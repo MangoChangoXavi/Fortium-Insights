@@ -20,12 +20,20 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>Tu Asesor Inmobiliario</title>
+        <title>Techos Digitales</title>
+        <meta
+          name="title"
+          content="Techos Digitales - Eleve su negocio inmobiliario con nuestras soluciones"
+        />
         <meta
           name="description"
-          content="Web de Tu Asesor Inmobiliario, compra lotes con nosotros al mejor preico, baratos, economicos y de buena calidad."
+          content="Techos Digitales is a one stop solution for real estate businesses to get customised solutions and software for their business!"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="keywords"
+          content="solucion inmobiliaria, soluciones inmobiliarias, crm inmobiliario, crm inmobiliaria, software inmobiliario, crm para inmobiliarias, inmobiliaria solucion, que es un crm inmobiliario, mejor crm inmobiliario"
+        />
+        <link rel="icon" type="image/svg+xml" href="/g8.svg" />
       </Head>
       <main
         className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
