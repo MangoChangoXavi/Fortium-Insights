@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_PRISMA_URL") // uses connection pooling
+  directUrl = env("DATABASE_URL_NON_POOLING") // uses a direct connection
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Lot {
+    lotId        Int       @id @default(autoincrement()) @map("lot_id")
+    identifier   String    
+    projectId   Int       
+    price        Decimal
+    downPayment  Decimal   @map("down_payment")
+    measures String?
+    totalArea    Decimal
+    location     String
+    availability Boolean   @default(true)
+    createdAt    DateTime  @default(now()) @map("created_at")
+    updatedAt    DateTime @updatedAt @map("updated_at")
+    isActive     Boolean   @default(true) @map("is_active")
+
+    boundaries String @default("")
+
+    estateNumber Int    @default(0) @map("estate_number")
+    folioNumber  Int    @default(0) @map("folio_number")
+    bookNumber   Int    @default(0) @map("book_number")
+    department   String @default("") @map("department")
+    lotNumber    Int    @default(0) @map("lot_number")
+
+    reservations Reservation[]
+}
+
+model Reservation {
+    id     Int    @id @default(autoincrement())
+    userId String
+
+    startDate           DateTime
+    endDate             DateTime
+    birthdate           DateTime
+    firstname           String    @map("first_name") @db.VarChar(200)
+    secondname          String    @map("second_name") @db.VarChar(200)
+    extraname           String?   @map("extra_name") @db.VarChar(200)
+    lastname            String    @map("last_name") @db.VarChar(200)
+    secondlastname      String    @map("second_last_name") @db.VarChar(200)
+    surname             String?   @db.VarChar(200)
+    profession          String    @db.VarChar(200)
+    address             String    @db.VarChar(500)
+    dpi                 Int       @default(0)
+    citizenship         String    @db.VarChar(200)
+    civilStatus         String    @map("civil_status") @db.VarChar(200) @default("Soltero/a")
+    nit                 Int        @default(0)
+    email               String?    @db.VarChar(100)
+    phone               Int         @default(0)
+    workaddress         String     @map("work_address") @db.VarChar(200)
+    workphone           Int         @map("work_phone") @default(0)
+    price               Decimal
+    downpaymentDate     DateTime   @default(now()) @map("downpayment_date")
+    downpaymentPrice    Decimal   @map("downpayment_price")
+    downpaymentNumber   Int?      @map("downpayment_number")
+    downPaymentQuota    Decimal?  @map("downpayment_quota")
+    downpaymentComments String?   @map("downpayment_comments") @db.VarChar(1000)
+    reservationPrice    Decimal   @map("reservation_amount")
+    reservationNumber   Int?      @map("reservation_number")
+    reservationQuota    Decimal?  @map("reservation_quota")
+    reservationComments String?   @map("reservation_comments") @db.VarChar(1000)
+    interest            Decimal
+    payday              Int       @map("pay_day")
+    comments            String?   @db.VarChar(1000)
+    createdAt           DateTime  @default(now()) @map("created_at")
+    updatedAt           DateTime  @default(now()) @updatedAt @map("updated_at")
+    deletedAt           DateTime? @map("deleted_at")
+    status              Int       @default(1) // 1 == reserved, 2 == selled, 3 == canceled
+    frontDpiUrl         String   @map("front_dpi_url")
+    backDpiUrl          String   @map("back_dpi_url")
+    clientImageUrl    String   @map("client_image_url") @default("")
+    signatureUrl        String   @map("signature_url")
+
+    capital   Decimal @map("capital")
+    totalPaid Decimal @map("total_paid")
+
+    lotId Int  @map("lot_id")
+    lot   Lot  @relation(fields: [lotId], references: [lotId], onDelete: Cascade)
+    user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    payments payment[]
+
+    @@index([lotId], name: "idx_reservation_lot_id")
+    @@index([userId], name: "idx_reservation_user_id")
+}
+
+model Event {
+    id     Int      @id @default(autoincrement())
+    title  String
+    start  DateTime
+    end    DateTime
+    allDay Boolean
+    desc   String
+    User   User?    @relation(fields: [userId], references: [id])
+    userId String?
+
+    @@index([userId])
+}
+
+model payment {
+    paymentId     Int       @id @default(autoincrement()) @map("payment_id")
+    clientName    String
+    Dpi           String
+    PaymentAmount String    @map("payment_amount")
+    createdAt     DateTime  @default(now()) @map("created_at")
+    updatedAt     DateTime? @updatedAt @map("updated_at")
+    deletedAt     DateTime? @map("deleted_at")
+    isActive      Boolean   @default(true) @map("is_active")
+    type          String    @default("C") @db.VarChar(1)
+    //C == CAPITAL
+    //A == ABONO
+    //R == RESERVA
+    //E == ENGANCHE
+
+    reservationId Int         @map("reservation_id")
+    reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
+    @@index([reservationId], name: "idx_payment_reservation__id")
+}
+
+// Necessary for Next auth
+model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+    @@index([userId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+}
+
+model User {
+    id            String        @id @default(cuid())
+    name          String?
+    email         String?       @unique
+    emailVerified DateTime?
+    image         String?
+    role          String?       @default("user")
+    accounts      Account[]
+    sessions      Session[]
+    reservations  Reservation[]
+    event         Event[]
+    createdAt   DateTime  @default(now()) @map("created_at")
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
