@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import grpImg from "../assets/images/grp-img.png";
 import Link from "next/link";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, SquareUserRound } from "lucide-react";
 
 const Cta = () => {
   return (
@@ -24,7 +24,7 @@ const Cta = () => {
                   className="bg-custom-green text-400 flex  items-center px-5 py-3 font-normal text-white hover:bg-blue-700"
                   href={"https://wa.me/59541638"}
                 >
-                  Contactanos &nbsp; <ArrowRightIcon />
+                  Contactanos &nbsp; <SquareUserRound />
                 </Link>
               </div>
             </div>

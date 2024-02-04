@@ -1,17 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 // import { AiOutlineMenu } from "react-icons/ai";
 // import { RxCross1 } from "react-icons/rx";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../assets/images/logo.webp";
-import { ArrowRightIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  GalleryHorizontalEnd,
+  SquareUserRound,
+} from "lucide-react";
 
 const Header = () => {
   const menu = [
     // { name: "Home", url: "/" },
-    { name: "Portafolio", url: "/portfolio" },
-    { name: "Contactanos", url: "https://wa.me/59541638" },
+    { name: "Portafolio", url: "/portfolio", icon: <GalleryHorizontalEnd /> },
+    {
+      name: "Contactanos",
+      url: "https://wa.me/59541638",
+      icon: <SquareUserRound />,
+    },
   ];
   return (
     <nav className="w-full bg-transparent">
@@ -34,14 +42,14 @@ const Header = () => {
             className={`mt-3 flex-1 justify-self-center pb-3 hover:block md:mt-0 md:block md:pb-0 lg:mt-8`}
           >
             <ul className="items-center justify-center  md:flex md:space-x-6 md:space-y-0">
-              {menu.map(({ name, url }, index) => (
+              {menu.map(({ name, url, icon }, index) => (
                 <li
                   key={index}
                   className="bg-custom-sky text-400 px-5 py-3 align-middle font-normal text-white hover:bg-blue-700 "
                 >
                   <Link className="flex items-center" href={url}>
                     {" "}
-                    {name} &nbsp; <ArrowRightIcon />
+                    {name} &nbsp; {icon}
                   </Link>
                 </li>
               ))}
