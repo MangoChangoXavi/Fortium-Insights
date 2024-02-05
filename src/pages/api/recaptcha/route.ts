@@ -1,8 +1,9 @@
-export default async function POST(req: Request) {
-  const body = (req.body as unknown as Record<string, string>) ?? "";
-  const token = body.token;
+import { type NextApiRequest } from "next";
+
+export default async function POST(req: NextApiRequest) {
+  const data = req.body;
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${data.token}`;
 
   const response = await fetch(url, {
     method: "POST",

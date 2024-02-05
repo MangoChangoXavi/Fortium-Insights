@@ -58,6 +58,9 @@ interface PropsI {
 const verifyCaptcha = async (token: string | null): Promise<string> => {
   const response = await fetch("/api/recaptcha/route", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ token }),
   });
   if (response.status === 200) {
@@ -193,6 +196,9 @@ export function Onboard({ handleSubmit }: PropsI) {
         />
         <Button type="submit" variant={"primary"} disabled={!isVerified}>
           Enviar &nbsp; <RightArrowIcon />
+        </Button>
+        <Button type="button" onClick={() => handleCaptchaSubmission("fd")}>
+          Try captcha
         </Button>
       </form>
     </Form>
