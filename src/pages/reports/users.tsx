@@ -123,7 +123,7 @@ export default function Users() {
   });
 
   return (
-    <LayoutSigned role={"admin"}>
+    <LayoutSigned>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
         <UIDebouncer
           value={search}

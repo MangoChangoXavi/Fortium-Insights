@@ -11,27 +11,16 @@ const menuItems = [
     link: "/projects",
     permissions: [],
   },
-  // {
-  //   name: "Calendario",
-  //   icon: <CalendarIcon />,
-  //   link: "/calendar",
-  // },
-  {
-    name: "Reservaciones",
-    icon: <CategoryIcon className="h-4 w-4" />,
-    link: "/reports/reservations",
-    permissions: [],
-  },
   {
     name: "Usuarios",
     icon: <UsersIcon className="h-5 w-5" />,
     link: "/reports/users",
-    permissions: ["admin"],
+    permissions: [],
   },
 ];
 
 export const LayoutSigned = ({
-  role = ["admin", "salesperson", "supervisor"],
+  role = ["admin", "salesperson", "supervisor", "user"],
   children,
   noPadding = false,
 }: {
@@ -66,7 +55,7 @@ export const LayoutSigned = ({
         userName={session.user.name ?? "Anonimo"}
         userRole={session.user.role}
         items={menuItems}
-        companyName="Tu Asesor Inmobiliario"
+        companyName="Techos Digitales"
       />
       <div className="w-full pt-2 md:pl-12 ">
         <div
