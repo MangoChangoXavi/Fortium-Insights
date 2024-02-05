@@ -189,15 +189,15 @@ export function Onboard({ handleSubmit }: PropsI) {
             )}
           />
         </div>
-        <ReCAPTCHA
+        {/* <ReCAPTCHA
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
           ref={recaptchaRef}
           onChange={handleCaptchaSubmission}
-        />
-        <Button type="submit" variant={"primary"} disabled={!isVerified}>
+        /> */}
+        <Button type="submit" variant={"primary"}>
           Enviar &nbsp; <RightArrowIcon />
         </Button>
-        <Button
+        {/* <Button
           type="button"
           onClick={() =>
             handleCaptchaSubmission(
@@ -206,7 +206,7 @@ export function Onboard({ handleSubmit }: PropsI) {
           }
         >
           Try captcha
-        </Button>
+        </Button> */}
       </form>
     </Form>
   );

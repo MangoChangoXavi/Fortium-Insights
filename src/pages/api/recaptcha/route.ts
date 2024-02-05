@@ -1,25 +1,26 @@
-//...existing imports
-import axios from "axios";
-import { type NextApiRequest, type NextApiResponse } from "next";
+import { type NextApiRequest } from "next";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-): Promise<void> {
-  // ... (existing transporter setup and mailData)
-  // Validate the reCAPTCHA token on the server-side
+export default async function POST(req: NextApiRequest) {
+  const data = await req.body;
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+  const token = data.token;
+  if (!token) throw new Error("No token provided");
 
-  try {
-    const response = await axios.post(
-      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${req.body.token}`,
-    );
-    if (response.data.success) {
-    } else {
-      // reCAPTCHA verification failed
-      res.status(400).send("reCAPTCHA verification failed.");
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal server error");
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const responseData = await response.json();
+
+  if (responseData.success) {
+    return "success!";
+  } else {
+    console.log(responseData);
+    throw new Error("Failed Captcha");
   }
 }
