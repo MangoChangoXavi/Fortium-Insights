@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { ReCAPTCHA } from "react-google-recaptcha";
 
 import {
   Form,
@@ -16,6 +17,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { RightArrowIcon } from "~/components/system/ui/Icons";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 
 const FormSchema = z.object({
   links: z.string({ required_error: "la direccion es requerida" }).max(5000, {
@@ -52,17 +55,46 @@ interface PropsI {
   handleSubmit: (data: z.infer<typeof FormSchema>) => void;
 }
 
+const verifyCaptcha = async (token: string | null): Promise<string> => {
+  const response = await fetch("/api/recaptcha/route", {
+    method: "POST",
+    body: JSON.stringify({ token }),
+  });
+  if (response.status === 200) {
+    const res = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return res.text;
+  } else {
+    const error = await response.text();
+    throw new Error(error);
+  }
+};
+
 export function Onboard({ handleSubmit }: PropsI) {
+  const router = useRouter();
+
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [isVerified, setIsverified] = useState<boolean>(false);
+
+  async function handleCaptchaSubmission(token: string | null) {
+    // Server function to verify captcha
+    await verifyCaptcha(token)
+      .then(() => setIsverified(true))
+      .catch(() => setIsverified(false));
+  }
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
+  const submitFnc = async (data: z.infer<typeof FormSchema>) => {
+    handleSubmit(data);
+    await router.push("/");
+  };
+
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="my-10 space-y-6"
-      >
+      <form onSubmit={form.handleSubmit(submitFnc)} className="my-10 space-y-6">
         {/* inputs group */}
         <div className="space-y-4">
           <FormField
@@ -154,7 +186,12 @@ export function Onboard({ handleSubmit }: PropsI) {
             )}
           />
         </div>
-        <Button type="submit" variant={"primary"}>
+        <ReCAPTCHA
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+          ref={recaptchaRef}
+          onChange={handleCaptchaSubmission}
+        />
+        <Button type="submit" variant={"primary"} disabled={!isVerified}>
           Enviar &nbsp; <RightArrowIcon />
         </Button>
       </form>

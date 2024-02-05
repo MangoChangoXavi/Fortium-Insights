@@ -1,11 +1,25 @@
-import Image from "next/image";
-import Link from "next/link";
 import Footer from "~/features/landingPage/components/Footer";
 import Header from "~/features/landingPage/components/Header";
-import { projects } from "~/data/projects";
 import { Onboard } from "~/components/template/forms/Onboard";
+import { api } from "~/utils/api";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function OnBoard() {
+  const { toast } = useToast();
+
+  // use the `useMutation` hook to create a mutation
+  const { mutate: createOnboard } = api.onboard.create.useMutation({
+    onSuccess: () => {
+      toast({ title: "Datos para nuevo proyecto enviados correctamente!" });
+    },
+    onError: (err) => {
+      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+      toast({
+        title: errorMessage ?? "Something went wrong. Please try again later.",
+      });
+    },
+  });
+
   return (
     <>
       <Header />
@@ -20,7 +34,7 @@ export default function OnBoard() {
               resultados
             </p>
           </div>
-          <Onboard />
+          <Onboard handleSubmit={createOnboard} />
         </div>
       </div>
       <Footer />
