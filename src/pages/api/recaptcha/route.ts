@@ -1,5 +1,4 @@
 import { type NextApiRequest } from "next";
-import axios from "axios";
 
 export default async function POST(req: NextApiRequest) {
   const data = await req.body;
@@ -7,13 +6,21 @@ export default async function POST(req: NextApiRequest) {
   const token = data.token;
   if (!token) throw new Error("No token provided");
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const res = await axios.post(
-    `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`,
-  );
-  if (res.data.success) {
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const responseData = await response.json();
+
+  if (responseData.success) {
     return "success!";
   } else {
+    console.log(responseData);
     throw new Error("Failed Captcha");
   }
 }
