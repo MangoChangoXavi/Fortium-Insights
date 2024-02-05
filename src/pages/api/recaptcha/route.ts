@@ -5,8 +5,9 @@ export default async function POST(req: NextApiRequest) {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
   const token = data.token;
   if (!token) throw new Error("No token provided");
+  console.log(secretKey, token);
 
-  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${data.token}`;
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
 
   const response = await fetch(url, {
     method: "POST",

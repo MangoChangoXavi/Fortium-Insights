@@ -81,7 +81,6 @@ export function Onboard({ handleSubmit }: PropsI) {
 
   async function handleCaptchaSubmission(token: string | null) {
     // Server function to verify captcha
-    console.log("token", token);
     await verifyCaptcha(token)
       .then(() => setIsverified(true))
       .catch(() => setIsverified(false));
