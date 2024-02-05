@@ -6,14 +6,14 @@ export default async function POST(req: NextApiRequest) {
   const token = data.token;
   if (!token) throw new Error("No token provided");
 
-  const url = `https://www.google.com/recaptcha/api/siteverify`;
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+  console.log("url", url);
 
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ secret: secretKey, response: token }),
   });
 
   const responseData = await response.json();
@@ -21,7 +21,7 @@ export default async function POST(req: NextApiRequest) {
   if (responseData.success) {
     return "success!";
   } else {
-    console.log(responseData);
+    console.error(responseData);
     throw new Error("Failed Captcha");
   }
 }
