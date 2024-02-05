@@ -198,7 +198,7 @@ export function Onboard({ handleSubmit }: PropsI) {
         <Button type="submit" variant={"primary"} disabled={!isVerified}>
           Enviar &nbsp; <RightArrowIcon />
         </Button>
-        {/* <Button
+        <Button
           type="button"
           onClick={() =>
             handleCaptchaSubmission(
@@ -207,7 +207,7 @@ export function Onboard({ handleSubmit }: PropsI) {
           }
         >
           Try captcha
-        </Button> */}
+        </Button>
       </form>
     </Form>
   );

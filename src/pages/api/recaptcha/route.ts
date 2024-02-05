@@ -17,6 +17,7 @@ export default async function POST(req: NextApiRequest) {
   if (responseData.success) {
     return "success!";
   } else {
+    console.log(responseData);
     throw new Error("Failed Captcha");
   }
 }
