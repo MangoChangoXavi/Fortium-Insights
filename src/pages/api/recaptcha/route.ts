@@ -1,5 +1,3 @@
-"use server";
-
 export async function verifyCaptcha(token: string | null) {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
