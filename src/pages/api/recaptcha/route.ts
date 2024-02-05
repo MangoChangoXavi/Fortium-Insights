@@ -9,10 +9,7 @@ export default async function POST(req: NextApiRequest) {
   const url = `https://www.google.com/recaptcha/api/siteverify?secret='${secretKey}'&response='${token}'`;
 
   const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    method: "POST",
   });
 
   const responseData = await response.json();
