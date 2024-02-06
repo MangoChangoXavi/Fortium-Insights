@@ -19,6 +19,7 @@ model onboard {
     problems   String
     success  String
     budget   String
+    status   String @default("initial")
     createdAt DateTime @default(now()) @map("created_at")
 }
 

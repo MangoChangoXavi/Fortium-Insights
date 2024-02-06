@@ -46,7 +46,7 @@ export const onboardRouter = createTRPCRouter({
       let where = {};
       if (input?.status) {
         where = {
-          role: input.status,
+          status: input.status,
         };
       }
       if (input?.search) {
@@ -212,12 +212,13 @@ export const onboardRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        links: z.string(),
-        intro: z.string(),
-        services: z.string(),
-        problems: z.string(),
-        success: z.string(),
-        budget: z.string(),
+        links: z.string().optional(),
+        intro: z.string().optional(),
+        services: z.string().optional(),
+        problems: z.string().optional(),
+        success: z.string().optional(),
+        budget: z.string().optional(),
+        status: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -232,9 +233,77 @@ export const onboardRouter = createTRPCRouter({
           problems: input.problems,
           success: input.success,
           budget: input.budget,
+          status: input.status,
         },
       });
 
       return onboard;
     }),
+
+  getDataTable: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        skip: z.number().min(0).nullish(),
+        status: z.string().optional(),
+        search: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 50;
+      const skip = input.skip ?? 0;
+      let where = {};
+      if (input.status) {
+        where = {
+          status: input.status,
+        };
+      }
+
+      if (input.search) {
+        where = {
+          ...where,
+          OR: [
+            {
+              name: {
+                contains: input.search,
+              },
+            },
+          ],
+        };
+      }
+      const totalItemsCount = await ctx.db.user.count({
+        where,
+      });
+      const onboards = await ctx.db.onboard.findMany({
+        take: limit,
+        skip,
+        orderBy: {
+          createdAt: "desc",
+        },
+        where,
+      });
+      return {
+        onboards,
+        totalItemsCount,
+      };
+    }),
+
+  countStatus: protectedProcedure.query(async ({ ctx }) => {
+    const statuss = await ctx.db.onboard.groupBy({
+      by: ["status"],
+      _count: {
+        status: true,
+      },
+    });
+    statuss.push({
+      status: "all",
+      _count: {
+        status: statuss.reduce((acc, status) => acc + status._count.status, 0),
+      },
+    });
+    return statuss.map((status) => ({
+      status: status.status,
+      count: status._count.status,
+    }));
+  }),
 });

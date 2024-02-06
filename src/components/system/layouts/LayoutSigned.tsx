@@ -6,9 +6,9 @@ import { GalleryIcon, CategoryIcon, UsersIcon } from "../ui/Icons";
 import { Sidebar } from "./Sidebar";
 const menuItems = [
   {
-    name: "Proyectos",
+    name: "On Boards",
     icon: <GalleryIcon />,
-    link: "/projects",
+    link: "/reports/onboards",
     permissions: [],
   },
   {
