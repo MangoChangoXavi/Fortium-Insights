@@ -23,6 +23,20 @@ model onboard {
     createdAt DateTime @default(now()) @map("created_at")
 }
 
+model client {
+    id        String  @id @default(cuid())
+    name      String
+    company   String
+    role   String
+    phone  String?
+    location  String
+    linkedIn  String?
+    notes String?
+    status  String @default("initial") // Initial, Contacted, Proposal, Contract, Completed
+    nextMeeting DateTime? @default(now()) @map("next_meeting")
+    createdAt DateTime @default(now()) @map("created_at")
+}
+
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())

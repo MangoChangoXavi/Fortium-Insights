@@ -21,33 +21,31 @@ import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 
 const FormSchema = z.object({
-  links: z.string({ required_error: "la direccion es requerida" }).max(5000, {
-    message: "la direccion no puede ser mayor a 5000 caracteres",
+  links: z.string({ required_error: "los links son requerida" }).max(5000, {
+    message: "los links so no pueden ser mayor a 5000 caracteres",
   }),
-  intro: z
-    .string({ required_error: "la direccion de trabajo es requerida" })
-    .max(5000, {
-      message: "la direccion de trabajo no puede ser mayor a 5000 caracteres",
-    }),
+  intro: z.string({ required_error: "la intro es requerida" }).max(5000, {
+    message: "la intro no puede ser mayor a 5000 caracteres",
+  }),
   services: z
-    .string({ required_error: "la direccion de trabajo es requerida" })
+    .string({ required_error: "los servicios son requeridos" })
     .max(5000, {
-      message: "la direccion de trabajo no puede ser mayor a 5000 caracteres",
+      message: "la servicios no puede ser mayor a 5000 caracteres",
     }),
   budget: z
-    .string({ required_error: "la direccion de trabajo es requerida" })
+    .string({ required_error: "El presupuesto es requerido" })
     .max(5000, {
-      message: "la direccion de trabajo no puede ser mayor a 5000 caracteres",
+      message: "El presupuesto no puede ser mayor a 5000 caracteres",
     }),
   problems: z
-    .string({ required_error: "la direccion de trabajo es requerida" })
+    .string({ required_error: "los problemas son requeridos" })
     .max(5000, {
-      message: "la direccion de trabajo no puede ser mayor a 5000 caracteres",
+      message: "Los problemas no pueden ser mayor a 5000 caracteres",
     }),
   success: z
-    .string({ required_error: "la direccion de trabajo es requerida" })
+    .string({ required_error: "el caso de exito es requerido" })
     .max(5000, {
-      message: "la direccion de trabajo no puede ser mayor a 5000 caracteres",
+      message: "el caso de exito no puede ser mayor a 5000 caracteres",
     }),
 });
 
