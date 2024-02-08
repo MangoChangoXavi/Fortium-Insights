@@ -17,7 +17,6 @@ import { Button } from "@/components/ui/button";
 import { RightArrowIcon } from "~/components/system/ui/Icons";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
 import {
   Popover,
   PopoverContent,

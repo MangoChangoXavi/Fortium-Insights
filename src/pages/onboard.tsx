@@ -27,7 +27,7 @@ export default function OnBoard() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-4">
             <h1 className="text-center text-[42px] font-bold tracking-normal text-black opacity-100">
-              Nuevo Cliente
+              On Boarding
             </h1>
             <p className="text-center text-[16px] tracking-normal text-gray-500">
               Cuentanos sobre ti para poder brindarte el mejor servicio y
