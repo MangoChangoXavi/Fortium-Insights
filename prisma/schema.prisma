@@ -50,7 +50,6 @@ model proposal {
   id          String   @id @default(cuid())
   title       String
   client      String
-  description String
   status      String   @default("initial") // Initial, Sent, Accepted, Rejected
   createdAt   DateTime @default(now()) @map("created_at")
 

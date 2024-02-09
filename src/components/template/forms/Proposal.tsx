@@ -21,31 +21,21 @@ import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 
 const FormSchema = z.object({
-  links: z.string({ required_error: "los links son requerida" }).max(5000, {
-    message: "los links so no pueden ser mayor a 5000 caracteres",
-  }),
-  intro: z.string({ required_error: "la intro es requerida" }).max(5000, {
-    message: "la intro no puede ser mayor a 5000 caracteres",
-  }),
-  services: z
-    .string({ required_error: "los servicios son requeridos" })
-    .max(5000, {
-      message: "la servicios no puede ser mayor a 5000 caracteres",
+  title: z
+    .string({ required_error: "El nombre del proyecto es requerido" })
+    .max(500, {
+      message: "El nombre del proyecto no puede ser mayor a 500 caracteres",
+    })
+    .min(3, {
+      message: "El nombre del proyecto no puede ser menor a 3 caracteres",
     }),
-  budget: z
-    .string({ required_error: "El presupuesto es requerido" })
-    .max(5000, {
-      message: "El presupuesto no puede ser mayor a 5000 caracteres",
-    }),
-  problems: z
-    .string({ required_error: "los problemas son requeridos" })
-    .max(5000, {
-      message: "Los problemas no pueden ser mayor a 5000 caracteres",
-    }),
-  success: z
-    .string({ required_error: "el caso de exito es requerido" })
-    .max(5000, {
-      message: "el caso de exito no puede ser mayor a 5000 caracteres",
+  client: z
+    .string({ required_error: "El nombre del cliente es requerido" })
+    .max(500, {
+      message: "El nombre del cliente no puede ser mayor a 500 caracteres",
+    })
+    .min(3, {
+      message: "El nombre del cliente no puede ser menor a 3 caracteres",
     }),
 });
 
@@ -71,18 +61,8 @@ const verifyCaptcha = async (token: string | null): Promise<string> => {
   }
 };
 
-export function Onboard({ handleSubmit }: PropsI) {
+export function Proposal({ handleSubmit }: PropsI) {
   const router = useRouter();
-
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const [isVerified, setIsverified] = useState<boolean>(false);
-
-  async function handleCaptchaSubmission(token: string | null) {
-    // Server function to verify captcha
-    await verifyCaptcha(token)
-      .then(() => setIsverified(true))
-      .catch(() => setIsverified(false));
-  }
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -100,14 +80,12 @@ export function Onboard({ handleSubmit }: PropsI) {
         <div className="space-y-4">
           <FormField
             control={form.control}
-            name="links"
+            name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Links del sitio web y redes sociales existentes.
-                </FormLabel>
+                <FormLabel>Titulo del proyecto</FormLabel>
                 <FormControl>
-                  <Textarea {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -115,70 +93,10 @@ export function Onboard({ handleSubmit }: PropsI) {
           />
           <FormField
             control={form.control}
-            name="intro"
+            name="client"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  ¿Que hace tu negocio y como llegaste a el?
-                </FormLabel>
-                <FormControl>
-                  <Textarea {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="services"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>¿En que servicio estas interesado?</FormLabel>
-                <FormControl>
-                  <Textarea {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="problems"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  ¿Que problemas esperas solucionar trabajando con nosotros?
-                </FormLabel>
-                <FormControl>
-                  <Textarea {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="success"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  ¿Como luce el exito para ti en este proyecto?
-                </FormLabel>
-                <FormControl>
-                  <Textarea {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="budget"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  ¿Cual es tu presupuesto para este proyecto?
-                </FormLabel>
+                <FormLabel>Cliente</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
