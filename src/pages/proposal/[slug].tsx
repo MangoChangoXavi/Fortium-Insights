@@ -23,7 +23,7 @@ export default function Proposal() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col gap-4 px-12 md:px-[120px]">
+      <section className="flex flex-col gap-4 px-6 py-12 md:px-[120px]">
         <div className="flex flex-col">
           <Image className="w-[100px]" src={logo} alt="Logo Image" />
           <p className="text-gray-500  sm:text-xl/relaxed">+ (502) 5954 1638</p>
@@ -93,49 +93,43 @@ export default function Proposal() {
               Condiciones de Pago
             </h4>
             <p className="text-gray-500  sm:text-xl/relaxed lg:w-2/3">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
-              ad, quo fuga dolores eius sunt suscipit quam et natus ipsa? Eaque
-              at labore magnam, expedita provident molestiae iusto reprehenderit
-              fuga! Nostrum, ea fugiat, eligendi ipsa at nesciunt nisi soluta
-              dolores repellat maxime dolor asperiores pariatur libero quo natus
-              sequi, repudiandae aperiam omnis. Labore in voluptatum aspernatur
-              repellendus dolor, nulla pariatur. Esse sit optio veniam maiores,
-              ex tempora itaque, voluptas beatae aliquid recusandae, eveniet
-              facilis officia minima iste corporis dolorem quam commodi.
-              Expedita natus recusandae excepturi modi tenetur magni laudantium
-              autem. Sint fugiat ipsa suscipit minus tenetur beatae, saepe at
-              doloremque rerum totam dignissimos vel earum, dolore, quam sunt
-              est hic nesciunt illo nisi quae enim. Autem ipsum sint voluptatum
-              assumenda. Eos cupiditate odit excepturi tempora laboriosam
-              temporibus maxime accusamus consectetur earum dignissimos
-              quibusdam dicta quia doloribus illum vel aliquid quas voluptate,
-              facilis minus ea! Voluptates voluptatem minus perferendis
-              voluptatibus magnam.
+              <span className="text-fourth-color  text-[16px] leading-8">
+                1. Pago Inicial
+                <br />
+              </span>
+              Se requiere un pago inicial del 50% al iniciar el proyecto para
+              cubrir los costos iniciales y asegurar nuestros servicios para su
+              empresa.
+              <br />
+              <br />
+              <span className="text-fourth-color  text-[16px] leading-8">
+                2. Plazo de pago
+                <br />
+              </span>
+              En caso se requiera una mejora continua para este proyecto los
+              pagos se realizarán dentro de los últimos días de cada mes a
+              partir de la fecha de emisión de la factura correspondiente a cada
+              pago y serán por el monto de $600, y se recibiran actualizaciones
+              semanales en el software.
+              <br />
+              <br />
+              <span className="text-fourth-color  text-[16px]  leading-8">
+                3. Metodos de pago
+                <br />
+              </span>
+              Aceptamos pagos mediante nuestra pasarela de pago. Nosotros nos
+              encargaremos de proporcionar los enlaces correspondientes para los
+              pagos acordados en el proyecto.
             </p>
           </div>
-          <div className="my-1 flex flex-col gap-1">
+          <div className="my-2 flex flex-col gap-1">
             <h4 className="text-fourth-color  text-[20px] font-medium leading-8">
               Duracion del Proyecto
             </h4>
             <p className="text-gray-500  sm:text-xl/relaxed lg:w-2/3">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
-              ad, quo fuga dolores eius sunt suscipit quam et natus ipsa? Eaque
-              at labore magnam, expedita provident molestiae iusto reprehenderit
-              fuga! Nostrum, ea fugiat, eligendi ipsa at nesciunt nisi soluta
-              dolores repellat maxime dolor asperiores pariatur libero quo natus
-              sequi, repudiandae aperiam omnis. Labore in voluptatum aspernatur
-              repellendus dolor, nulla pariatur. Esse sit optio veniam maiores,
-              ex tempora itaque, voluptas beatae aliquid recusandae, eveniet
-              facilis officia minima iste corporis dolorem quam commodi.
-              Expedita natus recusandae excepturi modi tenetur magni laudantium
-              autem. Sint fugiat ipsa suscipit minus tenetur beatae, saepe at
-              doloremque rerum totam dignissimos vel earum, dolore, quam sunt
-              est hic nesciunt illo nisi quae enim. Autem ipsum sint voluptatum
-              assumenda. Eos cupiditate odit excepturi tempora laboriosam
-              temporibus maxime accusamus consectetur earum dignissimos
-              quibusdam dicta quia doloribus illum vel aliquid quas voluptate,
-              facilis minus ea! Voluptates voluptatem minus perferendis
-              voluptatibus magnam.
+              El proyecto se completará en un plazo estimado de los meses
+              requeridos por el cliente a partir del inicio del desarrollo,
+              sujeto a cambios según las necesidades específicas del proyecto.
             </p>
           </div>
         </div>
@@ -161,7 +155,7 @@ export default function Proposal() {
             <br />
             Javier Monterroso
             <br />
-            Ingeniero de Software
+            Fundador y CEO
             <br />
             jvmonteros98@gmail.com
           </p>
