@@ -17,22 +17,6 @@ const Banner = () => {
             Creamos software personalizado para su negocio inmobiliario y lo
             ayudamos a hacer crecer su negocio.
           </p>
-
-          {/* <div className="mt-8 flex flex-wrap lg:justify-start justify-center gap-4 text-center">
-                            <Link
-                                href="#"
-                                className="block w-full rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
-                            >
-                                Get Started
-                            </Link>
-
-                            <Link
-                                href="#"
-                                className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
-                            >
-                                Learn More
-                            </Link>
-                        </div> */}
         </div>
       </div>
       <div className="position-relative mx-auto max-w-screen-xl px-4 pb-10 pt-8 sm:px-10 lg:px-20 lg:pb-40">

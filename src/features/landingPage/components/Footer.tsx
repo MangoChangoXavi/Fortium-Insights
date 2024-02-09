@@ -63,7 +63,7 @@ const Footer = () => {
                     <InstagramIcon />
                   </Link>
                   <Link className="text-[28px]" href={"https://wa.me/59541638"}>
-                    <WhatsAppIcon />
+                    <WhatsAppIcon className="h-6 w-6" />
                   </Link>
                 </div>
               </div>
