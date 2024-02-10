@@ -1,30 +1,38 @@
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
+/*
+model proposal {
+  id          String   @id @default(cuid())
+  title       String
+  client      String
+  status      String   @default("initial") // Initial, Sent, Accepted, Rejected
+  createdAt   DateTime @default(now()) @map("created_at")
 
-export const courseRouter = createTRPCRouter({
-  create: protectedProcedure
+  proposalServices proposalService[]
+}
+*/
+export const proposalRouter = createTRPCRouter({
+  create: publicProcedure
     .input(
       z.object({
         title: z.string(),
-        description: z.string(),
-        imageUrl: z.string(),
-        skills: z.string(),
-        userId: z.string(),
+        client: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const course = await ctx.db.course.create({
+      const proposal = await ctx.db.proposal.create({
         data: {
           title: input.title,
-          description: input.description,
-          imageUrl: input.imageUrl,
-          userId: input.userId,
-          skills: input.skills.split(",").map((skill) => skill.trim()),
+          client: input.client,
         },
       });
 
-      return course;
+      return proposal;
     }),
 
   countInfinite: protectedProcedure
@@ -40,7 +48,7 @@ export const courseRouter = createTRPCRouter({
       let where = {};
       if (input?.status) {
         where = {
-          role: input.status,
+          status: input.status,
         };
       }
       if (input?.search) {
@@ -55,13 +63,13 @@ export const courseRouter = createTRPCRouter({
           ],
         };
       }
-      const courses = await ctx.db.course.count({
+      const proposals = await ctx.db.proposal.count({
         where,
       });
 
       return {
-        count: courses,
-        pagesCount: Math.ceil(courses / limit),
+        count: proposals,
+        pagesCount: Math.ceil(proposals / limit),
       };
     }),
 
@@ -121,42 +129,23 @@ export const courseRouter = createTRPCRouter({
           },
         };
       }
-      const courses = await ctx.db.course.findMany({
+      const proposals = await ctx.db.proposal.findMany({
         take: limit + 1, // get an extra item at the end which we'll use as next cursor
         cursor: cursor ? { id: cursor } : undefined,
-        orderBy: {
-          position: "asc",
-        },
-        include: {
-          user: true,
-          sections: {
-            include: {
-              lessons: {
-                orderBy: {
-                  position: "asc",
-                },
-              },
-            },
-            orderBy: {
-              position: "asc",
-            },
-          },
-          assignations: true,
-        },
         where,
       });
 
-      const coursesCount = await ctx.db.course.count({ where });
+      const proposalsCount = await ctx.db.proposal.count({ where });
 
       let nextCursor: typeof cursor | undefined = undefined;
-      if (courses.length > limit) {
-        const nextItem = courses.pop();
+      if (proposals.length > limit) {
+        const nextItem = proposals.pop();
         nextCursor = nextItem!.id;
       }
       return {
-        courses,
+        proposals,
         nextCursor,
-        pagesCount: Math.ceil(coursesCount / limit),
+        pagesCount: Math.ceil(proposalsCount / limit),
       };
     }),
 
@@ -182,14 +171,11 @@ export const courseRouter = createTRPCRouter({
           },
         };
       }
-      const courses = await ctx.db.course.findMany({
-        orderBy: {
-          position: "asc",
-        },
+      const proposals = await ctx.db.proposal.findMany({
         where,
       });
 
-      return courses;
+      return proposals;
     }),
 
   read: protectedProcedure
@@ -199,29 +185,13 @@ export const courseRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const course = await ctx.db.course.findUnique({
+      const proposal = await ctx.db.proposal.findUnique({
         where: {
           id: input.id,
         },
-        include: {
-          user: true,
-          sections: {
-            include: {
-              lessons: {
-                orderBy: {
-                  position: "asc",
-                },
-              },
-            },
-            orderBy: {
-              position: "asc",
-            },
-          },
-          assignations: true,
-        },
       });
 
-      return course;
+      return proposal;
     }),
 
   delete: protectedProcedure
@@ -231,40 +201,111 @@ export const courseRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const course = await ctx.db.course.delete({
+      const proposal = await ctx.db.proposal.delete({
         where: {
           id: input.id,
         },
       });
 
-      return course;
+      return proposal;
     }),
 
   update: protectedProcedure
     .input(
       z.object({
         id: z.string(),
-        title: z.string().optional(),
-        description: z.string().optional(),
-        imageUrl: z.string().optional(),
-        skills: z.string().optional(),
+        links: z.string().optional(),
+        intro: z.string().optional(),
+        services: z.string().optional(),
+        problems: z.string().optional(),
+        success: z.string().optional(),
+        budget: z.string().optional(),
         status: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const course = await ctx.db.course.update({
+      const proposal = await ctx.db.proposal.update({
         where: {
           id: input.id,
         },
         data: {
-          title: input.title,
-          description: input.description,
-          imageUrl: input.imageUrl,
-          skills: (input.skills ?? "").split(",").map((skill) => skill.trim()),
+          links: input.links,
+          intro: input.intro,
+          services: input.services,
+          problems: input.problems,
+          success: input.success,
+          budget: input.budget,
           status: input.status,
         },
       });
 
-      return course;
+      return proposal;
     }),
+
+  getDataTable: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        skip: z.number().min(0).nullish(),
+        status: z.string().optional(),
+        search: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 50;
+      const skip = input.skip ?? 0;
+      let where = {};
+      if (input.status) {
+        where = {
+          status: input.status,
+        };
+      }
+
+      if (input.search) {
+        where = {
+          ...where,
+          OR: [
+            {
+              name: {
+                contains: input.search,
+              },
+            },
+          ],
+        };
+      }
+      const totalItemsCount = await ctx.db.user.count({
+        where,
+      });
+      const proposals = await ctx.db.proposal.findMany({
+        take: limit,
+        skip,
+        orderBy: {
+          createdAt: "desc",
+        },
+        where,
+      });
+      return {
+        proposals,
+        totalItemsCount,
+      };
+    }),
+
+  countStatus: protectedProcedure.query(async ({ ctx }) => {
+    const statuss = await ctx.db.proposal.groupBy({
+      by: ["status"],
+      _count: {
+        status: true,
+      },
+    });
+    statuss.push({
+      status: "all",
+      _count: {
+        status: statuss.reduce((acc, status) => acc + status._count.status, 0),
+      },
+    });
+    return statuss.map((status) => ({
+      status: status.status,
+      count: status._count.status,
+    }));
+  }),
 });

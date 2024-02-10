@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import React from "react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
-import { Proposal } from "~/components/template/forms/Proposal";
+import { Proposal } from "~/components/template/forms/ProposalBasic";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 
 export default function Dashboard() {
