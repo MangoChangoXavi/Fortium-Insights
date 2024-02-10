@@ -50,20 +50,16 @@ interface PropsI {
 }
 
 export function ProposalBasic({ handleSubmit }: PropsI) {
-  const router = useRouter();
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  const submitFnc = async (data: z.infer<typeof FormSchema>) => {
-    handleSubmit(data);
-    await router.push("/");
-  };
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitFnc)} className="my-10 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="my-10 space-y-6"
+      >
         {/* title and subtitle */}
         <div className="flex flex-col gap-[16px] ">
           {/* title */}

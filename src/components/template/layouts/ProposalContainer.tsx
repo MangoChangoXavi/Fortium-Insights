@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Handshake from "~/assets/img/handshake.gif";
 import { api } from "~/utils/api";
 import { useToast } from "@/components/ui/use-toast";
@@ -21,7 +21,7 @@ interface ServiceInfoI {
 
 export const ProposalContainer = () => {
   const [step, setStep] = useState(1);
-  const [serviceNumber, setServiceNumber] = useState(1);
+  const [servicesForms, setServicesForms] = useState<React.ReactNode[]>([]);
   const serviceArrRef = React.useRef<ServiceInfoI[]>([]);
   const { toast } = useToast();
 
@@ -32,17 +32,13 @@ export const ProposalContainer = () => {
     setStep((prev) => prev + 1);
   };
 
-  const handlePrevious = () => {
-    setStep((prev) => prev - 1);
-  };
-
   // use the `useMutation` hook to create a mutation
   const { mutate: createProposal } = api.proposal.create.useMutation({
     onSuccess: () => {
       // ctx.project.getSingleById.invalidate().catch((err) => {
       //   console.error(err);
       // });
-      toast({ title: "Proposale creado exitosamente" });
+      toast({ title: "Proposal creado exitosamente" });
     },
     onError: (err) => {
       const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
@@ -56,6 +52,17 @@ export const ProposalContainer = () => {
     // save the progress
     basicInfoRef.current = { ...data };
 
+    // update the services number
+    setServicesForms(
+      Array.from({ length: data.servicesNumber }, (_, i) => (
+        <ProposalServices
+          key={i}
+          handleSubmit={handleSubmitServices}
+          serviceNumber={i + 1}
+        />
+      )),
+    );
+
     // go to next step
     handleNext();
   };
@@ -65,37 +72,43 @@ export const ProposalContainer = () => {
     if (!basicInfoRef.current)
       return toast({ title: "La informacion basica es requerida" });
 
-    if (serviceNumber >= basicInfoRef.current.servicesNumber) {
-      // Adding one service
-      serviceArrRef.current.push(data);
-      setServiceNumber((prev) => prev + 1);
-      return;
-    }
+    // Adding one service
+    serviceArrRef.current.push(data);
     // go to next step
     handleNext();
-
-    // create the reservation
-    createProposal({
-      ...basicInfoRef.current,
-    });
-
-    // create the services
   };
+
+  // watching for all services to create them
+  useEffect(() => {
+    if (step === servicesForms.length + 2 && basicInfoRef.current) {
+      // create the proposal
+      createProposal({
+        ...basicInfoRef.current,
+      });
+
+      // create services
+    }
+  }, [createProposal, servicesForms.length, step]);
+
+  // booleans
+  const canAnnounce = servicesForms.length && step === servicesForms.length + 2;
 
   return (
     <>
       {step === 1 && <ProposalBasic handleSubmit={handleSubmitBasicInfo} />}
 
-      {step === 2 && basicInfoRef.current && (
-        <ProposalServices handleSubmit={handleSubmitServices} />
+      {servicesForms.map(
+        (form, i) => step === i + 2 && <div key={i}>{form}</div>,
       )}
 
-      {step === 3 && (
+      {canAnnounce ? (
         <Announce
           subtitle={announceSubtitle}
           image={Handshake}
           title="Informacion Guardada"
         />
+      ) : (
+        <></>
       )}
     </>
   );

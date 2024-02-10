@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { RightArrowIcon } from "~/components/system/ui/Icons";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/router";
+import { Textarea } from "@/components/ui/textarea";
 
 const FormSchema = z.object({
   title: z
@@ -40,33 +40,30 @@ const FormSchema = z.object({
 
 interface PropsI {
   handleSubmit: (data: z.infer<typeof FormSchema>) => void;
+  serviceNumber: number;
 }
 
-export function ProposalServices({ handleSubmit }: PropsI) {
-  const router = useRouter();
-
+export function ProposalServices({ handleSubmit, serviceNumber }: PropsI) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  const submitFnc = async (data: z.infer<typeof FormSchema>) => {
-    handleSubmit(data);
-    await router.push("/");
-  };
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitFnc)} className="my-10 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="my-10 space-y-6"
+      >
         {/* title and subtitle */}
         <div className="flex flex-col gap-[16px] ">
           {/* title */}
           <h1 className="font-sans text-xl font-semibold not-italic leading-[normal] text-[#2C2C2C]">
-            Informacion del Servicio
+            Informacion del Servicio #{serviceNumber}
           </h1>
           {/* subtitle */}
           <article className="text-sm font-normal not-italic leading-[normal] text-[#808080]">
-            En este paso tendra que llenar la informacion de los servicios que
-            se van a ofrecer
+            En este paso tendra que llenar la informacion del servicio #
+            {serviceNumber} que se va a ofrecer en la propuesta al cliente.
           </article>
         </div>
         {/* inputs group */}
@@ -91,7 +88,7 @@ export function ProposalServices({ handleSubmit }: PropsI) {
               <FormItem>
                 <FormLabel>Descripcion</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Textarea {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -1,3 +1,4 @@
+import { customAlphabet } from "nanoid";
 import { z } from "zod";
 
 import {
@@ -5,17 +6,12 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-/*
-model proposal {
-  id          String   @id @default(cuid())
-  title       String
-  client      String
-  status      String   @default("initial") // Initial, Sent, Accepted, Rejected
-  createdAt   DateTime @default(now()) @map("created_at")
 
-  proposalServices proposalService[]
-}
-*/
+const nanoid = customAlphabet(
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  7,
+);
+
 export const proposalRouter = createTRPCRouter({
   create: publicProcedure
     .input(
@@ -27,6 +23,7 @@ export const proposalRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const proposal = await ctx.db.proposal.create({
         data: {
+          id: nanoid(),
           title: input.title,
           client: input.client,
         },
