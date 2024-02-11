@@ -84,9 +84,8 @@ export const ProposalContainer = () => {
       // create the proposal
       createProposal({
         ...basicInfoRef.current,
+        services: serviceArrRef.current,
       });
-
-      // create services
     }
   }, [createProposal, servicesForms.length, step]);
 

@@ -18,6 +18,12 @@ export const proposalRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         client: z.string(),
+        services: z.array(
+          z.object({
+            title: z.string(),
+            description: z.string(),
+          }),
+        ),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -26,6 +32,9 @@ export const proposalRouter = createTRPCRouter({
           id: nanoid(),
           title: input.title,
           client: input.client,
+          proposalServices: {
+            create: input.services,
+          },
         },
       });
 
