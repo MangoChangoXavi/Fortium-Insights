@@ -47,6 +47,7 @@ model proposalService {
 
 model proposal {
   id          String   @id @default(cuid())
+  identifier String   @unique
   title       String
   client      String
   status      String   @default("initial") // Initial, Sent, Accepted, Rejected

@@ -63,6 +63,12 @@ export const getTip = async (): Promise<string> => {
   }
 };
 
+export function addDays(date: Date, days: number): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
 export const uploadFile = async (file: File): Promise<string> => {
   const response = await fetch("/api/upload/route", {
     method: "POST",

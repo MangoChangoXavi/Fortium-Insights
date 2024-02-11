@@ -10,17 +10,17 @@ export const PageNotFound = () => {
               404
             </h1>
             <p className="text-tertiary-900 mb-4 text-3xl font-bold tracking-tight md:text-4xl dark:text-white">
-              Something&apos;s missing.
+              Algo falta aqui.
             </p>
             <p className="text-tertiary-500 dark:text-tertiary-400 mb-4 text-lg font-light">
-              Sorry, we can&apos;t find that page. You&apos;ll find lots to
-              explore on the home page.
+              Perdon, esta pagina no existe, ponte en contacto con nostros si
+              alguien te dio un link equivocado.
             </p>
             <Link
               href="/"
               className="my-4 inline-flex rounded-lg bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
             >
-              Back to Homepage
+              Regresa a la pagina de bienvenida.
             </Link>
           </div>
         </div>

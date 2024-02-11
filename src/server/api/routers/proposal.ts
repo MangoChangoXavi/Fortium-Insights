@@ -29,6 +29,7 @@ export const proposalRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const proposal = await ctx.db.proposal.create({
         data: {
+          identifier: nanoid(),
           title: input.title,
           client: input.client,
           proposalServices: {
@@ -186,13 +187,18 @@ export const proposalRouter = createTRPCRouter({
   read: protectedProcedure
     .input(
       z.object({
-        id: z.string(),
+        id: z.string().optional(),
+        identifier: z.string().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
       const proposal = await ctx.db.proposal.findUnique({
         where: {
           id: input.id,
+          identifier: input.identifier,
+        },
+        include: {
+          proposalServices: true,
         },
       });
 

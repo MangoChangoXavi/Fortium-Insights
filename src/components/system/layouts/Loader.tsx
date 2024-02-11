@@ -29,7 +29,7 @@ export const Loader = (props: { size?: number }) => {
   );
 };
 
-export const UILoadingPage = () => {
+export const LoadingPage = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <Loader />
