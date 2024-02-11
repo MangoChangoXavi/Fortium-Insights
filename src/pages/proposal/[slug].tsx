@@ -24,14 +24,6 @@ export default function Proposal() {
         </div>
       </section>
       <section className="flex flex-col gap-4 px-6 py-12 md:px-[120px]">
-        <div className="flex flex-col">
-          <Image className="w-[100px]" src={logo} alt="Logo Image" />
-          <p className="text-gray-500  sm:text-xl/relaxed">+ (502) 5954 1638</p>
-          <p className="text-gray-500  sm:text-xl/relaxed">
-            jvmonteros98@gmail.com
-          </p>
-          <p className="text-gray-500  sm:text-xl/relaxed">20/Diciembre/2024</p>
-        </div>
         <h2 className="text-3xl font-bold sm:text-5xl ">Nombre del proyecto</h2>
         <div className="my-1 flex flex-col gap-2">
           <h3 className="text-dark mb-5 text-[24px]  font-semibold leading-7">

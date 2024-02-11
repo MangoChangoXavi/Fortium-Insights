@@ -41,9 +41,8 @@ model proposalService {
   id          String   @id @default(cuid())
   title       String
   description String
-  proposal    proposal @relation(fields: [id], references: [id], onDelete: Cascade)
-
-  @@index([id])
+  proposalId  String
+  proposal    proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
 }
 
 model proposal {

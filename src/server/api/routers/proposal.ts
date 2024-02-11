@@ -29,7 +29,6 @@ export const proposalRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const proposal = await ctx.db.proposal.create({
         data: {
-          id: nanoid(),
           title: input.title,
           client: input.client,
           proposalServices: {
