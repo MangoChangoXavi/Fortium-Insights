@@ -184,7 +184,7 @@ export const proposalRouter = createTRPCRouter({
       return proposals;
     }),
 
-  read: protectedProcedure
+  read: publicProcedure
     .input(
       z.object({
         id: z.string().optional(),
