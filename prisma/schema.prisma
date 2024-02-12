@@ -52,6 +52,7 @@ model proposal {
   client      String
   status      String   @default("initial") // Initial, Sent, Accepted, Rejected
   createdAt   DateTime @default(now()) @map("created_at")
+  paymentLink String @map("payment_link") @default("none")
 
   proposalServices proposalService[]
 }

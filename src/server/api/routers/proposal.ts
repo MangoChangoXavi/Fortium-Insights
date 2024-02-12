@@ -18,6 +18,7 @@ export const proposalRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         client: z.string(),
+        paymentLink: z.string().optional(),
         services: z.array(
           z.object({
             title: z.string(),
@@ -32,6 +33,7 @@ export const proposalRouter = createTRPCRouter({
           identifier: nanoid(),
           title: input.title,
           client: input.client,
+          paymentLink: input.paymentLink,
           proposalServices: {
             create: input.services,
           },

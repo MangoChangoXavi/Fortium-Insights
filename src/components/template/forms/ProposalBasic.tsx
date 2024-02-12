@@ -43,6 +43,14 @@ const FormSchema = z.object({
     .min(3, {
       message: "El nombre del cliente no puede ser menor a 3 caracteres",
     }),
+  paymentLink: z
+    .string({ required_error: "El link de pago es requerido" })
+    .max(500, {
+      message: "El link de pago no puede ser mayor a 500 caracteres",
+    })
+    .min(3, {
+      message: "El link de pago no puede ser menor a 3 caracteres",
+    }),
 });
 
 interface PropsI {
@@ -106,6 +114,19 @@ export function ProposalBasic({ handleSubmit }: PropsI) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Cliente</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="paymentLink"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Link de pago</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>

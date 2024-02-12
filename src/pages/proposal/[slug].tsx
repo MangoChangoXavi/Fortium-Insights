@@ -15,6 +15,7 @@ import ProposalIllustration3 from "~/assets/svg/ProposalIllustration3.svg";
 import ProposalIllustration4 from "~/assets/svg/ProposalIllustration4.svg";
 
 import Image from "next/image";
+import Link from "next/link";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Proposal(props: PageProps) {
   const { data: proposal, isLoading } = api.proposal.read.useQuery({
@@ -120,9 +121,9 @@ export default function Proposal(props: PageProps) {
                   1. Pago Inicial
                   <br />
                 </span>
-                Se requiere un pago inicial del 50% al iniciar el proyecto para
-                cubrir los costos iniciales y asegurar nuestros servicios para
-                su empresa.
+                Se requiere un pago inicial el cual el link encontrara adjunto
+                al final de la propuesta al iniciar el proyecto para cubrir los
+                costos iniciales y asegurar nuestros servicios para su empresa.
                 <br />
                 <br />
                 <span className="text-fourth-color  text-[16px] leading-8">
@@ -185,7 +186,14 @@ export default function Proposal(props: PageProps) {
             </h3>
             <p className="text-gray-500  sm:text-xl/relaxed">
               Esta oferta es válida hasta el{" "}
-              {addDays(proposal.createdAt, 5).toDateString()}.
+              {addDays(proposal.createdAt, 5).toDateString()}. Y para aceptarla
+              se necesitara la validacion del link del pago siguiente:{" "}
+              <Link
+                href={proposal.paymentLink}
+                className="cursor-pointer font-semibold text-blue-500 hover:underline"
+              >
+                Aqui
+              </Link>
               <br />
               <br />
               Agradecemos la oportunidad de presentar nuestra propuesta y
