@@ -53,12 +53,13 @@ export default function Proposal(props: PageProps) {
             <p className="text-gray-500  sm:text-xl/relaxed">
               Estimado/as Lectores, Nos complace presentarle nuestra oferta
               económica para proporcionar servicios de software a{" "}
-              {proposal.client}, una empresa líder en el sector de bienes
-              raíces. En Techos Digitales, comprendemos la importancia de las
-              soluciones tecnológicas eficientes y personalizadas para optimizar
-              las operaciones y mejorar la experiencia del cliente en la
-              industria inmobiliaria. Estamos seguros de que nuestros servicios
-              serán de gran valor para su empresa.
+              <span className="font-semibold">{proposal.client}</span>, una
+              empresa líder en el sector de bienes raíces. En Techos Digitales,
+              comprendemos la importancia de las soluciones tecnológicas
+              eficientes y personalizadas para optimizar las operaciones y
+              mejorar la experiencia del cliente en la industria inmobiliaria.
+              Estamos seguros de que nuestros servicios serán de gran valor para
+              su empresa.
             </p>
           </div>
           <div className="bottom-0 top-0 m-auto hidden w-full grow lg:block lg:w-1/2">
@@ -91,7 +92,8 @@ export default function Proposal(props: PageProps) {
             <p className="text-gray-500  sm:text-xl/relaxed ">
               Nuestro equipo de expertos en software se compromete a
               proporcionar soluciones personalizadas y de alta calidad para
-              satisfacer las necesidades específicas de {proposal.client}. Los
+              satisfacer las necesidades específicas de{" "}
+              <span className="font-semibold">{proposal.client}</span>. Los
               servicios que ofrecemos incluyen, pero no se limitan a:
             </p>
             {proposal.proposalServices.map((service, index) => (
@@ -199,7 +201,8 @@ export default function Proposal(props: PageProps) {
               <br />
               <br />
               Agradecemos la oportunidad de presentar nuestra propuesta y
-              esperamos poder trabajar juntos para llevar a {proposal.client} al
+              esperamos poder trabajar juntos para llevar a{" "}
+              <span className="font-semibold">{proposal.client}</span> al
               siguiente nivel en términos de eficiencia operativa y satisfacción
               del cliente. No dude en ponerse en contacto con nosotros para
               discutir cualquier detalle adicional o para programar una reunión
