@@ -2,13 +2,20 @@ import React, { type ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
-import { GalleryIcon, CategoryIcon, UsersIcon } from "../ui/Icons";
+import { UsersIcon } from "../ui/Icons";
 import { Sidebar } from "./Sidebar";
+import { AxeIcon, BugIcon, CatIcon } from "lucide-react";
 const menuItems = [
   {
     name: "On Boards",
-    icon: <GalleryIcon />,
+    icon: <AxeIcon className="h-5 w-5" />,
     link: "/reports/onboards",
+    permissions: [],
+  },
+  {
+    name: "Propuestas",
+    icon: <CatIcon className="h-5 w-5" />,
+    link: "/reports/proposals",
     permissions: [],
   },
   {

@@ -132,13 +132,25 @@ export default function Proposal(props: PageProps) {
                   2. Plazo de pago
                   <br />
                 </span>
-                Se dara el restante 50% al finalizar el proyecto con todas las
-                revisiones debidas para garantizar la mejor calidad, en caso se
-                requiera una mejora continua para este proyecto con
-                actualizaciones semanales los pagos se realizarán dentro de los
-                últimos días de cada mes a partir de la fecha de emisión de la
-                factura correspondiente a cada pago y serán por el monto de
-                $600, y se recibiran actualizaciones semanales en el software.
+                {proposal.concurrentPaymentAmount ? (
+                  <>
+                    los pagos se realizarán dentro del mismo día de cada mes a
+                    partir de la fecha de emisión de la factura correspondiente
+                    a cada pago y serán por el monto de{" "}
+                    {proposal.concurrentPaymentAmount}.
+                  </>
+                ) : (
+                  <>
+                    Se dara el restante 50% al finalizar el proyecto con todas
+                    las revisiones debidas para garantizar la mejor calidad, en
+                    caso se requiera una mejora continua para este proyecto con
+                    actualizaciones semanales los pagos se realizarán dentro de
+                    los últimos días de cada mes a partir de la fecha de emisión
+                    de la factura correspondiente a cada pago y serán por el
+                    monto de $600, y se recibiran actualizaciones semanales en
+                    el software.
+                  </>
+                )}
                 <br />
                 <br />
                 <span className="text-fourth-color  text-[16px]  leading-8">
