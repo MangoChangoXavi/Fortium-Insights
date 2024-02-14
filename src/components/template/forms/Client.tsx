@@ -57,13 +57,13 @@ const FormSchema = z.object({
     .max(5000, {
       message: "la ubicacion no puede ser mayor a 5000 caracteres",
     }),
-  linkedin: z
-    .string({ required_error: "El rol es requerido" })
+  linkedIn: z
+    .string({ required_error: "El linkedin es requerido" })
     .max(500, {
-      message: "El rol no puede ser mayor a 500 caracteres",
+      message: "El linkedin no puede ser mayor a 500 caracteres",
     })
     .min(3, {
-      message: "El rol no puede ser menor a 3 caracteres",
+      message: "El linkedin no puede ser menor a 3 caracteres",
     }),
   notes: z
     .string()
