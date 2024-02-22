@@ -286,7 +286,7 @@ export const proposalRouter = createTRPCRouter({
           ],
         };
       }
-      const totalItemsCount = await ctx.db.user.count({
+      const totalItemsCount = await ctx.db.proposal.count({
         where,
       });
       const proposals = await ctx.db.proposal.findMany({

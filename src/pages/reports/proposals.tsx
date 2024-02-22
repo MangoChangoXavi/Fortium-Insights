@@ -46,30 +46,30 @@ export default function Proposals() {
   );
   const { data: countData } = api.proposal.countStatus.useQuery();
 
-  const ctx = api.useUtils();
-  const { mutate } = api.proposal.update.useMutation({
-    onSuccess: () => {
-      ctx.proposal.readInfinite.invalidate().catch((err) => {
-        console.error(err);
-      });
-      ctx.proposal.countStatus.invalidate().catch((err) => {
-        console.error(err);
-      });
-    },
-    onError: (err) => {
-      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
-      toast({
-        title: errorMessage ?? "Something went wrong. Please try again later.",
-      });
-    },
-  });
+  // const ctx = api.useUtils();
+  // const { mutate } = api.proposal.update.useMutation({
+  //   onSuccess: () => {
+  //     ctx.proposal.readInfinite.invalidate().catch((err) => {
+  //       console.error(err);
+  //     });
+  //     ctx.proposal.countStatus.invalidate().catch((err) => {
+  //       console.error(err);
+  //     });
+  //   },
+  //   onError: (err) => {
+  //     const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+  //     toast({
+  //       title: errorMessage ?? "Something went wrong. Please try again later.",
+  //     });
+  //   },
+  // });
 
-  const updateStatus = (proposalId: string, status: string) => {
-    mutate({
-      id: proposalId,
-      status: status,
-    });
-  };
+  // const updateStatus = (proposalId: string, status: string) => {
+  //   mutate({
+  //     id: proposalId,
+  //     status: status,
+  //   });
+  // };
 
   const filters = [
     {
