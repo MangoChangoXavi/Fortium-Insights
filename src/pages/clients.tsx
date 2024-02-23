@@ -17,6 +17,8 @@ import {
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
 import { Loader } from "~/components/system/layouts/Loader";
 import { columns } from "~/components/template/columns/clients";
+import { IconLeft } from "react-day-picker";
+import { Tab } from "~/components/system/ui/Tab";
 
 const ITEMS_PER_PAGE = 5;
 export default function Clients() {
@@ -109,7 +111,7 @@ export default function Clients() {
     },
     {
       label: "Completado",
-      value: "admin",
+      value: "completed",
       icon: <DogIcon className="h-5 w-5 stroke-[#2c2c2c]" />,
       total: countData?.find((item) => item.status === "admin")?.count ?? 0,
       background: "bg-[#DCF691]",
@@ -140,14 +142,16 @@ export default function Clients() {
           setValue={setSearch}
           icon={<SearchIcon className="h-4 w-4" />}
         />
-        <div className="md:flex md:items-center md:justify-between">
-          {filters && (
-            <StatsGroup
-              filters={filters}
-              filter={filter}
-              setFilter={setFilter}
+        {/* tabs */}
+        <div className="flex h-16 w-full flex-row gap-10 rounded-lg bg-white px-10">
+          {filters.map((item, index) => (
+            <Tab
+              key={index}
+              {...item}
+              active={filter === item.value}
+              onClick={() => setFilter(item.value)}
             />
-          )}
+          ))}
         </div>
         {clientsData ? (
           <DataTable
