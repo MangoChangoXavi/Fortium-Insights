@@ -21,6 +21,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Client } from "~/components/template/forms/Client";
+import { type client } from "@prisma/client";
 
 const ITEMS_PER_PAGE = 5;
 export default function Clients() {
@@ -30,20 +31,22 @@ export default function Clients() {
   const ctx = api.useUtils();
 
   // use the `useMutation` hook to create a mutation
-  const { mutate: createClient } = api.clientRouter.create.useMutation({
-    onSuccess: () => {
-      toast({ title: "Ficha de cliente guardada correctamente!" });
-      ctx.onboard.getDataTable.invalidate().catch((err) => {
-        console.error(err);
-      });
-    },
-    onError: (err) => {
-      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
-      toast({
-        title: errorMessage ?? "Something went wrong. Please try again later.",
-      });
-    },
-  });
+  const { mutate: createClient, isLoading: isCreatingClient } =
+    api.clientRouter.create.useMutation({
+      onSuccess: () => {
+        toast({ title: "Ficha de cliente guardada correctamente!" });
+        ctx.clientRouter.getDataTable.invalidate().catch((err) => {
+          console.error(err);
+        });
+      },
+      onError: (err) => {
+        const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+        toast({
+          title:
+            errorMessage ?? "Something went wrong. Please try again later.",
+        });
+      },
+    });
 
   const [{ pageIndex, pageSize }, setPagination] =
     React.useState<PaginationState>({
@@ -71,19 +74,21 @@ export default function Clients() {
   );
   const { data: countData } = api.clientRouter.countStatus.useQuery();
 
-  const { mutate } = api.clientRouter.update.useMutation({
-    onSuccess: () => {
-      ctx.clientRouter.getDataTable.invalidate().catch((err) => {
-        console.error(err);
-      });
-    },
-    onError: (err) => {
-      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
-      toast({
-        title: errorMessage ?? "Something went wrong. Please try again later.",
-      });
-    },
-  });
+  const { mutate, isLoading: isChangingStatus } =
+    api.clientRouter.update.useMutation({
+      onSuccess: () => {
+        ctx.clientRouter.getDataTable.invalidate().catch((err) => {
+          console.error(err);
+        });
+      },
+      onError: (err) => {
+        const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+        toast({
+          title:
+            errorMessage ?? "Something went wrong. Please try again later.",
+        });
+      },
+    });
 
   const updateStatus = (clientId: string, status: string) => {
     mutate({
@@ -133,12 +138,51 @@ export default function Clients() {
     },
   ];
 
-  const handleClickNext = () => {
-    // setPagination((prev) => ({ ...prev, pageIndex: prev.pageIndex + 1 }));
+  // update position in the CRM
+  const handleForward = (client: client) => {
+    switch (filter) {
+      case "initial":
+        updateStatus(client.id, "contacted");
+        break;
+      case "contacted":
+        updateStatus(client.id, "proposal");
+        break;
+      case "proposal":
+        updateStatus(client.id, "contract");
+        break;
+      case "contract":
+        updateStatus(client.id, "completed");
+        break;
+      case "completed":
+        updateStatus(client.id, "completed");
+        break;
+      default:
+        break;
+    }
   };
-  const handleClickPrevious = () => {
-    // setPagination((prev) => ({ ...prev, pageIndex: prev.pageIndex - 1 }));
+  const handleBackward = (client: client) => {
+    switch (filter) {
+      case "initial":
+        updateStatus(client.id, "initial");
+        break;
+      case "contacted":
+        updateStatus(client.id, "initial");
+        break;
+      case "proposal":
+        updateStatus(client.id, "contacted");
+        break;
+      case "contract":
+        updateStatus(client.id, "proposal");
+        break;
+      case "completed":
+        updateStatus(client.id, "contract");
+        break;
+      default:
+        break;
+    }
   };
+
+  const isTableLoading = isLoading || isChangingStatus || isCreatingClient;
 
   return (
     <LayoutSigned>
@@ -157,10 +201,11 @@ export default function Clients() {
                 {...item}
                 active={filter === item.value}
                 onClick={() => setFilter(item.value)}
+                total={item.total}
               />
             ))}
           </div>
-          {isLoading ? (
+          {isTableLoading ? (
             <Loader />
           ) : (
             <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
@@ -173,8 +218,8 @@ export default function Clients() {
                   phone={client.phone ?? ""}
                   location={client.location}
                   linkedIn={client.linkedIn ?? ""}
-                  onClickNext={handleClickNext}
-                  onClickPrevious={handleClickPrevious}
+                  onClickNext={() => handleForward(client)}
+                  onClickPrevious={() => handleBackward(client)}
                 />
               ))}
               <DrawerTrigger asChild>
