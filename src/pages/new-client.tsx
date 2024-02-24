@@ -3,14 +3,17 @@ import Header from "~/features/landingPage/components/Header";
 import { api } from "~/utils/api";
 import { useToast } from "@/components/ui/use-toast";
 import { Client } from "~/components/template/forms/Client";
+import { useRouter } from "next/router";
 
 export default function NewClient() {
   const { toast } = useToast();
+  const router = useRouter();
 
   // use the `useMutation` hook to create a mutation
   const { mutate: createOnboard } = api.client.create.useMutation({
-    onSuccess: () => {
-      toast({ title: "Datos para nuevo proyecto enviados correctamente!" });
+    onSuccess: async () => {
+      toast({ title: "Ficha de cliente guardada correctamente!" });
+      await router.push("/");
     },
     onError: (err) => {
       const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];

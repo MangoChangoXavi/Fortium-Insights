@@ -5,8 +5,10 @@ import React from "react";
 
 import { UIDebouncer } from "~/components/system/ui/UIDebouncer";
 import {
+  BarChart,
   BoxIcon,
   DogIcon,
+  MinusIcon,
   PersonStandingIcon,
   PlusIcon,
   SearchIcon,
@@ -19,12 +21,42 @@ import { CategoryIcon, SellIcon } from "~/components/system/ui/Icons";
 import { Loader } from "~/components/system/layouts/Loader";
 import { Tab } from "~/components/system/ui/Tab";
 import { CustomerCard } from "~/components/system/ui/CustomerCard";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Client } from "~/components/template/forms/Client";
 
 const ITEMS_PER_PAGE = 5;
 export default function Clients() {
   const { toast } = useToast();
   const [filter, setFilter] = React.useState("initial");
   const [search, setSearch] = React.useState("");
+  const ctx = api.useUtils();
+
+  // use the `useMutation` hook to create a mutation
+  const { mutate: createClient } = api.client.create.useMutation({
+    onSuccess: () => {
+      toast({ title: "Ficha de cliente guardada correctamente!" });
+      ctx.client.getDataTable.invalidate().catch((err) => {
+        console.error(err);
+      });
+    },
+    onError: (err) => {
+      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+      toast({
+        title: errorMessage ?? "Something went wrong. Please try again later.",
+      });
+    },
+  });
 
   const [{ pageIndex, pageSize }, setPagination] =
     React.useState<PaginationState>({
@@ -52,7 +84,6 @@ export default function Clients() {
   );
   const { data: countData } = api.client.countStatus.useQuery();
 
-  const ctx = api.useUtils();
   const { mutate } = api.client.update.useMutation({
     onSuccess: () => {
       ctx.client.getDataTable.invalidate().catch((err) => {
@@ -124,52 +155,70 @@ export default function Clients() {
 
   return (
     <LayoutSigned>
-      <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
-        <UIDebouncer
-          value={search}
-          setValue={setSearch}
-          icon={<SearchIcon className="h-4 w-4" />}
-        />
-        {/* tabs */}
-        <div className="flex h-16 w-full flex-row gap-10 rounded-lg bg-white px-10">
-          {filters.map((item, index) => (
-            <Tab
-              key={index}
-              {...item}
-              active={filter === item.value}
-              onClick={() => setFilter(item.value)}
-            />
-          ))}
-        </div>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div className="grid grid-cols-4">
-            {data?.clients.map((client) => (
-              <CustomerCard
-                key={client.id}
-                name={client.name}
-                company={client.company}
-                role={client.role}
-                phone={client.phone ?? ""}
-                location={client.location}
-                linkedIn={client.linkedIn ?? ""}
-                onClickNext={handleClickNext}
-                onClickPrevious={handleClickPrevious}
+      <Drawer direction="right">
+        <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
+          <UIDebouncer
+            value={search}
+            setValue={setSearch}
+            icon={<SearchIcon className="h-4 w-4" />}
+          />
+          {/* tabs */}
+          <div className="flex h-16 w-full flex-row gap-10 rounded-lg bg-white px-10">
+            {filters.map((item, index) => (
+              <Tab
+                key={index}
+                {...item}
+                active={filter === item.value}
+                onClick={() => setFilter(item.value)}
               />
             ))}
-
-            <div className="h-[270px] w-[250px] cursor-pointer gap-4 rounded-2xl border border-zinc-500 transition duration-300 ease-in-out hover:scale-105">
-              <div className="inline-flex h-full w-full flex-col items-center justify-center">
-                <UserIcon className="relative mb-2 h-8 w-8" />
-                <div className="font-['Plus Jakarta Sans'] w-[108px] text-center text-base font-bold text-zinc-800">
-                  Nuevo Cliente
-                </div>
-              </div>
-            </div>
           </div>
-        )}
-      </section>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {data?.clients.map((client) => (
+                <CustomerCard
+                  key={client.id}
+                  name={client.name}
+                  company={client.company}
+                  role={client.role}
+                  phone={client.phone ?? ""}
+                  location={client.location}
+                  linkedIn={client.linkedIn ?? ""}
+                  onClickNext={handleClickNext}
+                  onClickPrevious={handleClickPrevious}
+                />
+              ))}
+              <DrawerTrigger asChild>
+                <button className="h-[270px] w-[250px] cursor-pointer gap-4 rounded-2xl border border-zinc-500 transition duration-300 ease-in-out hover:scale-105">
+                  <div className="inline-flex h-full w-full flex-col items-center justify-center">
+                    <UserIcon className="relative mb-2 h-8 w-8" />
+                    <div className="w-[108px] text-center text-base font-bold text-zinc-800">
+                      Nuevo Cliente
+                    </div>
+                  </div>
+                </button>
+              </DrawerTrigger>
+              <DrawerPortal>
+                <DrawerOverlay className="fixed inset-0 bg-black/40" />
+                <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-[500px] rounded-none">
+                  <DrawerHeader>
+                    <DrawerTitle>Nuevo Cliente</DrawerTitle>
+                    <DrawerDescription>
+                      En este apartado tienes que ingresar la ficha del nuevo
+                      cliente para comenzar a gestionarlo.
+                    </DrawerDescription>
+                  </DrawerHeader>
+                  <div className="px-6">
+                    <Client handleSubmit={createClient} />
+                  </div>
+                </DrawerContent>
+              </DrawerPortal>
+            </div>
+          )}
+        </section>
+      </Drawer>
     </LayoutSigned>
   );
 }

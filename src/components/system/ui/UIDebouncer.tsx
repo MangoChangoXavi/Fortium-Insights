@@ -45,7 +45,7 @@ export const UIDebouncer = ({
           onChange={handleInputChange}
         />
       </div>
-      <hr className="w-full border-darkGray bg-darkGray" />
+      <hr className="w-full border-zinc-400 bg-zinc-400" />
     </div>
     // <Input
     //   label="Buscar"
