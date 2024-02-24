@@ -269,6 +269,9 @@ export const clientRouter = createTRPCRouter({
               name: {
                 contains: input.search,
               },
+              company: {
+                contains: input.search,
+              },
             },
           ],
         };

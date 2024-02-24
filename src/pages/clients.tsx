@@ -197,7 +197,7 @@ export default function Clients() {
                       cliente para comenzar a gestionarlo.
                     </DrawerDescription>
                   </DrawerHeader>
-                  <div className="px-6">
+                  <div className="overflow-auto px-4">
                     <Client handleSubmit={createClient} />
                   </div>
                 </DrawerContent>
