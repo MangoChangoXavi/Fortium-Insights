@@ -7,13 +7,9 @@ import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
 import { UIDebouncer } from "~/components/system/ui/UIDebouncer";
-import { StarIcon, SearchIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
-import {
-  CategoryIcon,
-  CancelIcon,
-  SellIcon,
-} from "~/components/system/ui/Icons";
+import { CategoryIcon } from "~/components/system/ui/Icons";
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
 import { Loader } from "~/components/system/layouts/Loader";
 import { columns } from "~/components/template/columns/Onboards";
@@ -53,10 +49,7 @@ export default function Onboards() {
   const ctx = api.useUtils();
   const { mutate } = api.onboard.update.useMutation({
     onSuccess: () => {
-      ctx.onboard.readInfinite.invalidate().catch((err) => {
-        console.error(err);
-      });
-      ctx.onboard.countStatus.invalidate().catch((err) => {
+      ctx.onboard.getDataTable.invalidate().catch((err) => {
         console.error(err);
       });
     },

@@ -4,18 +4,7 @@ import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
 import { UIDebouncer } from "~/components/system/ui/UIDebouncer";
-import {
-  BarChart,
-  BoxIcon,
-  DogIcon,
-  MinusIcon,
-  PersonStandingIcon,
-  PlusIcon,
-  SearchIcon,
-  StarIcon,
-  TvIcon,
-  UserIcon,
-} from "lucide-react";
+import { BoxIcon, DogIcon, SearchIcon, StarIcon, UserIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import { CategoryIcon, SellIcon } from "~/components/system/ui/Icons";
 import { Loader } from "~/components/system/layouts/Loader";
@@ -23,10 +12,8 @@ import { Tab } from "~/components/system/ui/Tab";
 import { CustomerCard } from "~/components/system/ui/CustomerCard";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerPortal,
@@ -43,10 +30,10 @@ export default function Clients() {
   const ctx = api.useUtils();
 
   // use the `useMutation` hook to create a mutation
-  const { mutate: createClient } = api.client.create.useMutation({
+  const { mutate: createClient } = api.clientRouter.create.useMutation({
     onSuccess: () => {
       toast({ title: "Ficha de cliente guardada correctamente!" });
-      ctx.client.getDataTable.invalidate().catch((err) => {
+      ctx.onboard.getDataTable.invalidate().catch((err) => {
         console.error(err);
       });
     },
@@ -72,7 +59,7 @@ export default function Clients() {
     [pageIndex, pageSize],
   );
 
-  const { data, isLoading } = api.client.getDataTable.useQuery({
+  const { data, isLoading } = api.clientRouter.getDataTable.useQuery({
     limit: pageSize,
     skip: pageIndex * pageSize,
     status: filter,
@@ -82,11 +69,11 @@ export default function Clients() {
   const pageCount = Math.ceil(
     (data?.totalItemsCount ?? ITEMS_PER_PAGE) / ITEMS_PER_PAGE,
   );
-  const { data: countData } = api.client.countStatus.useQuery();
+  const { data: countData } = api.clientRouter.countStatus.useQuery();
 
-  const { mutate } = api.client.update.useMutation({
+  const { mutate } = api.clientRouter.update.useMutation({
     onSuccess: () => {
-      ctx.client.getDataTable.invalidate().catch((err) => {
+      ctx.clientRouter.getDataTable.invalidate().catch((err) => {
         console.error(err);
       });
     },

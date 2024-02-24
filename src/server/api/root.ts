@@ -11,7 +11,7 @@ import { proposalRouter } from "./routers/proposal";
 export const appRouter = createTRPCRouter({
   onboard: onboardRouter,
   user: userRouter,
-  client: clientRouter,
+  clientRouter: clientRouter,
   proposal: proposalRouter,
 });
 
