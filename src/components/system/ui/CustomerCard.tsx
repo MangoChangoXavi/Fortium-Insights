@@ -3,19 +3,6 @@ import { LinkedinIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-// model client {
-//     id          String    @id @default(cuid())
-//     name        String
-//     company     String
-//     role        String
-//     phone       String?
-//     location    String
-//     linkedIn    String?
-//     notes       String?
-//     status      String    @default("initial") // Initial, Contacted, Proposal, Contract, Completed
-//     nextMeeting DateTime? @default(now()) @map("next_meeting")
-//     createdAt   DateTime  @default(now()) @map("created_at")
-//   }
 export const CustomerCard = ({
   name,
   company,
@@ -23,6 +10,8 @@ export const CustomerCard = ({
   phone,
   location,
   linkedIn,
+  onClickPrevious,
+  onClickNext,
 }: {
   name: string;
   company: string;
@@ -30,9 +19,11 @@ export const CustomerCard = ({
   phone: string;
   location: string;
   linkedIn: string;
+  onClickPrevious: () => void;
+  onClickNext: () => void;
 }) => {
   return (
-    <div className="flex h-[250px] w-fit flex-col gap-6 rounded-2xl bg-white p-4">
+    <div className="flex h-[270px] w-[250px] flex-col gap-6 rounded-2xl bg-white p-4">
       <div className="flex flex-col gap-2">
         <p className="font-['Plus Jakarta Sans'] w-52 text-center text-base font-bold text-zinc-800">
           {name}
@@ -59,10 +50,18 @@ export const CustomerCard = ({
           {phone}
         </div>
         <div className="flex flex-row gap-2">
-          <Button className="h-8 w-8 rounded-full" variant="dark">
+          <Button
+            className="h-8 w-8 rounded-full"
+            variant="dark"
+            onClick={onClickPrevious}
+          >
             {"<"}
           </Button>
-          <Button className="h-8 w-8 rounded-full text-white" variant="dark">
+          <Button
+            className="h-8 w-8 rounded-full text-white"
+            variant="dark"
+            onClick={onClickNext}
+          >
             {">"}
           </Button>
         </div>

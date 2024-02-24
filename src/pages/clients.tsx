@@ -1,25 +1,23 @@
 import { api } from "~/utils/api";
-import {
-  DataTable,
-  type PaginationState,
-} from "@/components/layouts/data-table";
+import { type PaginationState } from "@/components/layouts/data-table";
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
 import { UIDebouncer } from "~/components/system/ui/UIDebouncer";
-import { BoxIcon, DogIcon, SearchIcon, StarIcon } from "lucide-react";
-import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import {
-  CancelIcon,
-  CategoryIcon,
-  SellIcon,
-} from "~/components/system/ui/Icons";
-import { StatsGroup } from "~/components/system/ui/StatsGroup";
+  BoxIcon,
+  DogIcon,
+  PersonStandingIcon,
+  PlusIcon,
+  SearchIcon,
+  StarIcon,
+  TvIcon,
+  UserIcon,
+} from "lucide-react";
+import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
+import { CategoryIcon, SellIcon } from "~/components/system/ui/Icons";
 import { Loader } from "~/components/system/layouts/Loader";
-import { columns } from "~/components/template/columns/clients";
-import { IconLeft } from "react-day-picker";
 import { Tab } from "~/components/system/ui/Tab";
-import { Button } from "@/components/ui/button";
 import { CustomerCard } from "~/components/system/ui/CustomerCard";
 
 const ITEMS_PER_PAGE = 5;
@@ -117,21 +115,12 @@ export default function Clients() {
     },
   ];
 
-  const clientsData = data?.clients.map((client) => {
-    return {
-      id: client.id,
-      name: client.name,
-      company: client.company,
-      role: client.role,
-      phone: client.phone,
-      location: client.location,
-      linkedIn: client.linkedIn,
-      notes: client.notes,
-      status: client.status,
-      nextMeeting: client.nextMeeting,
-      createdAt: client.createdAt,
-    };
-  });
+  const handleClickNext = () => {
+    // setPagination((prev) => ({ ...prev, pageIndex: prev.pageIndex + 1 }));
+  };
+  const handleClickPrevious = () => {
+    // setPagination((prev) => ({ ...prev, pageIndex: prev.pageIndex - 1 }));
+  };
 
   return (
     <LayoutSigned>
@@ -152,10 +141,11 @@ export default function Clients() {
             />
           ))}
         </div>
-        {isLoading && <Loader />}
-        {clientsData && clientsData.length > 0 ? (
+        {isLoading ? (
+          <Loader />
+        ) : (
           <div className="grid grid-cols-4">
-            {clientsData.map((client) => (
+            {data?.clients.map((client) => (
               <CustomerCard
                 key={client.id}
                 name={client.name}
@@ -164,12 +154,19 @@ export default function Clients() {
                 phone={client.phone ?? ""}
                 location={client.location}
                 linkedIn={client.linkedIn ?? ""}
+                onClickNext={handleClickNext}
+                onClickPrevious={handleClickPrevious}
               />
             ))}
-          </div>
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            No hay clientes
+
+            <div className="h-[270px] w-[250px] cursor-pointer gap-4 rounded-2xl border border-zinc-500 transition duration-300 ease-in-out hover:scale-105">
+              <div className="inline-flex h-full w-full flex-col items-center justify-center">
+                <UserIcon className="relative mb-2 h-8 w-8" />
+                <div className="font-['Plus Jakarta Sans'] w-[108px] text-center text-base font-bold text-zinc-800">
+                  Nuevo Cliente
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </section>
