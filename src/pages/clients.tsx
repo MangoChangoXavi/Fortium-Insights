@@ -19,11 +19,13 @@ import { Loader } from "~/components/system/layouts/Loader";
 import { columns } from "~/components/template/columns/clients";
 import { IconLeft } from "react-day-picker";
 import { Tab } from "~/components/system/ui/Tab";
+import { Button } from "@/components/ui/button";
+import { CustomerCard } from "~/components/system/ui/CustomerCard";
 
 const ITEMS_PER_PAGE = 5;
 export default function Clients() {
   const { toast } = useToast();
-  const [filter, setFilter] = React.useState("");
+  const [filter, setFilter] = React.useState("initial");
   const [search, setSearch] = React.useState("");
 
   const [{ pageIndex, pageSize }, setPagination] =
@@ -40,7 +42,7 @@ export default function Clients() {
     [pageIndex, pageSize],
   );
 
-  const { data } = api.client.getDataTable.useQuery({
+  const { data, isLoading } = api.client.getDataTable.useQuery({
     limit: pageSize,
     skip: pageIndex * pageSize,
     status: filter,
@@ -55,10 +57,7 @@ export default function Clients() {
   const ctx = api.useUtils();
   const { mutate } = api.client.update.useMutation({
     onSuccess: () => {
-      ctx.client.readInfinite.invalidate().catch((err) => {
-        console.error(err);
-      });
-      ctx.client.countStatus.invalidate().catch((err) => {
+      ctx.client.getDataTable.invalidate().catch((err) => {
         console.error(err);
       });
     },
@@ -80,7 +79,7 @@ export default function Clients() {
   const filters = [
     {
       label: "Inicial",
-      value: "",
+      value: "initial",
       icon: (
         <CategoryIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />
       ),
@@ -89,14 +88,14 @@ export default function Clients() {
     },
     {
       label: "Contactado",
-      value: "client",
+      value: "contacted",
       icon: <BoxIcon className="h-6 w-6  stroke-[#2c2c2c]" />,
       total: countData?.find((item) => item.status === "client")?.count ?? 0,
       background: "bg-[#dc5c5c]",
     },
     {
       label: "Propuesta",
-      value: "salesperson",
+      value: "proposal",
       icon: <SellIcon className="h-5 w-5  stroke-[#2c2c2c]" />,
       total:
         countData?.find((item) => item.status === "salesperson")?.count ?? 0,
@@ -104,7 +103,7 @@ export default function Clients() {
     },
     {
       label: "Contrato",
-      value: "admin",
+      value: "contract",
       icon: <StarIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
       total: countData?.find((item) => item.status === "admin")?.count ?? 0,
       background: "bg-[#DCF691]",
@@ -153,18 +152,24 @@ export default function Clients() {
             />
           ))}
         </div>
-        {clientsData ? (
-          <DataTable
-            onPaginationChange={setPagination}
-            pagination={pagination}
-            pageCount={pageCount}
-            columns={columns}
-            title="Clientes"
-            data={clientsData}
-          />
+        {isLoading && <Loader />}
+        {clientsData && clientsData.length > 0 ? (
+          <div className="grid grid-cols-4">
+            {clientsData.map((client) => (
+              <CustomerCard
+                key={client.id}
+                name={client.name}
+                company={client.company}
+                role={client.role}
+                phone={client.phone ?? ""}
+                location={client.location}
+                linkedIn={client.linkedIn ?? ""}
+              />
+            ))}
+          </div>
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <Loader />
+            No hay clientes
           </div>
         )}
       </section>

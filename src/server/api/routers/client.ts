@@ -273,7 +273,7 @@ export const clientRouter = createTRPCRouter({
           ],
         };
       }
-      const totalItemsCount = await ctx.db.user.count({
+      const totalItemsCount = await ctx.db.client.count({
         where,
       });
       const clients = await ctx.db.client.findMany({
