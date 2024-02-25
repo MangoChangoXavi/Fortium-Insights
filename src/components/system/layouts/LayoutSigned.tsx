@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
 import { UsersIcon } from "../ui/Icons";
 import { Sidebar } from "./Sidebar";
-import { AxeIcon, BugIcon, CatIcon, TvIcon } from "lucide-react";
+import { AxeIcon, BugIcon, CatIcon, MicIcon, TvIcon } from "lucide-react";
 const menuItems = [
   {
     name: "On Boards",
@@ -22,6 +22,12 @@ const menuItems = [
     name: "Clientes",
     icon: <TvIcon className="h-5 w-5" />,
     link: "/clients",
+    permissions: [],
+  },
+  {
+    name: "ACM",
+    icon: <MicIcon className="h-5 w-5" />,
+    link: "/acms",
     permissions: [],
   },
   {

@@ -150,7 +150,7 @@ export default function Users() {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <Loader />
+            No hay datos...
           </div>
         )}
       </section>

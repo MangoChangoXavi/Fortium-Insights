@@ -38,6 +38,9 @@ export default function Clients() {
         ctx.clientRouter.getDataTable.invalidate().catch((err) => {
           console.error(err);
         });
+        ctx.clientRouter.countStatus.invalidate().catch((err) => {
+          console.error(err);
+        });
       },
       onError: (err) => {
         const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
@@ -62,12 +65,13 @@ export default function Clients() {
     [pageIndex, pageSize],
   );
 
-  const { data, isLoading } = api.clientRouter.getDataTable.useQuery({
-    limit: pageSize,
-    skip: pageIndex * pageSize,
-    status: filter,
-    search,
-  });
+  const { data, isLoading: isLoadingTable } =
+    api.clientRouter.getDataTable.useQuery({
+      limit: pageSize,
+      skip: pageIndex * pageSize,
+      status: filter,
+      search,
+    });
 
   const pageCount = Math.ceil(
     (data?.totalItemsCount ?? ITEMS_PER_PAGE) / ITEMS_PER_PAGE,
@@ -78,6 +82,9 @@ export default function Clients() {
     api.clientRouter.update.useMutation({
       onSuccess: () => {
         ctx.clientRouter.getDataTable.invalidate().catch((err) => {
+          console.error(err);
+        });
+        ctx.clientRouter.countStatus.invalidate().catch((err) => {
           console.error(err);
         });
       },
@@ -111,29 +118,28 @@ export default function Clients() {
       label: "Contactado",
       value: "contacted",
       icon: <BoxIcon className="h-6 w-6  stroke-[#2c2c2c]" />,
-      total: countData?.find((item) => item.status === "client")?.count ?? 0,
+      total: countData?.find((item) => item.status === "contacted")?.count ?? 0,
       background: "bg-[#dc5c5c]",
     },
     {
       label: "Propuesta",
       value: "proposal",
       icon: <SellIcon className="h-5 w-5  stroke-[#2c2c2c]" />,
-      total:
-        countData?.find((item) => item.status === "salesperson")?.count ?? 0,
+      total: countData?.find((item) => item.status === "proposal")?.count ?? 0,
       background: "bg-[#61dc7d]",
     },
     {
       label: "Contrato",
       value: "contract",
       icon: <StarIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
-      total: countData?.find((item) => item.status === "admin")?.count ?? 0,
+      total: countData?.find((item) => item.status === "contract")?.count ?? 0,
       background: "bg-[#DCF691]",
     },
     {
       label: "Completado",
       value: "completed",
       icon: <DogIcon className="h-5 w-5 stroke-[#2c2c2c]" />,
-      total: countData?.find((item) => item.status === "admin")?.count ?? 0,
+      total: countData?.find((item) => item.status === "completed")?.count ?? 0,
       background: "bg-[#DCF691]",
     },
   ];
@@ -182,7 +188,7 @@ export default function Clients() {
     }
   };
 
-  const isTableLoading = isLoading || isChangingStatus || isCreatingClient;
+  const isLoading = isLoadingTable || isChangingStatus || isCreatingClient;
 
   return (
     <LayoutSigned>
@@ -205,7 +211,7 @@ export default function Clients() {
               />
             ))}
           </div>
-          {isTableLoading ? (
+          {isLoading ? (
             <Loader />
           ) : (
             <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">

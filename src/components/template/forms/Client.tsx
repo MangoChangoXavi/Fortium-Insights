@@ -230,9 +230,11 @@ export function Client({ handleSubmit }: PropsI) {
             )}
           />
         </div>
-        <Button type="submit" variant={"primary"}>
-          Enviar &nbsp; <RightArrowIcon />
-        </Button>
+        <div className="flex w-full flex-row items-center justify-center">
+          <Button type="submit" variant={"primary"}>
+            Enviar &nbsp; <RightArrowIcon />
+          </Button>
+        </div>
       </form>
     </Form>
   );

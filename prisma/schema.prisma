@@ -36,6 +36,17 @@ model client {
   nextMeeting DateTime? @default(now()) @map("next_meeting")
   createdAt   DateTime  @default(now()) @map("created_at")
 }
+model acm {
+  id          String    @id @default(cuid())
+  address String
+  operationType String // Buy, Rent
+  buildingType String // Apartment, House, Office, Warehouse
+  numberOfRoms Int
+  numberOfBathroms Int
+  numberOfParkingLots Int
+  totalArea Int
+  createdAt   DateTime  @default(now()) @map("created_at")
+}
 
 model proposalService {
   id          String   @id @default(cuid())

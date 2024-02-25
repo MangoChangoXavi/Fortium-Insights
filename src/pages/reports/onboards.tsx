@@ -11,7 +11,6 @@ import { SearchIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import { CategoryIcon } from "~/components/system/ui/Icons";
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
-import { Loader } from "~/components/system/layouts/Loader";
 import { columns } from "~/components/template/columns/Onboards";
 
 const ITEMS_PER_PAGE = 5;
@@ -142,7 +141,7 @@ export default function Onboards() {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <Loader />
+            No hay datos...
           </div>
         )}
       </section>
