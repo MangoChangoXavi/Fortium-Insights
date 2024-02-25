@@ -36,6 +36,38 @@ model client {
   nextMeeting DateTime? @default(now()) @map("next_meeting")
   createdAt   DateTime  @default(now()) @map("created_at")
 }
+
+
+model acmResultProperty {
+  id          String    @id @default(cuid())
+  address String
+  operationType String // Buy, Rent
+  buildingType String // Apartment, House, Office, Warehouse
+  numberOfRoms Int
+  numberOfBathroms Int
+  numberOfParkingLots Int
+  totalArea Int
+  price Decimal
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  
+  acm acm @relation(fields: [acmId], references: [id])
+  acmId String
+}
+
+model acmResultGraph {
+  id          String    @id @default(cuid())
+  location String
+  minValue Decimal
+  maxValue Decimal
+  mean Decimal
+  count Int
+  std Decimal?
+
+  acm acm @relation(fields: [acmId], references: [id])
+  acmId String
+}
+
 model acm {
   id          String    @id @default(cuid())
   address String
@@ -46,6 +78,9 @@ model acm {
   numberOfParkingLots Int
   totalArea Int
   createdAt   DateTime  @default(now()) @map("created_at")
+
+  acmResultGraph acmResultGraph[]
+  acmResultProperty acmResultProperty[]
 }
 
 model proposalService {

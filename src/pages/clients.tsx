@@ -240,7 +240,7 @@ export default function Clients() {
               </DrawerTrigger>
               <DrawerPortal>
                 <DrawerOverlay className="fixed inset-0 bg-black/40" />
-                <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-[500px] rounded-none">
+                <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full rounded-none sm:w-[35%]">
                   <DrawerHeader>
                     <DrawerTitle>Nuevo Cliente</DrawerTitle>
                     <DrawerDescription>
