@@ -28,6 +28,13 @@ import {
   RulerIcon,
   TagIcon,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const FormSchema = z.object({
   location: z
@@ -45,26 +52,50 @@ const FormSchema = z.object({
     .max(5000, {
       message: "El tipo de inmueble no puede ser mayor a 5000 caracteres",
     }),
-  numberOfRooms: z
-    .string({ required_error: "El numero de cuartos es requerido" })
-    .max(5000, {
-      message: "El numero de cuartos no puede ser mayor a 5000 caracteres",
-    }),
-  numberOfBathrooms: z
-    .string({ required_error: "El numero de baños es requerido" })
-    .max(5000, {
-      message: "El numero de baños no puede ser mayor a 5000 caracteres",
-    }),
-  numberOfParkingLots: z
-    .string({ required_error: "El numero de parqueos es requerido" })
-    .max(5000, {
-      message: "El numero de parqueos no puede ser mayor a 5000 caracteres",
-    }),
-  totalArea: z
-    .string({ required_error: "El area total es requerido" })
-    .max(5000, {
-      message: "El area total no puede ser mayor a 5000 caracteres",
-    }),
+  numberOfRooms: z.preprocess(
+    // Use this for numbers
+    (args) => (args === "" ? undefined : args),
+    z.coerce
+      .number({
+        required_error: "El numero de cuartos es requerido",
+        invalid_type_error: "El numero de cuartos no tiene que ir vacio",
+      })
+      .positive("El numero de cuartos tiene que ser positiva")
+      .max(99, "El numero de cuartos no puede ser mayor a 99"),
+  ),
+  numberOfBathrooms: z.preprocess(
+    // Use this for numbers
+    (args) => (args === "" ? undefined : args),
+    z.coerce
+      .number({
+        required_error: "El numero de baños es requerido",
+        invalid_type_error: "El numero de baños no tiene que ir vacio",
+      })
+      .positive("El numero de baños tiene que ser positiva")
+      .max(99, "El numero de baños no puede ser mayor a 99"),
+  ),
+  numberOfParkingLots: z.preprocess(
+    // Use this for numbers
+    (args) => (args === "" ? undefined : args),
+    z.coerce
+      .number({
+        required_error: "El numero de parqueos es requerido",
+        invalid_type_error: "El numero de parqueos no tiene que ir vacio",
+      })
+      .positive("El numero de parqueos tiene que ser positiva")
+      .max(999, "El numero de parqueos no puede ser mayor a 999"),
+  ),
+  totalArea: z.preprocess(
+    // Use this for numbers
+    (args) => (args === "" ? undefined : args),
+    z.coerce
+      .number({
+        required_error: "El area total es requerido",
+        invalid_type_error: "El area total no tiene que ir vacio",
+      })
+      .positive("El area total tiene que ser positiva")
+      .max(9999, "El area total no puede ser mayor a 9999"),
+  ),
 });
 
 interface PropsI {
@@ -127,7 +158,20 @@ export function ACMForm({ handleSubmit }: PropsI) {
                     <TagIcon className="h-4 w-4" /> Tipo de operacion
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona un tipo de operacion" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Soltero/a">Venta</SelectItem>
+                        <SelectItem value="Casado/a">Renta</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -144,7 +188,20 @@ export function ACMForm({ handleSubmit }: PropsI) {
                     <Building className="h-4 w-4" /> Tipo de inmueble
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona un tipo de inmueble" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Soltero/a">Apartamento</SelectItem>
+                        <SelectItem value="Casado/a">Casa</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -159,7 +216,7 @@ export function ACMForm({ handleSubmit }: PropsI) {
                     <BedIcon className="h-4 w-4" /> Numero de cuartos
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="number" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -176,7 +233,7 @@ export function ACMForm({ handleSubmit }: PropsI) {
                     <BathIcon className="h-4 w-4" /> Numero de baños
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="number" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -191,7 +248,7 @@ export function ACMForm({ handleSubmit }: PropsI) {
                     <CarIcon className="h-4 w-4" /> Numero de parqueos
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="number" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -208,7 +265,7 @@ export function ACMForm({ handleSubmit }: PropsI) {
                     <RulerIcon className="h-4 w-4" /> Area total
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="number" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
