@@ -78,6 +78,7 @@ model acm {
   numberOfParkingLots Int @default(0)
   totalArea Int @default(0)
   createdAt   DateTime  @default(now()) @map("created_at")
+  expectedPrice Decimal @default(0)
 
   acmResultGraph acmResultGraph[]
   acmResultProperty acmResultProperty[]

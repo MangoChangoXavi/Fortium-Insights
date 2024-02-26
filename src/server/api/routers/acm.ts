@@ -295,4 +295,25 @@ export const acmRouter = createTRPCRouter({
         totalItemsCount,
       };
     }),
+
+  // mutation to the route /result to update the result
+  updateResult: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        expectedPrice: z.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const acm = await ctx.db.acm.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          expectedPrice: input.expectedPrice,
+        },
+      });
+
+      return acm;
+    }),
 });
