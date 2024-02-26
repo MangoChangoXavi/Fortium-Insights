@@ -11,9 +11,6 @@ import {
   ClockIcon,
   EyeIcon,
   LocateIcon,
-  MapIcon,
-  MoreHorizontal,
-  PaperclipIcon,
   PrinterIcon,
   RulerIcon,
   SendIcon,
@@ -28,7 +25,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Client } from "../forms/Client";
 import Image from "next/image";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -140,7 +136,7 @@ export const columns: ColumnDef<acm>[] = [
     cell: ({ row }) => {
       const acm = row.original;
       return (
-        <Drawer direction="right">
+        <>
           <div className="flex flex-row gap-2">
             <DrawerTrigger>
               <Button variant="default" className="h-8 w-8 p-0">
@@ -225,7 +221,7 @@ export const columns: ColumnDef<acm>[] = [
               <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
             </DrawerContent>
           </DrawerPortal>
-        </Drawer>
+        </>
       );
     },
   },

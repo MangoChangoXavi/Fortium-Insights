@@ -27,6 +27,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ACMForm } from "~/components/template/forms/ACM";
+import { Drawer } from "@/components/ui/drawer";
 
 const ITEMS_PER_PAGE = 5;
 export default function ACMs() {
@@ -173,19 +174,21 @@ export default function ACMs() {
             </DialogTrigger>
           </Dialog>
         </div>
-        {data?.acms.length ? (
-          <DataTable
-            onPaginationChange={setPagination}
-            pagination={pagination}
-            pageCount={pageCount}
-            columns={columns}
-            data={data?.acms ?? []}
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            No hay datos...
-          </div>
-        )}
+        <Drawer direction="right">
+          {data?.acms.length ? (
+            <DataTable
+              onPaginationChange={setPagination}
+              pagination={pagination}
+              pageCount={pageCount}
+              columns={columns}
+              data={data?.acms ?? []}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              No hay datos...
+            </div>
+          )}
+        </Drawer>
       </section>
     </LayoutSigned>
   );
