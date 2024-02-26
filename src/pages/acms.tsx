@@ -83,10 +83,15 @@ export default function ACMs() {
   // const { data: countData } = api.acm.countStatus.useQuery();
 
   const ctx = api.useUtils();
-  const { mutate } = api.acm.update.useMutation({
+  const { mutate } = api.acm.create.useMutation({
     onSuccess: () => {
       ctx.acm.getDataTable.invalidate().catch((err) => {
         console.error(err);
+      });
+      toast({
+        title: "Creado con exito!",
+        description:
+          "Puede que demore unos minutos en completarse el resultado de la tasacion.",
       });
     },
     onError: (err) => {
@@ -114,10 +119,7 @@ export default function ACMs() {
       body: JSON.stringify(data),
     });
     if (response.status === 200) {
-      const res = await response.json();
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      console.log(res.body);
-      // return res;
+      mutate(data);
     } else {
       const error = await response.text();
       toast({
@@ -125,7 +127,6 @@ export default function ACMs() {
         description: error,
       });
     }
-    // mutate({ id, data });
   };
 
   const filters = [
@@ -160,10 +161,10 @@ export default function ACMs() {
     },
   ];
   const graphData = {
-    labels: ["Red", "Blue", "Yellow"],
+    labels: ["90,000.00 a 120,000.00", "121,000 a 140,0000", "+140,000.00"],
     datasets: [
       {
-        label: "My First Dataset",
+        label: "Distribucion de precios",
         data: [300, 50, 100],
         backgroundColor: [
           "rgb(255, 99, 132)",
@@ -192,6 +193,11 @@ export default function ACMs() {
     },
   }));
 
+  const acmDataResult = data?.acms.map((acm) => ({
+    ...acm,
+    link: `/acms/${acm.id}`,
+    price: 2000,
+  }));
   return (
     <LayoutSigned>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
@@ -244,7 +250,7 @@ export default function ACMs() {
           {selectedAcm && (
             <DrawerPortal>
               <DrawerOverlay className="fixed inset-0 bg-black/40" />
-              <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-[40%] rounded-none">
+              <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full rounded-none md:w-[60%] xl:w-[40%]">
                 <DrawerHeader>
                   <DrawerTitle>Resultado de la tasacion</DrawerTitle>
                   <DrawerDescription>
@@ -295,7 +301,7 @@ export default function ACMs() {
                       width={50}
                       height={50}
                     />
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col">
                       {selectedAcm.operationType === "rent"
                         ? "Arriendo"
                         : "Venta"}
@@ -314,13 +320,16 @@ export default function ACMs() {
                   <Doughnut data={graphData} />
                 </div>
                 <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
-                <DataTable
-                  columns={columnsResult}
-                  data={data?.acms ?? []}
-                  pagination={pagination}
-                  onPaginationChange={setPagination}
-                  pageCount={pageCount}
-                />
+                <div className="flex flex-col gap-2">
+                  <span className="mx-4">Propiedades Similares</span>
+                  <DataTable
+                    columns={columnsResult}
+                    data={acmDataResult ?? []}
+                    pagination={pagination}
+                    onPaginationChange={setPagination}
+                    pageCount={pageCount}
+                  />
+                </div>
               </DrawerContent>
             </DrawerPortal>
           )}
