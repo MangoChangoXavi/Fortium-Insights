@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "../ui/button";
 import { DataTablePagination } from "./data-table-pagination";
 
 export type PaginationState = {

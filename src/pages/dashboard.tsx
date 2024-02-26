@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import React from "react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
-import { Proposal } from "~/components/template/forms/ProposalBasic";
 import { ProposalContainer } from "~/components/template/layouts/ProposalContainer";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 
