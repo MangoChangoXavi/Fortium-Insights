@@ -47,7 +47,6 @@ import {
 import { Doughnut } from "react-chartjs-2";
 import { type acm } from "@prisma/client";
 import Image from "next/image";
-import { TableDashboard } from "~/components/system/dashboard/TableDashboard";
 
 const ITEMS_PER_PAGE = 5;
 export default function ACMs() {
@@ -101,33 +100,6 @@ export default function ACMs() {
       });
     },
   });
-
-  const handleSubmit = async (data: {
-    address: string;
-    operationType: string;
-    buildingType: string;
-    numberOfRooms: number;
-    numberOfBathrooms: number;
-    numberOfParkingLots: number;
-    totalArea: number;
-  }) => {
-    const response = await fetch("/api/acm/route", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.status === 200) {
-      mutate(data);
-    } else {
-      const error = await response.text();
-      toast({
-        title: "Ha ocurrido un error",
-        description: error,
-      });
-    }
-  };
 
   const filters = [
     {
@@ -223,7 +195,7 @@ export default function ACMs() {
             <DialogPortal>
               <DialogTitle>Crear Analisis</DialogTitle>
               <DialogContent>
-                <ACMForm handleSubmit={handleSubmit} />
+                <ACMForm handleSubmit={mutate} />
               </DialogContent>
             </DialogPortal>
             <DialogTrigger asChild>

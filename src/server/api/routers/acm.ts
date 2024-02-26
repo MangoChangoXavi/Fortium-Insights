@@ -20,19 +20,47 @@ export const acmRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const data = {
+        address: input.address,
+        operationType: input.operationType,
+        buildingType: input.buildingType,
+        numberOfRooms: input.numberOfRooms,
+        numberOfBathrooms: input.numberOfBathrooms,
+        numberOfParkingLots: input.numberOfParkingLots,
+        totalArea: input.totalArea,
+      };
+
       const acm = await ctx.db.acm.create({
-        data: {
-          address: input.address,
-          operationType: input.operationType,
-          buildingType: input.buildingType,
-          numberOfRooms: input.numberOfRooms,
-          numberOfBathrooms: input.numberOfBathrooms,
-          numberOfParkingLots: input.numberOfParkingLots,
-          totalArea: input.totalArea,
-        },
+        data,
       });
 
-      return acm;
+      const response = await fetch("https://td-flask-scrapper.vercel.app/acm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.status === 200) {
+        const responseJson = await response.json();
+        await ctx.db.acm.update({
+          where: {
+            id: acm.id,
+          },
+          data: {
+            expectedPrice: responseJson.expectedPrice as unknown as string,
+          },
+        });
+        return acm;
+      } else {
+        await ctx.db.acm.delete({
+          where: {
+            id: acm.id,
+          },
+        });
+        throw new Error("Error while creating the ACM");
+      }
     }),
 
   countInfinite: protectedProcedure
@@ -313,7 +341,6 @@ export const acmRouter = createTRPCRouter({
           expectedPrice: input.expectedPrice,
         },
       });
-
       return acm;
     }),
 });
