@@ -43,8 +43,8 @@ model acmResultProperty {
   address String
   operationType String // Buy, Rent
   buildingType String // Apartment, House, Office, Warehouse
-  numberOfRoms Int
-  numberOfBathroms Int
+  numberOfRooms Int
+  numberOfBathrooms Int
   numberOfParkingLots Int
   totalArea Int
   price Decimal
@@ -73,10 +73,10 @@ model acm {
   address String
   operationType String // Buy, Rent
   buildingType String // Apartment, House, Office, Warehouse
-  numberOfRoms Int
-  numberOfBathroms Int
-  numberOfParkingLots Int
-  totalArea Int
+  numberOfRooms Int @default(0)
+  numberOfBathrooms Int @default(0)
+  numberOfParkingLots Int @default(0)
+  totalArea Int @default(0)
   createdAt   DateTime  @default(now()) @map("created_at")
 
   acmResultGraph acmResultGraph[]

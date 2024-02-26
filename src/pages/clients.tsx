@@ -21,7 +21,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Client } from "~/components/template/forms/Client";
-import { type client } from "@prisma/client";
+import { acm, type client } from "@prisma/client";
 
 const ITEMS_PER_PAGE = 5;
 export default function Clients() {

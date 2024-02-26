@@ -37,11 +37,9 @@ import {
 } from "@/components/ui/select";
 
 const FormSchema = z.object({
-  location: z
-    .string({ required_error: "La ubicacion es requerida" })
-    .max(5000, {
-      message: "La ubicacion no pueden ser mayor a 5000 caracteres",
-    }),
+  address: z.string({ required_error: "La ubicacion es requerida" }).max(5000, {
+    message: "La ubicacion no pueden ser mayor a 5000 caracteres",
+  }),
   operationType: z
     .string({ required_error: "El tipo de operacion es requerida" })
     .max(5000, {
@@ -103,20 +101,16 @@ interface PropsI {
 }
 
 export function ACMForm({ handleSubmit }: PropsI) {
-  const router = useRouter();
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  const submitFnc = async (data: z.infer<typeof FormSchema>) => {
-    handleSubmit(data);
-    await router.push("/");
-  };
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitFnc)} className="my-10 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="my-10 space-y-6"
+      >
         {/* title and subtitle */}
         <div className="flex flex-col gap-[16px] ">
           {/* title */}
@@ -136,7 +130,7 @@ export function ACMForm({ handleSubmit }: PropsI) {
           <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="location"
+              name="address"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex flex-row gap-2">

@@ -13,8 +13,8 @@ export const acmRouter = createTRPCRouter({
         address: z.string(),
         operationType: z.string(),
         buildingType: z.string(),
-        numberOfRoms: z.number(),
-        numberOfBathroms: z.number(),
+        numberOfRooms: z.number(),
+        numberOfBathrooms: z.number(),
         numberOfParkingLots: z.number(),
         totalArea: z.number(),
       }),
@@ -25,8 +25,8 @@ export const acmRouter = createTRPCRouter({
           address: input.address,
           operationType: input.operationType,
           buildingType: input.buildingType,
-          numberOfRoms: input.numberOfRoms,
-          numberOfBathroms: input.numberOfBathroms,
+          numberOfRooms: input.numberOfRooms,
+          numberOfBathrooms: input.numberOfBathrooms,
           numberOfParkingLots: input.numberOfParkingLots,
           totalArea: input.totalArea,
         },
@@ -217,8 +217,8 @@ export const acmRouter = createTRPCRouter({
         address: z.string(),
         operationType: z.string(),
         buildingType: z.string(),
-        numberOfRoms: z.number(),
-        numberOfBathroms: z.number(),
+        numberOfRooms: z.number(),
+        numberOfBathrooms: z.number(),
         numberOfParkingLots: z.number(),
         totalArea: z.number(),
       }),
@@ -232,8 +232,8 @@ export const acmRouter = createTRPCRouter({
           address: input.address,
           operationType: input.operationType,
           buildingType: input.buildingType,
-          numberOfRoms: input.numberOfRoms,
-          numberOfBathroms: input.numberOfBathroms,
+          numberOfRooms: input.numberOfRooms,
+          numberOfBathrooms: input.numberOfBathrooms,
           numberOfParkingLots: input.numberOfParkingLots,
           totalArea: input.totalArea,
         },
@@ -266,10 +266,13 @@ export const acmRouter = createTRPCRouter({
           ...where,
           OR: [
             {
-              name: {
+              address: {
                 contains: input.search,
               },
-              company: {
+              operationType: {
+                contains: input.search,
+              },
+              buildingType: {
                 contains: input.search,
               },
             },

@@ -75,6 +75,37 @@ export default function ACMs() {
     },
   });
 
+  const handleSubmit = async (data: {
+    address: string;
+    operationType: string;
+    buildingType: string;
+    numberOfRooms: number;
+    numberOfBathrooms: number;
+    numberOfParkingLots: number;
+    totalArea: number;
+  }) => {
+    const response = await fetch("/api/acm/route", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.status === 200) {
+      const res = await response.json();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      console.log(res.body);
+      // return res;
+    } else {
+      const error = await response.text();
+      toast({
+        title: "Ha ocurrido un error",
+        description: error,
+      });
+    }
+    // mutate({ id, data });
+  };
+
   const filters = [
     {
       label: "Ultimo Mes",
@@ -132,7 +163,7 @@ export default function ACMs() {
             <DialogPortal>
               <DialogTitle>Crear Analisis</DialogTitle>
               <DialogContent>
-                <ACMForm handleSubmit={() => {}} />
+                <ACMForm handleSubmit={handleSubmit} />
               </DialogContent>
             </DialogPortal>
             <DialogTrigger asChild>

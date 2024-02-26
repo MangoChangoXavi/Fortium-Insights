@@ -101,18 +101,6 @@ export default function Onboards() {
     // },
   ];
 
-  const onboardsData = data?.onboards.map((onboard) => {
-    return {
-      id: onboard.id,
-      links: onboard.links,
-      intro: onboard.intro,
-      services: onboard.services,
-      problems: onboard.problems,
-      success: onboard.success,
-      budget: onboard.budget,
-    };
-  });
-
   return (
     <LayoutSigned>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
@@ -130,14 +118,14 @@ export default function Onboards() {
             />
           )}
         </div>
-        {onboardsData ? (
+        {data?.onboards && data.onboards.length > 0 ? (
           <DataTable
             onPaginationChange={setPagination}
             pagination={pagination}
             pageCount={pageCount}
             columns={columns}
             title="On Boards"
-            data={onboardsData}
+            data={data?.onboards}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
