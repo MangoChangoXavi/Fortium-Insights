@@ -47,6 +47,7 @@ import {
 import { Doughnut } from "react-chartjs-2";
 import { type acm } from "@prisma/client";
 import Image from "next/image";
+import { Loader } from "~/components/system/layouts/Loader";
 
 const ITEMS_PER_PAGE = 5;
 export default function ACMs() {
@@ -82,7 +83,14 @@ export default function ACMs() {
   // const { data: countData } = api.acm.countStatus.useQuery();
 
   const ctx = api.useUtils();
-  const { mutate } = api.acm.create.useMutation({
+  const { mutate, isLoading } = api.acm.create.useMutation({
+    onSettled: () => {
+      toast({
+        title: "Analizis iniciado",
+        description:
+          "Puede que demore unos minutos en completarse el resultado de la tasacion.",
+      });
+    },
     onSuccess: () => {
       ctx.acm.getDataTable.invalidate().catch((err) => {
         console.error(err);
@@ -96,7 +104,9 @@ export default function ACMs() {
     onError: (err) => {
       const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
       toast({
-        title: errorMessage ?? "Something went wrong. Please try again later.",
+        title:
+          errorMessage ??
+          "Ocurrio un problema al crear el analisis, ya se esta trabajando en ello.",
       });
     },
   });
@@ -195,7 +205,13 @@ export default function ACMs() {
             <DialogPortal>
               <DialogTitle>Crear Analisis</DialogTitle>
               <DialogContent>
-                <ACMForm handleSubmit={mutate} />
+                {isLoading ? (
+                  <div className="flex w-full flex-row items-center justify-center">
+                    <Loader />
+                  </div>
+                ) : (
+                  <ACMForm handleSubmit={mutate} />
+                )}
               </DialogContent>
             </DialogPortal>
             <DialogTrigger asChild>
