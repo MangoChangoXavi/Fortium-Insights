@@ -59,6 +59,7 @@ export const acmRouter = createTRPCRouter({
             id: acm.id,
           },
         });
+        console.error(await response.text());
         throw new Error("Error while creating the ACM");
       }
     }),

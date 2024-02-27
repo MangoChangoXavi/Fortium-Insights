@@ -180,6 +180,9 @@ export default function ACMs() {
     link: `/acms/${acm.id}`,
     price: 2000,
   }));
+
+  const resultIsComplete =
+    selectedAcm && (selectedAcm?.expectedPrice as unknown as number) > 0;
   return (
     <LayoutSigned>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
@@ -235,92 +238,99 @@ export default function ACMs() {
               No hay datos...
             </div>
           )}
-          {selectedAcm && (
-            <DrawerPortal>
-              <DrawerOverlay className="fixed inset-0 bg-black/40" />
-              <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full rounded-none md:w-[60%] xl:w-[40%]">
-                <DrawerHeader>
-                  <DrawerTitle>Resultado de la tasacion</DrawerTitle>
-                  <DrawerDescription>
-                    Te traemos la busqueda de la tasacion de la propiedad, esta
-                    es una herramienta que te ayuda a valorar sin embargo eres
-                    tu quien tiene la ultima palabra.
-                  </DrawerDescription>
-                </DrawerHeader>
-                <div className="flex w-full flex-row gap-8 px-4">
-                  <span className="flex flex-row gap-2  text-xs font-medium text-zinc-500">
-                    <ClockIcon className="h-4 w-4" />
-                    {selectedAcm.createdAt.toLocaleString()}
-                  </span>
-                  <span className="flex  flex-row gap-2 text-xs font-medium text-zinc-500">
-                    <LocateIcon className="h-4 w-4" /> {selectedAcm.address}
-                  </span>
-                  {/* number of rooms */}
-                  <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
-                    <BedIcon className="h-4 w-4" />
-                    <span>{selectedAcm.numberOfRooms}</span>
-                  </div>
-                  {/* number of bathrooms */}
-                  <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
-                    <BathIcon className="h-4 w-4" />
-                    <span>{selectedAcm.numberOfBathrooms}</span>
-                  </div>
-                  {/* number of parking lots */}
-                  <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
-                    <CarIcon className="h-4 w-4" />
-                    <span>{selectedAcm.numberOfParkingLots}</span>
-                  </div>
-                  {/* total area */}
-                  <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
-                    <RulerIcon className="h-4 w-4" />
-                    <span>{selectedAcm.numberOfRooms} mts2</span>
-                  </div>
-                </div>
-                <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
-                <div className="flex w-full flex-row justify-between px-4">
-                  <div className="flex flex-row items-center justify-center gap-2">
-                    <Image
-                      src={
-                        selectedAcm.operationType === "rent"
-                          ? RentIllustration
-                          : SellIllustration
-                      }
-                      alt="Rent"
-                      width={50}
-                      height={50}
-                    />
-                    <div className="flex flex-col">
-                      {selectedAcm.operationType === "rent"
-                        ? "Arriendo"
-                        : "Venta"}
-                      <span className="text-xs font-medium text-zinc-500 ">
-                        {selectedAcm.buildingType}
-                      </span>
+          <DrawerPortal>
+            <DrawerOverlay className="fixed inset-0 bg-black/40" />
+            <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full rounded-none md:w-[60%] xl:w-[40%]">
+              {resultIsComplete ? (
+                <>
+                  <DrawerHeader>
+                    <DrawerTitle>Resultado de la tasacion</DrawerTitle>
+                    <DrawerDescription>
+                      Te traemos la busqueda de la tasacion de la propiedad,
+                      esta es una herramienta que te ayuda a valorar sin embargo
+                      eres tu quien tiene la ultima palabra.
+                    </DrawerDescription>
+                  </DrawerHeader>
+                  <div className="flex w-full flex-row gap-8 px-4">
+                    <span className="flex flex-row gap-2  text-xs font-medium text-zinc-500">
+                      <ClockIcon className="h-4 w-4" />
+                      {selectedAcm.createdAt.toLocaleString()}
+                    </span>
+                    <span className="flex  flex-row gap-2 text-xs font-medium text-zinc-500">
+                      <LocateIcon className="h-4 w-4" /> {selectedAcm.address}
+                    </span>
+                    {/* number of rooms */}
+                    <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
+                      <BedIcon className="h-4 w-4" />
+                      <span>{selectedAcm.numberOfRooms}</span>
+                    </div>
+                    {/* number of bathrooms */}
+                    <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
+                      <BathIcon className="h-4 w-4" />
+                      <span>{selectedAcm.numberOfBathrooms}</span>
+                    </div>
+                    {/* number of parking lots */}
+                    <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
+                      <CarIcon className="h-4 w-4" />
+                      <span>{selectedAcm.numberOfParkingLots}</span>
+                    </div>
+                    {/* total area */}
+                    <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
+                      <RulerIcon className="h-4 w-4" />
+                      <span>{selectedAcm.numberOfRooms} mts2</span>
                     </div>
                   </div>
-                  <Button variant="secondary">
-                    Valoracion Estimada: GTQ. 54,000.00
-                  </Button>
+                  <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
+                  <div className="flex w-full flex-row justify-between px-4">
+                    <div className="flex flex-row items-center justify-center gap-2">
+                      <Image
+                        src={
+                          selectedAcm.operationType === "rent"
+                            ? RentIllustration
+                            : SellIllustration
+                        }
+                        alt="Rent"
+                        width={50}
+                        height={50}
+                      />
+                      <div className="flex flex-col">
+                        {selectedAcm.operationType === "rent"
+                          ? "Arriendo"
+                          : "Venta"}
+                        <span className="text-xs font-medium text-zinc-500 ">
+                          {selectedAcm.buildingType}
+                        </span>
+                      </div>
+                    </div>
+                    <Button variant="secondary">
+                      Valoracion Estimada: GTQ.{" "}
+                      {selectedAcm.expectedPrice as unknown as number}
+                    </Button>
+                  </div>
+                  <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
+                  {/* graph */}
+                  <div className="h-64 w-64 self-center">
+                    <Doughnut data={graphData} />
+                  </div>
+                  <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
+                  <div className="flex flex-col gap-2">
+                    <span className="mx-4">Propiedades Similares</span>
+                    <DataTable
+                      columns={columnsResult}
+                      data={acmDataResult ?? []}
+                      pagination={pagination}
+                      onPaginationChange={setPagination}
+                      pageCount={pageCount}
+                    />
+                  </div>
+                </>
+              ) : (
+                <div className="flex w-full flex-row items-center justify-center text-xl text-primary-500">
+                  Aun no se ha completado la tasacion
                 </div>
-                <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
-                {/* graph */}
-                <div className="h-64 w-64 self-center">
-                  <Doughnut data={graphData} />
-                </div>
-                <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
-                <div className="flex flex-col gap-2">
-                  <span className="mx-4">Propiedades Similares</span>
-                  <DataTable
-                    columns={columnsResult}
-                    data={acmDataResult ?? []}
-                    pagination={pagination}
-                    onPaginationChange={setPagination}
-                    pageCount={pageCount}
-                  />
-                </div>
-              </DrawerContent>
-            </DrawerPortal>
-          )}
+              )}
+            </DrawerContent>
+          </DrawerPortal>
         </Drawer>
       </section>
     </LayoutSigned>
