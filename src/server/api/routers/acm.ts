@@ -44,6 +44,7 @@ export const acmRouter = createTRPCRouter({
 
       if (response.status === 200) {
         const responseJson = await response.json();
+        console.log(responseJson);
         await ctx.db.acm.update({
           where: {
             id: acm.id,

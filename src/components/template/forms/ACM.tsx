@@ -170,8 +170,8 @@ export function ACMForm({ handleSubmit }: PropsI) {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="Soltero/a">Venta</SelectItem>
-                        <SelectItem value="Casado/a">Renta</SelectItem>
+                        <SelectItem value="sell">Venta</SelectItem>
+                        <SelectItem value="rent">Renta</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -200,8 +200,8 @@ export function ACMForm({ handleSubmit }: PropsI) {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="Soltero/a">Apartamento</SelectItem>
-                        <SelectItem value="Casado/a">Casa</SelectItem>
+                        <SelectItem value="appartment">Apartamento</SelectItem>
+                        <SelectItem value="house">Casa</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
