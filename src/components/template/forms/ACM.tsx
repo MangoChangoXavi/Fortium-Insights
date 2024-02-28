@@ -35,6 +35,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import MapSelect from "~/components/system/ui/MapSelect";
+import { useState } from "react";
 
 const FormSchema = z.object({
   address: z.string({ required_error: "La ubicacion es requerida" }).max(5000, {
@@ -101,8 +103,13 @@ interface PropsI {
 }
 
 export function ACMForm({ handleSubmit }: PropsI) {
+  const [value, setValue] = useState(null);
+  const addressValue = value?.label ?? "";
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    values: {
+      address: addressValue,
+    },
   });
 
   return (
@@ -136,7 +143,8 @@ export function ACMForm({ handleSubmit }: PropsI) {
                   <FormLabel className="flex flex-row gap-2">
                     <MapIcon className="h-4 w-4" /> Ubicacion
                   </FormLabel>
-                  <FormControl>
+                  <MapSelect value={value} setValue={setValue} />
+                  <FormControl className="hidden">
                     <Input {...field} />
                   </FormControl>
                   <FormMessage />
