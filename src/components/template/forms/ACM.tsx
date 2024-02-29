@@ -264,7 +264,7 @@ export function ACMForm({ handleSubmit }: PropsI) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex flex-row gap-2">
-                    <RulerIcon className="h-4 w-4" /> Area total
+                    <RulerIcon className="h-4 w-4" /> Area total (mts2)
                   </FormLabel>
                   <FormControl>
                     <Input {...field} type="number" />

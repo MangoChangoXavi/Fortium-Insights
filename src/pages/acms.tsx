@@ -294,7 +294,7 @@ export default function ACMs() {
                     {/* total area */}
                     <div className="flex flex-row gap-2 text-xs font-medium text-zinc-500">
                       <RulerIcon className="h-4 w-4" />
-                      <span>{selectedAcm.numberOfRooms} mts2</span>
+                      <span>{selectedAcm.totalArea} mts2</span>
                     </div>
                   </div>
                   <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
@@ -335,9 +335,6 @@ export default function ACMs() {
                     <DataTable
                       columns={columnsResult}
                       data={selectedAcm.acmResultDetail ?? []}
-                      pagination={paginationResult}
-                      onPaginationChange={setPaginationResult}
-                      pageCount={pageCountResult}
                     />
                   </div>
                 </>
