@@ -62,6 +62,22 @@ export const columns: ColumnDef<acm>[] = [
   {
     accessorKey: "buildingType",
     header: "Tipo de inmueble",
+    cell: ({ row }) => {
+      const acm = row.original;
+
+      return (
+        <>
+          {
+            {
+              house: "Casa",
+              apartment: "Apartamento",
+              office: "Oficina",
+              land: "Terreno",
+            }[acm.buildingType]
+          }
+        </>
+      );
+    },
   },
   {
     accessorKey: "numberOfRooms",

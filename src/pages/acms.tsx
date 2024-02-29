@@ -1,4 +1,4 @@
-import { api } from "~/utils/api";
+import { RouterOutputs, api } from "~/utils/api";
 import {
   DataTable,
   type PaginationState,
@@ -48,14 +48,16 @@ import { Doughnut } from "react-chartjs-2";
 import { type acm } from "@prisma/client";
 import Image from "next/image";
 import { Loader } from "~/components/system/layouts/Loader";
-import MapSelect from "~/components/system/ui/MapSelect";
 
 const ITEMS_PER_PAGE = 5;
+type ACMGetDataTable = RouterOutputs["acm"]["getDataTable"]["acms"][0];
 export default function ACMs() {
   const { toast } = useToast();
   const [filter, setFilter] = React.useState("");
   const [search, setSearch] = React.useState("");
-  const [selectedAcm, setSelectedAcm] = React.useState<acm | null>(null);
+  const [selectedAcm, setSelectedAcm] = React.useState<ACMGetDataTable | null>(
+    null,
+  );
 
   const [{ pageIndex, pageSize }, setPagination] =
     React.useState<PaginationState>({
@@ -144,16 +146,13 @@ export default function ACMs() {
     },
   ];
   const graphData = {
-    labels: ["90,000.00 a 120,000.00", "121,000 a 140,0000", "+140,000.00"],
+    labels: selectedAcm?.acmResultSummary.map(
+      (item) => `${item.minValue.toString()} - ${item.maxValue.toString()}`,
+    ),
     datasets: [
       {
         label: "Distribucion de precios",
-        data: [300, 50, 100],
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-        ],
+        data: selectedAcm?.acmResultSummary.map((item) => item.count),
         hoverOffset: 4,
       },
     ],

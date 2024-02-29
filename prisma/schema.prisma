@@ -38,34 +38,33 @@ model client {
 }
 
 
-model acmResultProperty {
-  id          String    @id @default(cuid())
-  address String
-  operationType String // Buy, Rent
-  buildingType String // Apartment, House, Office, Warehouse
-  numberOfRooms Int
-  numberOfBathrooms Int
-  numberOfParkingLots Int
-  totalArea Int
-  price Decimal
-  createdAt   DateTime  @default(now()) @map("created_at")
+model acmResultDetail {
 
-  
-  acm acm @relation(fields: [acmId], references: [id])
-  acmId String
-}
-
-model acmResultGraph {
   id          String    @id @default(cuid())
   location String
-  minValue Decimal
-  maxValue Decimal
-  mean Decimal
-  count Int
-  std Decimal?
-
+  price Decimal
+  rooms Int
+  bathrooms Int
+  parkingLots Int
+  area Int
+  url String
+  createdAt   DateTime  @default(now()) @map("created_at")
   acm acm @relation(fields: [acmId], references: [id])
   acmId String
+  @@index([acmId])
+}
+
+model acmResultSummary {
+  id          String    @id @default(cuid())
+  location String
+  count Int
+  mean Decimal
+  std Decimal
+  minValue Decimal
+  maxValue Decimal
+  acm acm @relation(fields: [acmId], references: [id])
+  acmId String
+  @@index([acmId])
 }
 
 model acm {
@@ -80,8 +79,8 @@ model acm {
   createdAt   DateTime  @default(now()) @map("created_at")
   expectedPrice Decimal @default(0)
 
-  acmResultGraph acmResultGraph[]
-  acmResultProperty acmResultProperty[]
+  acmResultSummary acmResultSummary[]
+  acmResultDetail acmResultDetail[]
 }
 
 model proposalService {

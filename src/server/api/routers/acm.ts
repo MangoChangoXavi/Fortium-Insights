@@ -44,15 +44,24 @@ export const acmRouter = createTRPCRouter({
 
       if (response.status === 200) {
         const responseJson = await response.json();
+
         console.log(responseJson);
+
         await ctx.db.acm.update({
           where: {
             id: acm.id,
           },
           data: {
             expectedPrice: responseJson.expectedPrice as unknown as string,
+            acmResultDetail: {
+              create: responseJson.detail,
+            },
+            acmResultSummary: {
+              create: responseJson.summary,
+            },
           },
         });
+
         return acm;
       } else {
         await ctx.db.acm.delete({
@@ -319,6 +328,10 @@ export const acmRouter = createTRPCRouter({
           createdAt: "desc",
         },
         where,
+        include: {
+          acmResultDetail: true,
+          acmResultSummary: true,
+        },
       });
       return {
         acms,
