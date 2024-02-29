@@ -126,7 +126,7 @@ export const columns: ColumnDef<acm>[] = [
       return (
         <div className="flex flex-row gap-2">
           <RulerIcon className="h-4 w-4" />
-          <span>{acm.numberOfRooms} mts2</span>
+          <span>{acm.totalArea} mts2</span>
         </div>
       );
     },
@@ -136,7 +136,7 @@ export const columns: ColumnDef<acm>[] = [
     header: "Fecha de creacion",
     cell: ({ row }) => {
       const acm = row.original;
-      return new Date(acm.createdAt).toLocaleDateString();
+      return new Date(acm.createdAt).toLocaleString();
     },
   },
   {

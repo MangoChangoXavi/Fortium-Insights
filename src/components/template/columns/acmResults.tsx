@@ -4,63 +4,63 @@ import Link from "next/link";
 import { GTQ } from "~/utils/functions";
 export type acm = {
   id: string;
-  numberOfRooms: number;
-  numberOfBathrooms: number;
-  numberOfParkingLots: number;
-  totalArea: number;
+  rooms: number;
+  bathrooms: number;
+  parkingLots: number;
+  area: number;
   price: number;
-  link: string;
+  url: string;
 };
 
 export const columns: ColumnDef<acm>[] = [
   {
-    accessorKey: "numberOfRooms",
+    accessorKey: "rooms",
     header: "Numero de habitaciones",
     cell: ({ row }) => {
       const acm = row.original;
       return (
         <div className="flex flex-row gap-2">
           <BedIcon className="h-4 w-4" />
-          <span>{acm.numberOfRooms}</span>
+          <span>{acm.rooms}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: "numberOfBathrooms",
+    accessorKey: "bathrooms",
     header: "Numero de baños",
     cell: ({ row }) => {
       const acm = row.original;
       return (
         <div className="flex flex-row gap-2">
           <BathIcon className="h-4 w-4" />
-          <span>{acm.numberOfBathrooms}</span>
+          <span>{acm.bathrooms}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: "numberOfParkingLots",
+    accessorKey: "parkingLots",
     header: "Numero de parqueaderos",
     cell: ({ row }) => {
       const acm = row.original;
       return (
         <div className="flex flex-row gap-2">
           <CarIcon className="h-4 w-4" />
-          <span>{acm.numberOfRooms}</span>
+          <span>{acm.rooms}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: "totalArea",
+    accessorKey: "area",
     header: "Area total",
     cell: ({ row }) => {
       const acm = row.original;
       return (
         <div className="flex flex-row gap-2">
           <RulerIcon className="h-4 w-4" />
-          <span>{acm.numberOfRooms} mts2</span>
+          <span>{acm.area} mts2</span>
         </div>
       );
     },
@@ -74,13 +74,13 @@ export const columns: ColumnDef<acm>[] = [
     },
   },
   {
-    accessorKey: "link",
+    accessorKey: "url",
     header: "Link",
     cell: ({ row }) => {
       const acm = row.original;
       return (
         <Link
-          href={acm.link}
+          href={acm.url}
           target="_blank"
           className="flex flex-row gap-2 hover:text-blue-500 hover:underline"
         >

@@ -58,8 +58,8 @@ model acmResultSummary {
   id          String    @id @default(cuid())
   location String
   count Int
-  mean Decimal
-  std Decimal
+  mean Decimal @default(0)
+  std Decimal @default(0)
   minValue Decimal
   maxValue Decimal
   acm acm @relation(fields: [acmId], references: [id])

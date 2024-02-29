@@ -45,7 +45,6 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Doughnut } from "react-chartjs-2";
-import { type acm } from "@prisma/client";
 import Image from "next/image";
 import { Loader } from "~/components/system/layouts/Loader";
 
@@ -59,6 +58,7 @@ export default function ACMs() {
     null,
   );
 
+  // pagination for main table
   const [{ pageIndex, pageSize }, setPagination] =
     React.useState<PaginationState>({
       pageIndex: 0,
@@ -83,6 +83,28 @@ export default function ACMs() {
   const pageCount = Math.ceil(
     (data?.totalItemsCount ?? ITEMS_PER_PAGE) / ITEMS_PER_PAGE,
   );
+
+  // pagination for result table
+  const [
+    { pageIndex: pageIndexResult, pageSize: pageSizeResult },
+    setPaginationResult,
+  ] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: ITEMS_PER_PAGE,
+  });
+
+  const paginationResult = React.useMemo(
+    () => ({
+      pageIndex: pageIndexResult,
+      pageSize: pageSizeResult,
+    }),
+    [pageIndexResult, pageSizeResult],
+  );
+
+  const pageCountResult = Math.ceil(
+    (selectedAcm?.acmResultDetail?.length ?? ITEMS_PER_PAGE) / ITEMS_PER_PAGE,
+  );
+
   // const { data: countData } = api.acm.countStatus.useQuery();
 
   const ctx = api.useUtils();
@@ -145,6 +167,7 @@ export default function ACMs() {
       background: "bg-[#DCF691]",
     },
   ];
+  console.log(selectedAcm?.acmResultSummary);
   const graphData = {
     labels: selectedAcm?.acmResultSummary.map(
       (item) => `${item.minValue.toString()} - ${item.maxValue.toString()}`,
@@ -173,12 +196,6 @@ export default function ACMs() {
         setSelectedAcm(acm);
       }
     },
-  }));
-
-  const acmDataResult = data?.acms.map((acm) => ({
-    ...acm,
-    link: `/acms/${acm.id}`,
-    price: 2000,
   }));
 
   const resultIsComplete =
@@ -240,7 +257,7 @@ export default function ACMs() {
           )}
           <DrawerPortal>
             <DrawerOverlay className="fixed inset-0 bg-black/40" />
-            <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full rounded-none md:w-[60%] xl:w-[40%]">
+            <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full overflow-y-auto overflow-x-hidden rounded-none md:w-[60%] xl:w-[40%]">
               {resultIsComplete ? (
                 <>
                   <DrawerHeader>
@@ -317,10 +334,10 @@ export default function ACMs() {
                     <span className="mx-4">Propiedades Similares</span>
                     <DataTable
                       columns={columnsResult}
-                      data={acmDataResult ?? []}
-                      pagination={pagination}
-                      onPaginationChange={setPagination}
-                      pageCount={pageCount}
+                      data={selectedAcm.acmResultDetail ?? []}
+                      pagination={paginationResult}
+                      onPaginationChange={setPaginationResult}
+                      pageCount={pageCountResult}
                     />
                   </div>
                 </>
