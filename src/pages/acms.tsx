@@ -47,6 +47,7 @@ import {
 import { Doughnut } from "react-chartjs-2";
 import Image from "next/image";
 import { Loader } from "~/components/system/layouts/Loader";
+import { useRouter } from "next/router";
 
 const ITEMS_PER_PAGE = 5;
 type ACMGetDataTable = RouterOutputs["acm"]["getDataTable"]["acms"][0];
@@ -167,7 +168,7 @@ export default function ACMs() {
       background: "bg-[#DCF691]",
     },
   ];
-  console.log(selectedAcm?.acmResultSummary);
+
   const graphData = {
     labels: selectedAcm?.acmResultSummary.map(
       (item) => `${item.minValue.toString()} - ${item.maxValue.toString()}`,
@@ -180,16 +181,15 @@ export default function ACMs() {
       },
     ],
   };
-
+  const router = useRouter();
   const acmData = data?.acms.map((acm) => ({
     ...acm,
-    handleSelect: (action: string) => {
+    handleSelect: async (action: string) => {
       if (action === "view") {
         setSelectedAcm(acm);
       }
       if (action === "print") {
-        console.log("print");
-        setSelectedAcm(acm);
+        await router.push(`/pdf/acm/${acm.id}`);
       }
       if (action === "send") {
         console.log("send");

@@ -31,7 +31,7 @@ export type acm = {
   numberOfParkingLots: number;
   totalArea: number;
   createdAt: Date;
-  handleSelect: (action: AcmActions) => void;
+  handleSelect: (action: AcmActions) => Promise<void>;
 };
 
 export const columns: ColumnDef<acm>[] = [
