@@ -46,12 +46,12 @@ const FormSchema = z.object({
     .string({ required_error: "El tipo de operacion es requerida" })
     .max(5000, {
       message: "El tipo de operacion no puede ser mayor a 5000 caracteres",
-    }),
+    }).optional(),
   buildingType: z
     .string({ required_error: "El tipo de inmueble es requerida" })
     .max(5000, {
       message: "El tipo de inmueble no puede ser mayor a 5000 caracteres",
-    }),
+    }).optional(),
   numberOfRooms: z.preprocess(
     // Use this for numbers
     (args) => (args === "" ? undefined : args),
@@ -62,7 +62,7 @@ const FormSchema = z.object({
       })
       .positive("El numero de cuartos tiene que ser positiva")
       .max(99, "El numero de cuartos no puede ser mayor a 99"),
-  ),
+  ).optional(),
   numberOfBathrooms: z.preprocess(
     // Use this for numbers
     (args) => (args === "" ? undefined : args),
@@ -73,7 +73,7 @@ const FormSchema = z.object({
       })
       .positive("El numero de baños tiene que ser positiva")
       .max(99, "El numero de baños no puede ser mayor a 99"),
-  ),
+  ).optional(),
   numberOfParkingLots: z.preprocess(
     // Use this for numbers
     (args) => (args === "" ? undefined : args),
@@ -84,7 +84,7 @@ const FormSchema = z.object({
       })
       .positive("El numero de parqueos tiene que ser positiva")
       .max(999, "El numero de parqueos no puede ser mayor a 999"),
-  ),
+  ).optional(),
   totalArea: z.preprocess(
     // Use this for numbers
     (args) => (args === "" ? undefined : args),
@@ -95,7 +95,7 @@ const FormSchema = z.object({
       })
       .positive("El area total tiene que ser positiva")
       .max(9999, "El area total no puede ser mayor a 9999"),
-  ),
+  ).optional(),
 });
 
 interface PropsI {
@@ -103,7 +103,7 @@ interface PropsI {
 }
 
 export function ACMForm({ handleSubmit }: PropsI) {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState<{label: string} | null>(null);
   const addressValue = value?.label ?? "";
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

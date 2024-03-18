@@ -5,21 +5,42 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { uploadFile } from "~/utils/functions";
+import { getCoordinates, getSatelliteImage } from "~/utils/googleMaps";
+import { getScrappedPostFromMongo } from "../mongodb";
 
 export const acmRouter = createTRPCRouter({
   create: publicProcedure
     .input(
       z.object({
         address: z.string(),
-        operationType: z.string(),
-        buildingType: z.string(),
-        numberOfRooms: z.number(),
-        numberOfBathrooms: z.number(),
-        numberOfParkingLots: z.number(),
-        totalArea: z.number(),
+        operationType: z.string().optional(),
+        buildingType: z.string().optional(),
+        numberOfRooms: z.number().optional(),
+        numberOfBathrooms: z.number().optional(),
+        numberOfParkingLots: z.number().optional(),
+        totalArea: z.number().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const coordinates = await getCoordinates(input.address);
+
+      if (!coordinates.lat || !coordinates.lng) {
+        throw new Error("Invalid address");
+      }
+
+      const satellitalImageBlob = await getSatelliteImage(
+        coordinates.lat as unknown as number,
+        coordinates.lng as unknown as number,
+      );
+
+      // convert the blob to a file with png type
+      const file = new File([satellitalImageBlob], "satellitalImage.png", {
+        type: "image/png",
+      });
+
+      // const satellitalImageUrl = await uploadFile(file);
+
       const data = {
         address: input.address,
         operationType: input.operationType,
@@ -28,49 +49,37 @@ export const acmRouter = createTRPCRouter({
         numberOfBathrooms: input.numberOfBathrooms,
         numberOfParkingLots: input.numberOfParkingLots,
         totalArea: input.totalArea,
+        lat: coordinates.lat,
+        lng: coordinates.lng,
+        // satellitalImageUrl: satellitalImageUrl,
+        radius: 5,
       };
 
-      const acm = await ctx.db.acm.create({
-        data,
-      });
+      // const acm = await ctx.db.acm.create({
+      //   data,
+      // });
 
-      const response = await fetch("https://td-flask-scrapper.vercel.app/acm", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      // from the table scrapedProperty locate all the properties that are close to the new property
+      // based on the coordinates lat and lng
+      // get all the properties that are close to the new property in a 5km radiu
+      const properties = await getScrappedPostFromMongo({ ...data });
 
-      if (response.status === 200) {
-        const responseJson = await response.json();
+      console.log(properties);
 
-        console.log(responseJson);
-
-        await ctx.db.acm.update({
-          where: {
-            id: acm.id,
-          },
-          data: {
-            expectedPrice: responseJson.expectedPrice as unknown as string,
-            acmResultDetail: {
-              create: responseJson.detail,
-            },
-            acmResultSummary: {
-              create: responseJson.summary,
-            },
-          },
-        });
-
-        return acm;
-      } else {
-        await ctx.db.acm.delete({
-          where: {
-            id: acm.id,
-          },
-        });
-        console.error(await response.text());
-        throw new Error("Error while creating the ACM");
+      // for each property, create a new acmDetail
+      for (const property of properties) {
+        // await ctx.db.acmResultDetail.create({
+        //   data: {
+        //     acmId: acm.id,
+        //     location: property.location,
+        //     price: property.price,
+        //     rooms: property.numberOfRooms,
+        //     bathrooms: property.numberOfBathrooms,
+        //     parkingLots: property.numberOfParkingLots,
+        //     area: property.totalArea,
+        //     url: property.url,
+        //   },
+        // });
       }
     }),
 
