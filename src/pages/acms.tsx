@@ -199,7 +199,7 @@ export default function ACMs() {
   }));
 
   const resultIsComplete =
-    selectedAcm && (selectedAcm?.expectedPrice as unknown as number) > 0;
+    selectedAcm ;
   return (
     <LayoutSigned>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">

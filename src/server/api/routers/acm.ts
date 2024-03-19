@@ -52,7 +52,7 @@ export const acmRouter = createTRPCRouter({
         lat: coordinates.lat,
         lng: coordinates.lng,
         // satellitalImageUrl: satellitalImageUrl,
-        radius: 5,
+        radius: 2,
       };
 
       // from the table scrapedProperty locate all the properties that are close to the new property
@@ -74,6 +74,7 @@ export const acmRouter = createTRPCRouter({
               buildingType: property.buildingType ?? 0,
               numberOfParkingLots: property.numberOfParkingLots ?? 0,
               totalArea: property.totalArea ?? 0,
+              url: property.url,
             })),
           },
         },

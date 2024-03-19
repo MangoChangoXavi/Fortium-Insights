@@ -4,10 +4,10 @@ import Link from "next/link";
 import { GTQ } from "~/utils/functions";
 export type acm = {
   id: string;
-  rooms: number;
-  bathrooms: number;
-  parkingLots: number;
-  area: number;
+  numberOfRooms: number;
+  numberOfBathrooms: number;
+  numberOfParkingLots: number;
+  totalArea: number;
   price: number;
   url: string;
 };
@@ -21,7 +21,7 @@ export const columns: ColumnDef<acm>[] = [
       return (
         <div className="flex flex-row gap-2">
           <BedIcon className="h-4 w-4" />
-          <span>{acm.rooms}</span>
+          <span>{acm.numberOfRooms}</span>
         </div>
       );
     },
@@ -34,7 +34,7 @@ export const columns: ColumnDef<acm>[] = [
       return (
         <div className="flex flex-row gap-2">
           <BathIcon className="h-4 w-4" />
-          <span>{acm.bathrooms}</span>
+          <span>{acm.numberOfBathrooms}</span>
         </div>
       );
     },
@@ -47,7 +47,7 @@ export const columns: ColumnDef<acm>[] = [
       return (
         <div className="flex flex-row gap-2">
           <CarIcon className="h-4 w-4" />
-          <span>{acm.rooms}</span>
+          <span>{acm.numberOfParkingLots}</span>
         </div>
       );
     },
@@ -60,7 +60,7 @@ export const columns: ColumnDef<acm>[] = [
       return (
         <div className="flex flex-row gap-2">
           <RulerIcon className="h-4 w-4" />
-          <span>{acm.area} mts2</span>
+          <span>{acm.totalArea} mts2</span>
         </div>
       );
     },
