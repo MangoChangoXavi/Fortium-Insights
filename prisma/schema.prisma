@@ -37,50 +37,57 @@ model client {
   createdAt   DateTime  @default(now()) @map("created_at")
 }
 
-
 model acmResultDetail {
+  id                  String   @id @default(cuid())
+  lat                 Decimal  @default(0)
+  lng                 Decimal  @default(0)
+  price               Decimal  @default(0)
+  numberOfRooms       Int      @default(0)
+  numberOfBathrooms   Int      @default(0)
+  numberOfParkingLots Int      @default(0)
+  totalArea           Int      @default(0)
+  buildingType        String   @default("")
+  url                 String   @default("")
+  currency            String   @default("USD")
+  address             String   @default("")
+  createdAt           DateTime @default(now()) @map("created_at")
+  acm                 acm      @relation(fields: [acmId], references: [id])
+  acmId               String
 
-  id          String    @id @default(cuid())
-  location String
-  price Decimal
-  rooms Int
-  bathrooms Int
-  parkingLots Int
-  area Int
-  url String
-  createdAt   DateTime  @default(now()) @map("created_at")
-  acm acm @relation(fields: [acmId], references: [id])
-  acmId String
   @@index([acmId])
 }
 
 model acmResultSummary {
-  id          String    @id @default(cuid())
+  id       String  @id @default(cuid())
   location String
-  count Int
-  mean Decimal @default(0)
-  std Decimal @default(0)
+  count    Int
+  mean     Decimal @default(0)
+  std      Decimal @default(0)
   minValue Decimal
   maxValue Decimal
-  acm acm @relation(fields: [acmId], references: [id])
-  acmId String
+  acm      acm     @relation(fields: [acmId], references: [id])
+  acmId    String
+
   @@index([acmId])
 }
 
 model acm {
-  id          String    @id @default(cuid())
-  address String
-  operationType String // Buy, Rent
-  buildingType String // Apartment, House, Office, Warehouse
-  numberOfRooms Int @default(0)
-  numberOfBathrooms Int @default(0)
-  numberOfParkingLots Int @default(0)
-  totalArea Int @default(0)
-  createdAt   DateTime  @default(now()) @map("created_at")
-  expectedPrice Decimal @default(0)
+  id                  String   @id @default(cuid())
+  address             String
+  lat                 Decimal  @default(0)
+  lng                 Decimal  @default(0)
+  radius              Decimal  @default(0)
+  operationType       String // Buy, Rent
+  buildingType        String // Apartment, House, Office, Warehouse
+  numberOfRooms       Int?     @default(0)
+  numberOfBathrooms   Int?     @default(0)
+  numberOfParkingLots Int?     @default(0)
+  totalArea           Int?     @default(0)
+  createdAt           DateTime @default(now()) @map("created_at")
+  expectedPrice       Decimal  @default(0)
 
   acmResultSummary acmResultSummary[]
-  acmResultDetail acmResultDetail[]
+  acmResultDetail  acmResultDetail[]
 }
 
 model proposalService {
@@ -92,14 +99,14 @@ model proposalService {
 }
 
 model proposal {
-  id          String   @id @default(cuid())
-  identifier String   @unique
-  title       String
-  client      String
-  status      String   @default("initial") // Initial, Sent, Accepted, Rejected
-  createdAt   DateTime @default(now()) @map("created_at")
-  paymentLink String @map("payment_link") @default("none")
-  concurrentPaymentAmount String? @default("") @map("concurrent_payment_amount")
+  id                      String   @id @default(cuid())
+  identifier              String   @unique
+  title                   String
+  client                  String
+  status                  String   @default("initial") // Initial, Sent, Accepted, Rejected
+  createdAt               DateTime @default(now()) @map("created_at")
+  paymentLink             String   @default("none") @map("payment_link")
+  concurrentPaymentAmount String?  @default("") @map("concurrent_payment_amount")
 
   proposalServices proposalService[]
 }

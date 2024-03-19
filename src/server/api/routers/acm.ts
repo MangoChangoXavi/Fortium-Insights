@@ -14,8 +14,8 @@ export const acmRouter = createTRPCRouter({
     .input(
       z.object({
         address: z.string(),
-        operationType: z.string().optional(),
-        buildingType: z.string().optional(),
+        buildingType: z.string(),
+        operationType: z.string(),
         numberOfRooms: z.number().optional(),
         numberOfBathrooms: z.number().optional(),
         numberOfParkingLots: z.number().optional(),
@@ -55,32 +55,29 @@ export const acmRouter = createTRPCRouter({
         radius: 5,
       };
 
-      // const acm = await ctx.db.acm.create({
-      //   data,
-      // });
-
       // from the table scrapedProperty locate all the properties that are close to the new property
       // based on the coordinates lat and lng
       // get all the properties that are close to the new property in a 5km radiu
       const properties = await getScrappedPostFromMongo({ ...data });
-
-      console.log(properties);
-
-      // for each property, create a new acmDetail
-      for (const property of properties) {
-        // await ctx.db.acmResultDetail.create({
-        //   data: {
-        //     acmId: acm.id,
-        //     location: property.location,
-        //     price: property.price,
-        //     rooms: property.numberOfRooms,
-        //     bathrooms: property.numberOfBathrooms,
-        //     parkingLots: property.numberOfParkingLots,
-        //     area: property.totalArea,
-        //     url: property.url,
-        //   },
-        // });
-      }
+      await ctx.db.acm.create({
+        data: {
+          ...data,
+          acmResultDetail: {
+            create: properties.map((property) => ({
+              lat: property.location.coordinates[1],
+              lng: property.location.coordinates[0],
+              price: property.price,
+              currency: property.currency,
+              address: property.address,
+              numberOfBathrooms: property.numberOfBathrooms ?? 0,
+              numberOfRooms: property.numberOfRooms ?? 0,
+              buildingType: property.buildingType ?? 0,
+              numberOfParkingLots: property.numberOfParkingLots ?? 0,
+              totalArea: property.totalArea ?? 0,
+            })),
+          },
+        },
+      });
     }),
 
   countInfinite: protectedProcedure
