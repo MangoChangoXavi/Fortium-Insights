@@ -15,7 +15,6 @@ import {
   SellIcon,
 } from "~/components/system/ui/Icons";
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
-import { Loader } from "~/components/system/layouts/Loader";
 import { columns } from "~/components/template/columns/Users";
 
 const ITEMS_PER_PAGE = 5;
@@ -89,14 +88,14 @@ export default function Users() {
       label: "Desactivados",
       value: "user",
       icon: <CancelIcon className="h-6 w-6 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
-      total: countData?.find((item) => item.role === "user")?.count ?? 0,
+      total: countData?.find((item) => item.role === "disabled")?.count ?? 0,
       background: "bg-[#dc5c5c]",
     },
     {
-      label: "Vendedores",
-      value: "salesperson",
+      label: "Usuario",
+      value: "user",
       icon: <SellIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
-      total: countData?.find((item) => item.role === "salesperson")?.count ?? 0,
+      total: countData?.find((item) => item.role === "user")?.count ?? 0,
       background: "bg-[#61dc7d]",
     },
     {

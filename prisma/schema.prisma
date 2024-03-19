@@ -72,22 +72,23 @@ model acmResultSummary {
 }
 
 model acm {
-  id                  String   @id @default(cuid())
+  id                  String             @id @default(cuid())
   address             String
-  lat                 Decimal  @default(0)
-  lng                 Decimal  @default(0)
-  radius              Decimal  @default(0)
+  lat                 Decimal            @default(0)
+  lng                 Decimal            @default(0)
+  radius              Decimal            @default(0)
   operationType       String // Buy, Rent
   buildingType        String // Apartment, House, Office, Warehouse
-  numberOfRooms       Int?     @default(0)
-  numberOfBathrooms   Int?     @default(0)
-  numberOfParkingLots Int?     @default(0)
-  totalArea           Int?     @default(0)
-  createdAt           DateTime @default(now()) @map("created_at")
-  expectedPrice       Decimal  @default(0)
-
-  acmResultSummary acmResultSummary[]
-  acmResultDetail  acmResultDetail[]
+  numberOfRooms       Int?               @default(0)
+  numberOfBathrooms   Int?               @default(0)
+  numberOfParkingLots Int?               @default(0)
+  totalArea           Int?               @default(0)
+  createdAt           DateTime           @default(now()) @map("created_at")
+  expectedPrice       Decimal            @default(0)
+  userId              String
+  user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  acmResultSummary    acmResultSummary[]
+  acmResultDetail     acmResultDetail[]
 }
 
 model proposalService {
@@ -147,10 +148,11 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  role          String?   @default("user")
+  role          String?   @default("disabled")
   accounts      Account[]
   sessions      Session[]
   createdAt     DateTime  @default(now()) @map("created_at")
+  acm           acm[]
 }
 
 model VerificationToken {

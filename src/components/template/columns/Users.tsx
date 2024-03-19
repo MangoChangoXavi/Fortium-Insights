@@ -84,20 +84,18 @@ export const columns: ColumnDef<user>[] = [
             <div
               className={`h-[4px] w-[4px] rounded-full ${
                 {
-                  user: "bg-red-500",
+                  disabled: "bg-red-500",
                   admin: "bg-emerald-500",
-                  salesperson: "bg-primary-500",
-                  supervisor: "bg-yellow-500",
+                  user: "bg-primary-500",
                 }[user.userRole ? user.userRole : "user"]
               }`}
             ></div>
             <span className="text-xs font-medium  not-italic text-[#2c2c2c]">
               {
                 {
-                  user: "Desactivado",
+                  disabled: "Desactivado",
                   admin: "Administrador",
-                  salesperson: "Vendedor",
-                  supervisor: "Supervisor",
+                  user: "Usuario",
                 }[user.userRole ? user.userRole : "user"]
               }
             </span>
@@ -128,10 +126,10 @@ export const columns: ColumnDef<user>[] = [
               <AlertDialogTrigger asChild>
                 <DropdownMenuItem
                   onClick={() => {
-                    role = "salesperson";
+                    role = "user";
                   }}
                 >
-                  Vendedor
+                  Usuario
                 </DropdownMenuItem>
               </AlertDialogTrigger>
               <AlertDialogTrigger asChild>
@@ -146,10 +144,10 @@ export const columns: ColumnDef<user>[] = [
               <AlertDialogTrigger asChild>
                 <DropdownMenuItem
                   onClick={() => {
-                    role = "supervisor";
+                    role = "disabled";
                   }}
                 >
-                  Supervisor
+                  Deshabilitar
                 </DropdownMenuItem>
               </AlertDialogTrigger>
             </DropdownMenuContent>

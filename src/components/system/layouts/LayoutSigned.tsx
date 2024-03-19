@@ -4,42 +4,42 @@ import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
 import { UsersIcon } from "../ui/Icons";
 import { Sidebar } from "./Sidebar";
-import { AxeIcon, BugIcon, CatIcon, MicIcon, TvIcon } from "lucide-react";
+import { AxeIcon, CatIcon, MicIcon, TvIcon } from "lucide-react";
 const menuItems = [
   {
     name: "On Boards",
     icon: <AxeIcon className="h-5 w-5" />,
     link: "/reports/onboards",
-    permissions: [],
+    permissions: ["admin"],
   },
   {
     name: "Propuestas",
     icon: <CatIcon className="h-5 w-5" />,
     link: "/reports/proposals",
-    permissions: [],
+    permissions: ["admin"],
   },
   {
     name: "Clientes",
     icon: <TvIcon className="h-5 w-5" />,
     link: "/clients",
-    permissions: [],
+    permissions: ["admin"],
   },
   {
     name: "ACM",
     icon: <MicIcon className="h-5 w-5" />,
     link: "/acms",
-    permissions: [],
+    permissions: ["admin", "user"],
   },
   {
     name: "Usuarios",
     icon: <UsersIcon className="h-5 w-5" />,
     link: "/reports/users",
-    permissions: [],
+    permissions: ["admin"],
   },
 ];
 
 export const LayoutSigned = ({
-  role = ["admin", "salesperson", "supervisor", "user"],
+  role = ["admin", "user", "disabled"],
   children,
   noPadding = false,
 }: {
