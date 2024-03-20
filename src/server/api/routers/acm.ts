@@ -8,7 +8,7 @@ import {
 import { uploadFile } from "~/utils/functions";
 import { getCoordinates, getSatelliteImage } from "~/utils/googleMaps";
 import { getScrappedPostFromMongo } from "../mongodb";
-
+export const maxDuration = 200; // This function can run for a maximum of 5 seconds
 export const acmRouter = createTRPCRouter({
   create: publicProcedure
     .input(
