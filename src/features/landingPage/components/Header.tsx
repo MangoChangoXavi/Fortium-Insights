@@ -9,6 +9,7 @@ import {
   ArrowRightIcon,
   GalleryHorizontalEnd,
   SquareUserRound,
+  UserIcon,
 } from "lucide-react";
 
 const Header = () => {
@@ -20,6 +21,7 @@ const Header = () => {
       url: "https://wa.me/59541638",
       icon: <SquareUserRound />,
     },
+    { name: "Ingresar", url: "/api/auth/signin", icon: <UserIcon /> },
   ];
   return (
     <nav className="w-full bg-transparent">
@@ -42,14 +44,14 @@ const Header = () => {
             className={`mt-3 flex-1 justify-self-center pb-3 hover:block md:mt-0 md:block md:pb-0 lg:mt-8`}
           >
             <ul className="items-center justify-center  md:flex md:space-x-6 md:space-y-0">
-              {menu.map(({ name, url, icon }, index) => (
+              {menu.map(({ name, url }, index) => (
                 <li
                   key={index}
-                  className="bg-custom-sky text-400 px-5 py-3 align-middle font-normal text-white hover:bg-blue-700 "
+                  className="text-400 align-middle font-normal text-primary-500 hover:underline"
                 >
                   <Link className="flex items-center" href={url}>
                     {" "}
-                    {name} &nbsp; {icon}
+                    {name} 
                   </Link>
                 </li>
               ))}
