@@ -113,7 +113,7 @@ export const columns: ColumnDef<acm>[] = [
       return (
         <div className="flex flex-row gap-2">
           <CarIcon className="h-4 w-4" />
-          <span>{acm.numberOfRooms}</span>
+          <span>{acm.numberOfParkingLots}</span>
         </div>
       );
     },
