@@ -4,6 +4,11 @@ import { env } from "~/env.mjs";
 import { appRouter } from "~/server/api/root";
 import { createTRPCContext } from "~/server/api/trpc";
 
+//All trpc functions can be run max for 200 seconds
+export const config = {
+  maxDuration: 200,
+};
+
 // export API handler
 export default createNextApiHandler({
   router: appRouter,
