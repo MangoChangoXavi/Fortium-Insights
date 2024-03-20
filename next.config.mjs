@@ -17,6 +17,8 @@ const config = {
       "res.akamaized.net",
       "i.insider.com",
       "d7lrki2kktov4uja.public.blob.vercel-storage.com",
+      "mancro.com",
+      "photos.encuentra24.com"
     ],
   },
 
