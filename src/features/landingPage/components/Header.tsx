@@ -13,7 +13,7 @@ import {
 import { useSession } from "next-auth/react";
 
 const Header = () => {
-  const session = useSession();
+  const { data: session } = useSession();
   const menu = [
     // { name: "Home", url: "/" },
     { name: "Portafolio", url: "/portfolio", icon: <GalleryHorizontalEnd /> },
