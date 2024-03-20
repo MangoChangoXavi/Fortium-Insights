@@ -1,5 +1,5 @@
+import connectDB from "~/lib/connectToMongo";
 import ScrappedPost from "../../model/ScrappedPost";
-import connectDB from "../../pages/lib/connectToMongo";
 
 interface PropsI {
   lat: number;
