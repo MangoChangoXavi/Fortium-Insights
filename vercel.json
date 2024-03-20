@@ -1,6 +1,6 @@
 {
     "functions": {
-      "api/trpc/acm.create": {
+      "api/trpc/**": {
         "maxDuration": 200 // This function can run for a maximum of 200 seconds
       }
     }
