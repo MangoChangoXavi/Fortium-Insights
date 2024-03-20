@@ -2,7 +2,6 @@ import React from "react";
 import Header from "./components/Header";
 
 import Banner from "./components/Banner";
-import logo from "../assets/images/top-bg.jpg";
 import Softwares from "./components/Softwares";
 import WhyUs from "./components/WhyUs";
 import Cta from "./components/Cta";

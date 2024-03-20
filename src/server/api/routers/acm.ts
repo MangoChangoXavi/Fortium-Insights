@@ -29,15 +29,15 @@ export const acmRouter = createTRPCRouter({
         throw new Error("Invalid address");
       }
 
-      const satellitalImageBlob = await getSatelliteImage(
-        coordinates.lat as unknown as number,
-        coordinates.lng as unknown as number,
-      );
+      // const satellitalImageBlob = await getSatelliteImage(
+      //   coordinates.lat as unknown as number,
+      //   coordinates.lng as unknown as number,
+      // );
 
       // convert the blob to a file with png type
-      const file = new File([satellitalImageBlob], "satellitalImage.png", {
-        type: "image/png",
-      });
+      // const file = new File([satellitalImageBlob], "satellitalImage.png", {
+      //   type: "image/png",
+      // });
 
       // const satellitalImageUrl = await uploadFile(file);
 
