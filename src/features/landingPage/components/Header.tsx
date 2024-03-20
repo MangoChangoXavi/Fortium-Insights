@@ -6,13 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "../assets/images/logo.webp";
 import {
-  ArrowRightIcon,
   GalleryHorizontalEnd,
   SquareUserRound,
   UserIcon,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 const Header = () => {
+  const session = useSession();
   const menu = [
     // { name: "Home", url: "/" },
     { name: "Portafolio", url: "/portfolio", icon: <GalleryHorizontalEnd /> },
@@ -21,7 +22,8 @@ const Header = () => {
       url: "https://wa.me/59541638",
       icon: <SquareUserRound />,
     },
-    { name: "Ingresar", url: "/api/auth/signin", icon: <UserIcon /> },
+    {name: session ? "Oficina" : "Ingresa",
+    url: session ? "/dashboard" : "/api/auth/signin", icon: <UserIcon /> },
   ];
   return (
     <nav className="w-full bg-transparent">
