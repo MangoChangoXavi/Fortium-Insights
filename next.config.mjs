@@ -10,7 +10,7 @@ const config = {
   images: {
     domains: [
       "lh3.googleusercontent.com",
-      "img.clerk.com",
+      "dummyimage.com",
       "images.unsplash.com",
       "plus.unsplash.com",
       "bucketproyectoespecial.s3.us-east-2.amazonaws.com",

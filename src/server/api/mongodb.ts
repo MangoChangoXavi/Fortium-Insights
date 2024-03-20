@@ -14,6 +14,24 @@ interface PropsI {
   currency?: string;
 }
 
+interface ScrappedPostI {
+  _id: string;
+  location: {
+    type: string;
+    coordinates: number[];
+  };
+  numberOfBathrooms: number;
+  numberOfRooms: number;
+  buildingType: string;
+  numberOfParkingLots: number;
+  totalArea: number;
+  price: number;
+  currency: string;
+  url: string;
+  address: string;
+  imagesUrl: string[];
+}
+
 async function getScrappedPostFromMongo({
   lat,
   lng,
@@ -25,7 +43,7 @@ async function getScrappedPostFromMongo({
   currency,
   numberOfParkingLots,
   totalArea,
-}: PropsI) {
+}: PropsI): Promise<ScrappedPostI[]> {
   // find all posts in the radius
   await connectDB();
 

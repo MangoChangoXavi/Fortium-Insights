@@ -159,7 +159,6 @@ export const columns: ColumnDef<acm>[] = [
                 <EyeIcon className="h-4 w-4" />
               </Button>
             </DrawerTrigger>
-            <DrawerTrigger>
               <Button
                 variant="default"
                 className="h-8 w-8 p-0"
@@ -168,7 +167,6 @@ export const columns: ColumnDef<acm>[] = [
                 <span className="sr-only">Open menu</span>
                 <PrinterIcon className="h-4 w-4" />
               </Button>
-            </DrawerTrigger>
             <DrawerTrigger>
               <Button
                 variant="default"

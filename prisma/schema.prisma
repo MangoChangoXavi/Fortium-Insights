@@ -47,6 +47,7 @@ model acmResultDetail {
   numberOfParkingLots Int      @default(0)
   totalArea           Int      @default(0)
   buildingType        String   @default("")
+  imagesUrl           String[] @default([])
   url                 String   @default("")
   currency            String   @default("USD")
   address             String   @default("")
@@ -58,15 +59,17 @@ model acmResultDetail {
 }
 
 model acmResultSummary {
-  id       String  @id @default(cuid())
-  location String
-  count    Int
-  mean     Decimal @default(0)
-  std      Decimal @default(0)
-  minValue Decimal
-  maxValue Decimal
-  acm      acm     @relation(fields: [acmId], references: [id])
-  acmId    String
+  id                 String  @id @default(cuid())
+  location           String
+  count              Int
+  mean               Decimal @default(0)
+  std                Decimal @default(0)
+  minValue           Decimal
+  maxValue           Decimal
+  expectedPrice      Decimal @default(0)
+  satellitalImageUrl String  @default("")
+  acm                acm     @relation(fields: [acmId], references: [id])
+  acmId              String
 
   @@index([acmId])
 }
@@ -84,7 +87,6 @@ model acm {
   numberOfParkingLots Int?               @default(0)
   totalArea           Int?               @default(0)
   createdAt           DateTime           @default(now()) @map("created_at")
-  expectedPrice       Decimal            @default(0)
   userId              String
   user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   acmResultSummary    acmResultSummary[]

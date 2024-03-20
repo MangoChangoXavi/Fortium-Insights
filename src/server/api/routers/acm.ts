@@ -53,12 +53,44 @@ export const acmRouter = createTRPCRouter({
         lng: coordinates.lng,
         // satellitalImageUrl: satellitalImageUrl,
         radius: 2,
+        userId: ctx.userId,
       };
 
       // from the table scrapedProperty locate all the properties that are close to the new property
       // based on the coordinates lat and lng
       // get all the properties that are close to the new property in a 5km radiu
       const properties = await getScrappedPostFromMongo({ ...data });
+
+      const acmResultSummary = {
+        location: `${coordinates.lat},${coordinates.lng}`,
+        count: properties.length,
+        mean:
+          properties.reduce((acc, property) => acc + property.price, 0) /
+          properties.length,
+        std: Math.sqrt(
+          properties.reduce(
+            (acc, property) =>
+              acc +
+              Math.pow(
+                property.price -
+                  properties.reduce(
+                    (acc, property) => acc + property.price,
+                    0,
+                  ) /
+                    properties.length,
+                2,
+              ),
+            0,
+          ) / properties.length,
+        ),
+        minValue: Math.min(...properties.map((property) => property.price)),
+        maxValue: Math.max(...properties.map((property) => property.price)),
+        expectedPrice: Math.round(
+          properties.reduce((acc, property) => acc + property.price, 0) /
+            properties.length,
+        ),
+      };
+
       await ctx.db.acm.create({
         data: {
           ...data,
@@ -74,8 +106,12 @@ export const acmRouter = createTRPCRouter({
               buildingType: property.buildingType ?? 0,
               numberOfParkingLots: property.numberOfParkingLots ?? 0,
               totalArea: property.totalArea ?? 0,
+              imagesUrl: property.imagesUrl,
               url: property.url,
             })),
+          },
+          acmResultSummary: {
+            create: acmResultSummary,
           },
         },
       });
@@ -300,7 +336,9 @@ export const acmRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
       const skip = input.skip ?? 0;
-      let where = {};
+      let where = {
+        userId: ctx.userId,
+      };
       if (input.status) {
         where = {
           status: input.status,

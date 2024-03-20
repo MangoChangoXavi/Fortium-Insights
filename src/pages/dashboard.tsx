@@ -16,7 +16,7 @@ export default function Dashboard() {
           /> */}
             <main className="py-4"></main>
           </div>
-          <main className="py-4 bg-[url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=1896&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
+          <main className="py-4 h-screen bg-[url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=1896&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
             <div className="flex flex-col gap-6 md:flex-row">
               <div className="flex w-full flex-col gap-6 md:w-3/5">
                 {/* graph */}
