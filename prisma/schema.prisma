@@ -58,22 +58,6 @@ model acmResultDetail {
   @@index([acmId])
 }
 
-model acmResultSummary {
-  id                 String  @id @default(cuid())
-  location           String
-  count              Int
-  mean               Decimal @default(0)
-  std                Decimal @default(0)
-  minValue           Decimal
-  maxValue           Decimal
-  expectedPrice      Decimal @default(0)
-  satellitalImageUrl String  @default("")
-  acm                acm     @relation(fields: [acmId], references: [id])
-  acmId              String
-
-  @@index([acmId])
-}
-
 model acm {
   id                  String             @id @default(cuid())
   address             String
@@ -89,7 +73,6 @@ model acm {
   createdAt           DateTime           @default(now()) @map("created_at")
   userId              String
   user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  acmResultSummary    acmResultSummary[]
   acmResultDetail     acmResultDetail[]
 }
 

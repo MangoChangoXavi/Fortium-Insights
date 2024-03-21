@@ -5,8 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { uploadFile } from "~/utils/functions";
-import { getCoordinates, getSatelliteImage } from "~/utils/googleMaps";
+import { getCoordinates } from "~/utils/googleMaps";
 import { getScrappedPostFromMongo } from "../mongodb";
 export const maxDuration = 200; // This function can run for a maximum of 5 seconds
 export const acmRouter = createTRPCRouter({
@@ -61,36 +60,6 @@ export const acmRouter = createTRPCRouter({
       // get all the properties that are close to the new property in a 5km radiu
       const properties = await getScrappedPostFromMongo({ ...data });
 
-      const acmResultSummary = {
-        location: `${coordinates.lat},${coordinates.lng}`,
-        count: properties.length,
-        mean:
-          properties.reduce((acc, property) => acc + property.price, 0) /
-          properties.length,
-        std: Math.sqrt(
-          properties.reduce(
-            (acc, property) =>
-              acc +
-              Math.pow(
-                property.price -
-                  properties.reduce(
-                    (acc, property) => acc + property.price,
-                    0,
-                  ) /
-                    properties.length,
-                2,
-              ),
-            0,
-          ) / properties.length,
-        ),
-        minValue: Math.min(...properties.map((property) => property.price)),
-        maxValue: Math.max(...properties.map((property) => property.price)),
-        expectedPrice: Math.round(
-          properties.reduce((acc, property) => acc + property.price, 0) /
-            properties.length,
-        ),
-      };
-
       await ctx.db.acm.create({
         data: {
           ...data,
@@ -109,9 +78,6 @@ export const acmRouter = createTRPCRouter({
               imagesUrl: property.imagesUrl,
               url: property.url,
             })),
-          },
-          acmResultSummary: {
-            create: acmResultSummary,
           },
         },
       });
@@ -387,6 +353,7 @@ export const acmRouter = createTRPCRouter({
       };
       if (input.status) {
         where = {
+          ...where,
           status: input.status,
         };
       }
@@ -421,32 +388,11 @@ export const acmRouter = createTRPCRouter({
         where,
         include: {
           acmResultDetail: true,
-          acmResultSummary: true,
         },
       });
       return {
         acms,
         totalItemsCount,
       };
-    }),
-
-  // mutation to the route /result to update the result
-  updateResult: publicProcedure
-    .input(
-      z.object({
-        id: z.string(),
-        expectedPrice: z.number(),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      const acm = await ctx.db.acm.update({
-        where: {
-          id: input.id,
-        },
-        data: {
-          expectedPrice: input.expectedPrice,
-        },
-      });
-      return acm;
     }),
 });

@@ -196,7 +196,20 @@ export default function ACMs() {
     },
   }));
 
+  const calculateExpectedPrice = () => {
+    if (!selectedAcm) return 0;
+    const pricesInDollars = selectedAcm.acmResultDetail.map((property) =>
+      property.currency === "Q"
+        ? parseFloat(property.price.toString()) * 0.13
+        : parseFloat(property.price.toString()),
+    );
+    const total = pricesInDollars.reduce((a, b) => a + b, 0);
+    const roundedAverage = Math.round(total / pricesInDollars.length);
+    return roundedAverage;
+  };
+
   const resultIsComplete = selectedAcm;
+
   return (
     <LayoutSigned>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
@@ -353,15 +366,7 @@ export default function ACMs() {
                         <div className="mt-4 md:text-xl xl:text-2xl">
                           <p className="text-gray-600">Valoracion Estimada:</p>
                           <p className="text-green-600">
-                            {USD.format(
-                              Math.round(
-                                selectedAcm.acmResultDetail.reduce(
-                                  (acc, property) =>
-                                    acc + (property.price as unknown as number),
-                                  0,
-                                ) / selectedAcm.acmResultDetail.length,
-                              ),
-                            )}
+                            {USD.format(calculateExpectedPrice())}
                           </p>
                         </div>
                       </div>
