@@ -228,6 +228,26 @@ export default function ACMs() {
     return roundedAverage;
   };
 
+  const calculateMinPrice = () => {
+    if (!selectedAcm) return 0;
+    const pricesInDollars = selectedAcm.acmResultDetail.map((property) =>
+      property.currency === "Q"
+        ? parseFloat(property.price.toString()) * 0.13
+        : parseFloat(property.price.toString()),
+    );
+    return Math.min(...pricesInDollars);
+  };
+
+  const calculateMaxPrice = () => {
+    if (!selectedAcm) return 0;
+    const pricesInDollars = selectedAcm.acmResultDetail.map((property) =>
+      property.currency === "Q"
+        ? parseFloat(property.price.toString()) * 0.13
+        : parseFloat(property.price.toString()),
+    );
+    return Math.max(...pricesInDollars);
+  };
+
   const resultIsComplete = selectedAcm;
 
   return (
@@ -422,14 +442,7 @@ export default function ACMs() {
                           alt="image"
                         />
                         <p className="mt-2 font-semibold text-slate-700">
-                          {USD.format(
-                            Math.min(
-                              ...selectedAcm.acmResultDetail.map(
-                                (property) =>
-                                  property.price as unknown as number,
-                              ),
-                            ),
-                          )}
+                          {USD.format(calculateMinPrice())}
                         </p>
                       </div>
                       <div className="mt-6 flex flex-col items-center">
@@ -444,14 +457,7 @@ export default function ACMs() {
                           alt="image"
                         />
                         <p className="mt-2 font-semibold text-slate-700">
-                          {USD.format(
-                            Math.max(
-                              ...selectedAcm.acmResultDetail.map(
-                                (property) =>
-                                  property.price as unknown as number,
-                              ),
-                            ),
-                          )}
+                          {USD.format(calculateMaxPrice())}
                         </p>
                       </div>
                       <div>
