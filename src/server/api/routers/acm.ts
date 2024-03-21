@@ -304,6 +304,22 @@ export const acmRouter = createTRPCRouter({
       return acm;
     }),
 
+  deleteResultDetail: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const acm = await ctx.db.acmResultDetail.delete({
+        where: {
+          id: input.id,
+        },
+      });
+
+      return acm;
+    }),
+
   update: protectedProcedure
     .input(
       z.object({

@@ -1,4 +1,4 @@
-import { RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs, api } from "~/utils/api";
 import {
   DataTable,
   type PaginationState,
@@ -17,6 +17,7 @@ import {
   PlusIcon,
   RulerIcon,
   SearchIcon,
+  TrashIcon,
 } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import { CategoryIcon } from "~/components/system/ui/Icons";
@@ -134,8 +135,7 @@ export default function ACMs() {
       });
       toast({
         title: "Creado con exito!",
-        description:
-          "Puede que demore unos minutos en completarse el resultado de la tasacion.",
+        description: "Ya puede ver su resultado en la tabla.",
       });
     },
     onError: (err) => {
@@ -147,6 +147,26 @@ export default function ACMs() {
       });
     },
   });
+  const { mutate: deleteACMDetail, isLoading: isDeleting } =
+    api.acm.deleteResultDetail.useMutation({
+      onError: (err) => {
+        const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+        toast({
+          title:
+            errorMessage ??
+            "Ocurrio un problema al eliminar, ya se esta trabajando en ello.",
+        });
+      },
+      onSuccess: () => {
+        ctx.acm.getDataTable.invalidate().catch((err) => {
+          console.error(err);
+        });
+        toast({
+          title: "Borrado con exito!",
+          description: "El elemento ya no aparecera en la tabla.",
+        });
+      },
+    });
 
   const filters = [
     {
@@ -668,7 +688,7 @@ export default function ACMs() {
                       Propiedades Similares
                     </DrawerTitle>
                     {selectedAcm.acmResultDetail.map((resultDetail, index) => (
-                      <Link href={resultDetail.url} key={index} target="_blank">
+                      <div key={index}>
                         <div className="mt-4">
                           <div className="mt-12 flex items-center gap-4">
                             <Image
@@ -681,7 +701,7 @@ export default function ACMs() {
                               }
                               alt="image"
                             />
-                            <div>
+                            <Link href={resultDetail.url} target="_blank">
                               <div>
                                 <p className="font-semibold text-slate-700 md:text-[18px] xl:text-[16px] 2xl:text-[18px]">
                                   {resultDetail.address}
@@ -739,7 +759,7 @@ export default function ACMs() {
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </Link>
 
                             <div className="w-[40%] text-end">
                               <span className="font-semibold text-green-600 md:text-xl xl:text-2xl">
@@ -751,11 +771,22 @@ export default function ACMs() {
                                       resultDetail.price as unknown as number,
                                     )}
                               </span>
+                              <Button
+                                className="m-2"
+                                variant={"error"}
+                                type="button"
+                                onClick={() => {
+                                  selectedAcm.acmResultDetail.splice(index, 1);
+                                  deleteACMDetail({ id: resultDetail.id });
+                                }}
+                              >
+                                <TrashIcon className="h-4 w-4 stroke-white" />{" "}
+                              </Button>
                             </div>
                           </div>
                           <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
                         </div>
-                      </Link>
+                      </div>
                     ))}
                   </div>
                   {/* <div className='flex w-full flex-row justify-between px-4'>
