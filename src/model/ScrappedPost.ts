@@ -14,6 +14,7 @@ const scrappedPostSchema = new mongoose.Schema({
     type: { type: String, default: "Point" },
     coordinates: { type: [Number], index: "2dsphere" },
   },
+  operationType: String,
   url: String,
   date: { type: Date, default: Date.now },
 });

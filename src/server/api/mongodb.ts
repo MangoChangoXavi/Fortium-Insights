@@ -42,6 +42,7 @@ async function getScrappedPostFromMongo({
   price,
   currency,
   numberOfParkingLots,
+  operationType,
   totalArea,
 }: PropsI): Promise<ScrappedPostI[]> {
   // find all posts in the radius
@@ -61,6 +62,13 @@ async function getScrappedPostFromMongo({
           $maxDistance: radius * METERS_PER_KM,
         },
       },
+    };
+  }
+
+  if (operationType) {
+    where = {
+      ...where,
+      operationType: operationType,
     };
   }
 

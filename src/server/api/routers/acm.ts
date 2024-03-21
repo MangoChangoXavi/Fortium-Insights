@@ -117,6 +117,52 @@ export const acmRouter = createTRPCRouter({
       });
     }),
 
+  countFilters: protectedProcedure
+    .input(
+      z.object({
+        filter: z.string().optional(),
+        search: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const lessThan1Month = await ctx.db.acm.count({
+        where: {
+          createdAt: {
+            gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30),
+          },
+        },
+      });
+      const lessThan6Months = await ctx.db.acm.count({
+        where: {
+          createdAt: {
+            gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30 * 6),
+            lt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30),
+          },
+        },
+      });
+      const lessThan1Year = await ctx.db.acm.count({
+        where: {
+          createdAt: {
+            gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30 * 12),
+            lt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30 * 6),
+          },
+        },
+      });
+      const moreThan1Year = await ctx.db.acm.count({
+        where: {
+          createdAt: {
+            lt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30 * 12),
+          },
+        },
+      });
+
+      return {
+        lessThan1Month,
+        lessThan6Months,
+        lessThan1Year,
+        moreThan1Year,
+      };
+    }),
   countInfinite: protectedProcedure
     .input(
       z.object({
