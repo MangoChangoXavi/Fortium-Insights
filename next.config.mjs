@@ -20,6 +20,7 @@ const config = {
       "mancro.com",
       "photos.encuentra24.com",
       "scontent.faep24-2.fna.fbcdn.net",
+      "scontent.faep24-1.fna.fbcdn.net",
     ],
   },
 

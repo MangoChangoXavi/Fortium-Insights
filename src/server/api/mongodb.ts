@@ -109,7 +109,7 @@ async function getScrappedPostFromMongo({
   if (totalArea) {
     where = {
       ...where,
-      totalArea: { $gte: totalArea - 50, $lte: totalArea + 50 },
+      totalArea: { $gte: totalArea - 20, $lte: totalArea + 20 },
     };
   }
 
