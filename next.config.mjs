@@ -18,7 +18,8 @@ const config = {
       "i.insider.com",
       "d7lrki2kktov4uja.public.blob.vercel-storage.com",
       "mancro.com",
-      "photos.encuentra24.com"
+      "photos.encuentra24.com",
+      "scontent.faep24-2.fna.fbcdn.net",
     ],
   },
 
