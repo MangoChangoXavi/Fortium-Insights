@@ -33,7 +33,7 @@ export default function Requirements() {
     <LayoutSigned>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
         <div className="flex h-fit w-full flex-row justify-between gap-16 rounded-lg bg-white p-10">
-          <div className=" w-[40%]">
+          <div className="w-[40%]">
             <RequirementsForm handleSubmit={handleSubmit} />
           </div>
           <div className="flex w-[60%] flex-col gap-2">

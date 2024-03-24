@@ -149,10 +149,7 @@ export function RequirementsForm({ handleSubmit }: PropsI) {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="my-10 space-y-6"
-      >
+      <form onSubmit={form.handleSubmit(handleSubmit)} className=" space-y-6">
         {/* title and subtitle */}
         <div className="flex flex-col gap-[16px] ">
           {/* title */}
