@@ -42,7 +42,7 @@ export const acmRouter = createTRPCRouter({
 
       const data = {
         address: input.address,
-        operationType: input.operationType,
+        // operationType: input.operationType,
         buildingType: input.buildingType,
         numberOfRooms: input.numberOfRooms,
         numberOfBathrooms: input.numberOfBathrooms,
@@ -50,8 +50,14 @@ export const acmRouter = createTRPCRouter({
         totalArea: input.totalArea,
         lat: coordinates.lat,
         lng: coordinates.lng,
+        minRent: 0,
+        maxRent: 0,
+        rentCount: 0,
+        sellCount: 0,
+        minSell: 0,
+        maxSell: 0,
         // satellitalImageUrl: satellitalImageUrl,
-        radius: 2,
+        radius: 1,
         userId: ctx.userId,
       };
 
@@ -60,11 +66,38 @@ export const acmRouter = createTRPCRouter({
       // get all the properties that are close to the new property in a 5km radiu
       const properties = await getScrappedPostFromMongo({ ...data });
 
+      const propertiesToSell = properties.filter(
+        (property) => property.operationType === "sell",
+      );
+
+      const propertiesToRent = properties.filter(
+        (property) => property.operationType === "rent",
+      );
+
+      // assign min rent, max rent and rent price
+      if (propertiesToRent.length > 0) {
+        const rentPrices = propertiesToRent.map((property) => property.price);
+        data.minRent = Math.min(...rentPrices);
+        data.maxRent = Math.max(...rentPrices);
+        data.rentCount = propertiesToRent.length;
+      }
+
+      // assign min sell, max sell and sell price
+      if (propertiesToSell.length > 0) {
+        const sellPrices = propertiesToSell.map((property) => property.price);
+        data.minSell = Math.min(...sellPrices);
+        data.maxSell = Math.max(...sellPrices);
+        data.sellCount = propertiesToSell.length;
+      }
+
+      const propertiesInTheSameOperationType =
+        input.operationType === "sell" ? propertiesToSell : propertiesToRent;
+
       await ctx.db.acm.create({
         data: {
           ...data,
           acmResultDetail: {
-            create: properties.map((property) => ({
+            create: propertiesInTheSameOperationType.map((property) => ({
               lat: property.location.coordinates[1],
               lng: property.location.coordinates[0],
               price: property.price,

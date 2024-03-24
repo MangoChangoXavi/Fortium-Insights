@@ -4,7 +4,15 @@ import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
 import { UsersIcon } from "../ui/Icons";
 import { Sidebar } from "./Sidebar";
-import { AxeIcon, CatIcon, MicIcon, TvIcon } from "lucide-react";
+import {
+  AxeIcon,
+  CatIcon,
+  DatabaseIcon,
+  MicIcon,
+  SearchIcon,
+  TvIcon,
+  Wallet,
+} from "lucide-react";
 const menuItems = [
   {
     name: "On Boards",
@@ -25,9 +33,15 @@ const menuItems = [
     permissions: ["admin"],
   },
   {
-    name: "ACM",
-    icon: <MicIcon className="h-5 w-5" />,
+    name: "Valoraciones",
+    icon: <Wallet className="h-5 w-5" />,
     link: "/acms",
+    permissions: ["admin", "user"],
+  },
+  {
+    name: "Requerimientos",
+    icon: <SearchIcon className="h-5 w-5" />,
+    link: "/requirements",
     permissions: ["admin", "user"],
   },
   {

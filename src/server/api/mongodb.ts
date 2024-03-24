@@ -8,6 +8,7 @@ interface PropsI {
   numberOfBathrooms?: number;
   numberOfRooms?: number;
   buildingType?: string;
+  operationType?: string;
   numberOfParkingLots?: number;
   totalArea?: number;
   price?: number;
@@ -23,6 +24,7 @@ interface ScrappedPostI {
   numberOfBathrooms: number;
   numberOfRooms: number;
   buildingType: string;
+  operationType: string;
   numberOfParkingLots: number;
   totalArea: number;
   price: number;
@@ -30,6 +32,146 @@ interface ScrappedPostI {
   url: string;
   address: string;
   imagesUrl: string[];
+}
+
+async function getRequirementsFromMongo({
+  lat,
+  lng,
+  radius,
+  minNumberOfRooms,
+  maxNumberOfRooms,
+  minNumberOfBathrooms,
+  maxNumberOfBathrooms,
+  minNumberOfParkingLots,
+  maxNumberOfParkingLots,
+  minTotalArea,
+  maxTotalArea,
+  buildingType,
+  operationType,
+}: {
+  lat: number;
+  lng: number;
+  radius: number;
+  minNumberOfRooms?: number;
+  maxNumberOfRooms?: number;
+  minNumberOfBathrooms?: number;
+  maxNumberOfBathrooms?: number;
+  minNumberOfParkingLots?: number;
+  maxNumberOfParkingLots?: number;
+  minTotalArea?: number;
+  maxTotalArea?: number;
+  buildingType?: string;
+  operationType?: string;
+}): Promise<ScrappedPostI[]> {
+  await connectDB();
+
+  const METERS_PER_KM = 1000;
+
+  let where = {};
+  if (lat && lng && radius) {
+    where = {
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [lng, lat],
+          },
+          $maxDistance: radius * METERS_PER_KM,
+        },
+      },
+    };
+  }
+
+  if (operationType) {
+    where = {
+      ...where,
+      operationType: operationType,
+    };
+  }
+
+  if (minNumberOfBathrooms && maxNumberOfBathrooms) {
+    where = {
+      ...where,
+      numberOfBathrooms: {
+        $gte: minNumberOfBathrooms,
+        $lte: maxNumberOfBathrooms,
+      },
+    };
+  } else if (minNumberOfBathrooms) {
+    where = {
+      ...where,
+      numberOfBathrooms: { $gte: minNumberOfBathrooms },
+    };
+  } else if (maxNumberOfBathrooms) {
+    where = {
+      ...where,
+      numberOfBathrooms: { $lte: maxNumberOfBathrooms },
+    };
+  }
+
+  if (minNumberOfRooms && maxNumberOfRooms) {
+    where = {
+      ...where,
+      numberOfRooms: { $gte: minNumberOfRooms, $lte: maxNumberOfRooms },
+    };
+  } else if (minNumberOfRooms) {
+    where = {
+      ...where,
+      numberOfRooms: { $gte: minNumberOfRooms },
+    };
+  } else if (maxNumberOfRooms) {
+    where = {
+      ...where,
+      numberOfRooms: { $lte: maxNumberOfRooms },
+    };
+  }
+
+  if (buildingType) {
+    where = {
+      ...where,
+      buildingType: buildingType,
+    };
+  }
+
+  if (minNumberOfParkingLots && maxNumberOfParkingLots) {
+    where = {
+      ...where,
+      numberOfParkingLots: {
+        $gte: minNumberOfParkingLots,
+        $lte: maxNumberOfParkingLots,
+      },
+    };
+  } else if (minNumberOfParkingLots) {
+    where = {
+      ...where,
+      numberOfParkingLots: { $gte: minNumberOfParkingLots },
+    };
+  } else if (maxNumberOfParkingLots) {
+    where = {
+      ...where,
+      numberOfParkingLots: { $lte: maxNumberOfParkingLots },
+    };
+  }
+
+  if (minTotalArea && maxTotalArea) {
+    where = {
+      ...where,
+      totalArea: { $gte: minTotalArea, $lte: maxTotalArea },
+    };
+  } else if (minTotalArea) {
+    where = {
+      ...where,
+      totalArea: { $gte: minTotalArea },
+    };
+  } else if (maxTotalArea) {
+    where = {
+      ...where,
+      totalArea: { $lte: maxTotalArea },
+    };
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return await ScrappedPost.find(where);
 }
 
 async function getScrappedPostFromMongo({
@@ -131,4 +273,4 @@ async function getScrappedPostFromMongo({
   return await ScrappedPost.find(where);
 }
 
-export { getScrappedPostFromMongo };
+export { getScrappedPostFromMongo, getRequirementsFromMongo };

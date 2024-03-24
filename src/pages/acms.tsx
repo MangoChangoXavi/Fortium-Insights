@@ -41,8 +41,9 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import Image from "next/image";
-import { Loader } from "~/components/system/layouts/Loader";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { Loader } from "~/components/system/layouts/Loader";
 
 import ImageSidebarMapaUbicacion from "~/assets/img/imageSidebarMapaUbicacion.jpeg";
 import ImageSidebarDifferentImages from "~/assets/img/imageSidebarDifferentLocations.jpeg";
@@ -53,8 +54,8 @@ import ImageSidebarImageHouseRed from "~/assets/img/ImageSidebarImageHouseRed.pn
 import ImageSidebarImageHouseYellow from "~/assets/img/ImageSidebarImageHouseYellow.png";
 import ImageSidebarImageHouseGreen from "~/assets/img/ImageSidebarImageHouseGreen.png";
 import imageSidebarCompraVenta from "~/assets/img/imageSidebarCompraVenta.jpeg";
-import Link from "next/link";
 import { GTQ, USD } from "~/utils/functions";
+import { AcmResultDetailCard } from "~/components/template/layouts/AcmResultDetailCard";
 
 const ITEMS_PER_PAGE = 5;
 type ACMGetDataTable = RouterOutputs["acm"]["getDataTable"]["acms"][0];
@@ -623,11 +624,18 @@ export default function ACMs() {
                           realización de operaciones de{" "}
                           <span className="font-bold">compra-venta</span> es{" "}
                           <br />
-                          de <span className="font-bold">GTQ. 268800</span>
+                          de{" "}
+                          <span className="font-bold">
+                            {USD.format(
+                              selectedAcm.minSell as unknown as number,
+                            )}
+                          </span>
                         </p>
                         <div className="mt-8">
                           <div className="text-center text-xl font-bold text-green-600">
-                            GTQ. 268800
+                            {USD.format(
+                              selectedAcm.maxSell as unknown as number,
+                            )}
                           </div>
                         </div>
                       </div>
@@ -642,11 +650,19 @@ export default function ACMs() {
                         <div className="flex justify-between">
                           <div className="text-sm font-bold text-zinc-600">
                             <p className="my-2">Minimo estimado</p>
-                            <p>GTQ. 241900</p>
+                            <p>
+                              {USD.format(
+                                selectedAcm.minSell as unknown as number,
+                              )}
+                            </p>
                           </div>
                           <div className="text-sm font-bold text-zinc-600">
                             <p className="my-2">Máximo estimado</p>
-                            <p className="text-end">GTQ. 298700</p>
+                            <p className="text-end">
+                              {USD.format(
+                                selectedAcm.maxSell as unknown as number,
+                              )}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -659,11 +675,22 @@ export default function ACMs() {
                         <p className="text-sm text-zinc-600">
                           el precio estimado para el inmueble en el mercado de{" "}
                           <span className="font-bold">alquiler</span> es de{" "}
-                          <span className="font-bold">3000 GTQ/mes</span>
+                          <span className="font-bold">
+                            {USD.format(
+                              ((selectedAcm.maxRent ?? 0) -
+                                (selectedAcm.minRent ?? 0)) /
+                                2,
+                            )}
+                          </span>
                         </p>
                         <div className="mt-8">
                           <div className="text-center text-xl font-bold text-green-600">
-                            3000 GTQ/mes
+                            {USD.format(
+                              ((selectedAcm.maxRent ?? 0) -
+                                (selectedAcm.minRent ?? 0)) /
+                                2,
+                            )}{" "}
+                            / mes
                           </div>
                         </div>
                       </div>
@@ -678,11 +705,19 @@ export default function ACMs() {
                         <div className="flex justify-between">
                           <div className="text-sm font-bold text-zinc-600">
                             <p className="my-2">Minimo estimado</p>
-                            <p>2800 GTQ/mes</p>
+                            <p>
+                              {USD.format(
+                                selectedAcm.minRent as unknown as number,
+                              )}
+                            </p>
                           </div>
                           <div className="text-sm font-bold text-zinc-600">
                             <p className="my-2">Máximo estimado</p>
-                            <p className="text-end">3110 GTQ/mes</p>
+                            <p className="text-end">
+                              {USD.format(
+                                selectedAcm.maxRent as unknown as number,
+                              )}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -694,128 +729,16 @@ export default function ACMs() {
                       Propiedades Similares
                     </DrawerTitle>
                     {selectedAcm.acmResultDetail.map((resultDetail, index) => (
-                      <div key={index}>
-                        <div className="mt-4">
-                          <div className="mt-12 flex items-center gap-4">
-                            <Image
-                              className="h-[80px] w-[120px] rounded-xl"
-                              width={500}
-                              height={500}
-                              src={
-                                resultDetail.imagesUrl[0] ??
-                                "https://dummyimage.com/600x400/000/fff&text=sin+imagen"
-                              }
-                              alt="image"
-                            />
-                            <Link href={resultDetail.url} target="_blank">
-                              <div>
-                                <p className="font-semibold text-slate-700 md:text-[18px] xl:text-[16px] 2xl:text-[18px]">
-                                  {resultDetail.address}
-                                </p>
-                              </div>
-                              <div className="flex">
-                                <div className="pr-4 font-bold">
-                                  <span className="text-zinc-500 md:text-sm lg:text-[14px]">
-                                    Habitaciones
-                                  </span>
-                                  <div className="flex flex-row items-center gap-6 md:text-[13px] lg:text-[14px]">
-                                    <BedIcon className="h-4 w-4" />
-                                    <span>{resultDetail.numberOfRooms}</span>
-                                  </div>
-                                </div>
-
-                                <div className="pr-4 font-bold">
-                                  <span className="text-zinc-500 md:text-sm lg:text-[14px]">
-                                    Baños
-                                  </span>
-                                  <div className="flex flex-row items-center gap-4 md:text-[13px] lg:text-[14px]">
-                                    <BathIcon className="h-4 w-4" />
-                                    <span>
-                                      {resultDetail.numberOfBathrooms}
-                                    </span>
-                                  </div>
-                                </div>
-
-                                <div className="pr-4 font-bold">
-                                  <span className="text-zinc-500 md:text-sm lg:text-[14px]">
-                                    Parqueadores
-                                  </span>
-                                  <div className="flex flex-row items-center gap-4 md:text-[13px] lg:text-[14px]">
-                                    <div className="pl-2">
-                                      <CarIcon className="h-4 w-4" />
-                                    </div>
-                                    <span>
-                                      {resultDetail.numberOfParkingLots}
-                                    </span>
-                                  </div>
-                                </div>
-
-                                <div className="font-bold">
-                                  <span className="text-zinc-500 md:text-sm lg:text-[14px]">
-                                    Metros
-                                  </span>
-                                  <div className="flex flex-row md:text-[13px] lg:text-[14px]">
-                                    <RulerIcon className="h-4 w-4" />
-                                    <span className="ml-2">
-                                      {
-                                        resultDetail.totalArea as unknown as number
-                                      }
-                                    </span>
-                                    <span className="ml-[2px]">m²</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </Link>
-
-                            <div className="w-[40%] text-end">
-                              <span className="font-semibold text-green-600 md:text-xl xl:text-2xl">
-                                {resultDetail.currency === "Q"
-                                  ? GTQ.format(
-                                      resultDetail.price as unknown as number,
-                                    )
-                                  : USD.format(
-                                      resultDetail.price as unknown as number,
-                                    )}
-                              </span>
-                              <Button
-                                className="m-2"
-                                variant={"error"}
-                                type="button"
-                                onClick={() => {
-                                  selectedAcm.acmResultDetail.splice(index, 1);
-                                  deleteACMDetail({ id: resultDetail.id });
-                                }}
-                              >
-                                <TrashIcon className="h-4 w-4 stroke-white" />{" "}
-                              </Button>
-                            </div>
-                          </div>
-                          <hr className="my-6 h-[0px] w-full border border-neutral-400 border-opacity-50" />
-                        </div>
-                      </div>
+                      <AcmResultDetailCard
+                        key={index}
+                        {...resultDetail}
+                        handleDelete={() => {
+                          selectedAcm.acmResultDetail.splice(index, 1);
+                          deleteACMDetail({ id: resultDetail.id });
+                        }}
+                      />
                     ))}
                   </div>
-                  {/* <div className='flex w-full flex-row justify-between px-4'>
-                    <div className='flex flex-row items-center justify-center gap-2'>
-                      <Image
-                        src={
-                          selectedAcm.operationType === 'rent' ? RentIllustration : SellIllustration
-                        }
-                        alt='Rent'
-                        width={50}
-                        height={50}
-                      />
-                      <div className='flex flex-col'>
-                        {selectedAcm.operationType === 'rent' ? 'Arriendo' : 'Venta'}
-                        <span className='text-xs font-medium text-zinc-500 '>
-                          {selectedAcm.buildingType}
-                        </span>
-                      </div>
-                    </div>
-                    <Button variant='secondary'>
-                      Valoracion Estimada: GTQ. {selectedAcm.expectedPrice as unknown as number}
-                    </Button>
-                  </div> */}
                   {/* <div className='h-64 w-64 self-center'>
                     <Doughnut data={graphData} />
                   </div> */}
