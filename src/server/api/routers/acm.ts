@@ -28,21 +28,8 @@ export const acmRouter = createTRPCRouter({
         throw new Error("Invalid address");
       }
 
-      // const satellitalImageBlob = await getSatelliteImage(
-      //   coordinates.lat as unknown as number,
-      //   coordinates.lng as unknown as number,
-      // );
-
-      // convert the blob to a file with png type
-      // const file = new File([satellitalImageBlob], "satellitalImage.png", {
-      //   type: "image/png",
-      // });
-
-      // const satellitalImageUrl = await uploadFile(file);
-
       const data = {
         address: input.address,
-        // operationType: input.operationType,
         buildingType: input.buildingType,
         numberOfRooms: input.numberOfRooms,
         numberOfBathrooms: input.numberOfBathrooms,
@@ -56,64 +43,76 @@ export const acmRouter = createTRPCRouter({
         sellCount: 0,
         minSell: 0,
         maxSell: 0,
-        // satellitalImageUrl: satellitalImageUrl,
         radius: 1,
-        userId: ctx.userId,
+        userId: ctx.userId ?? "",
       };
 
       // from the table scrapedProperty locate all the properties that are close to the new property
       // based on the coordinates lat and lng
       // get all the properties that are close to the new property in a 5km radiu
-      const properties = await getScrappedPostFromMongo({ ...data });
+      try {
+        const properties = await getScrappedPostFromMongo({ ...data });
 
-      const propertiesToSell = properties.filter(
-        (property) => property.operationType === "sell",
-      );
+        const propertiesToSell = properties.filter(
+          (property) => property.operationType === "sell",
+        );
 
-      const propertiesToRent = properties.filter(
-        (property) => property.operationType === "rent",
-      );
+        const propertiesToRent = properties.filter(
+          (property) => property.operationType === "rent",
+        );
 
-      // assign min rent, max rent and rent price
-      if (propertiesToRent.length > 0) {
-        const rentPrices = propertiesToRent.map((property) => property.price);
-        data.minRent = Math.min(...rentPrices);
-        data.maxRent = Math.max(...rentPrices);
-        data.rentCount = propertiesToRent.length;
-      }
+        // assign min rent, max rent and rent price
+        if (propertiesToRent.length > 0) {
+          const rentPrices = propertiesToRent.map((property) => {
+            return property.currency === "Q"
+              ? property.price * 0.13
+              : property.price;
+          });
+          data.minRent = Math.min(...rentPrices);
+          data.maxRent = Math.max(...rentPrices);
+          data.rentCount = propertiesToRent.length;
+        }
 
-      // assign min sell, max sell and sell price
-      if (propertiesToSell.length > 0) {
-        const sellPrices = propertiesToSell.map((property) => property.price);
-        data.minSell = Math.min(...sellPrices);
-        data.maxSell = Math.max(...sellPrices);
-        data.sellCount = propertiesToSell.length;
-      }
+        // assign min sell, max sell and sell price
+        if (propertiesToSell.length > 0) {
+          const sellPrices = propertiesToSell.map((property) => {
+            return property.currency === "Q"
+              ? property.price * 0.13
+              : property.price;
+          });
+          data.minSell = Math.min(...sellPrices);
+          data.maxSell = Math.max(...sellPrices);
+          data.sellCount = propertiesToSell.length;
+        }
 
-      const propertiesInTheSameOperationType =
-        input.operationType === "sell" ? propertiesToSell : propertiesToRent;
+        const propertiesInTheSameOperationType =
+          input.operationType === "sell" ? propertiesToSell : propertiesToRent;
 
-      await ctx.db.acm.create({
-        data: {
-          ...data,
-          acmResultDetail: {
-            create: propertiesInTheSameOperationType.map((property) => ({
-              lat: property.location.coordinates[1],
-              lng: property.location.coordinates[0],
-              price: property.price,
-              currency: property.currency,
-              address: property.address,
-              numberOfBathrooms: property.numberOfBathrooms ?? 0,
-              numberOfRooms: property.numberOfRooms ?? 0,
-              buildingType: property.buildingType ?? 0,
-              numberOfParkingLots: property.numberOfParkingLots ?? 0,
-              totalArea: property.totalArea ?? 0,
-              imagesUrl: property.imagesUrl,
-              url: property.url,
-            })),
+        await ctx.db.acm.create({
+          data: {
+            ...data,
+            operationType: input.operationType,
+            acmResultDetail: {
+              create: propertiesInTheSameOperationType.map((property) => ({
+                lat: property.location.coordinates[1],
+                lng: property.location.coordinates[0],
+                price: property.price,
+                currency: property.currency,
+                address: property.address,
+                numberOfBathrooms: property.numberOfBathrooms ?? 0,
+                numberOfRooms: property.numberOfRooms ?? 0,
+                buildingType: property.buildingType ?? 0,
+                numberOfParkingLots: property.numberOfParkingLots ?? 0,
+                totalArea: property.totalArea ?? 0,
+                imagesUrl: property.imagesUrl,
+                url: property.url,
+              })),
+            },
           },
-        },
-      });
+        });
+      } catch (e) {
+        console.log("ERROR", e);
+      }
     }),
 
   countFilters: protectedProcedure

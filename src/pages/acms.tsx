@@ -627,14 +627,18 @@ export default function ACMs() {
                           de{" "}
                           <span className="font-bold">
                             {USD.format(
-                              selectedAcm.minSell as unknown as number,
+                              ((selectedAcm.minSell as unknown as number) +
+                                (selectedAcm.maxSell as unknown as number)) /
+                                2,
                             )}
                           </span>
                         </p>
                         <div className="mt-8">
                           <div className="text-center text-xl font-bold text-green-600">
                             {USD.format(
-                              selectedAcm.maxSell as unknown as number,
+                              ((selectedAcm.minSell as unknown as number) +
+                                (selectedAcm.maxSell as unknown as number)) /
+                                2,
                             )}
                           </div>
                         </div>
@@ -677,7 +681,7 @@ export default function ACMs() {
                           <span className="font-bold">alquiler</span> es de{" "}
                           <span className="font-bold">
                             {USD.format(
-                              ((selectedAcm.maxRent ?? 0) -
+                              ((selectedAcm.maxRent ?? 0) +
                                 (selectedAcm.minRent ?? 0)) /
                                 2,
                             )}
@@ -686,7 +690,7 @@ export default function ACMs() {
                         <div className="mt-8">
                           <div className="text-center text-xl font-bold text-green-600">
                             {USD.format(
-                              ((selectedAcm.maxRent ?? 0) -
+                              ((selectedAcm.maxRent ?? 0) +
                                 (selectedAcm.minRent ?? 0)) /
                                 2,
                             )}{" "}
