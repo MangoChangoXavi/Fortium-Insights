@@ -1,25 +1,21 @@
 import { api, type RouterInputs } from "~/utils/api";
-import { type PaginationState } from "@/components/layouts/data-table";
 import React from "react";
 import "chart.js/auto";
-import { UIDebouncer } from "~/components/system/ui/UIDebouncer";
-import { SearchIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 
 import { RequirementsForm } from "~/components/template/forms/Requirements";
 import { AcmResultDetailCard } from "~/components/template/layouts/AcmResultDetailCard";
 import { Loader } from "~/components/system/layouts/Loader";
+import { ClientSidePagination } from "~/components/system/ui/ClientSidePagination";
 
-const ITEMS_PER_PAGE = 15;
+const ITEMS_PER_PAGE = 4;
+
 type RequirementsGetI = RouterInputs["requirements"]["get"];
 export default function Requirements() {
+  const [page, setPage] = React.useState<number>(0);
+
   const [searchParameters, setSearchParemeters] =
     React.useState<RequirementsGetI | null>(null);
-  const [search, setSearch] = React.useState<string>("");
-
-  const { data: countData } = api.acm.countFilters.useQuery({
-    search,
-  });
 
   const { data, isLoading } = api.requirements.get.useQuery({
     ...searchParameters,
@@ -28,6 +24,11 @@ export default function Requirements() {
   const handleSubmit = (values: RequirementsGetI) => {
     setSearchParemeters(values);
   };
+
+  const hasData = data && data.length > 0;
+  const paginatedData = hasData
+    ? data.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE)
+    : [];
 
   return (
     <LayoutSigned>
@@ -38,10 +39,19 @@ export default function Requirements() {
           </div>
           <div className="flex w-[60%] flex-col gap-2">
             {isLoading && <Loader />}
-            {!isLoading &&
-              data?.map((resultDetail, index) => (
-                <AcmResultDetailCard key={index} {...resultDetail} />
-              ))}
+            {hasData && (
+              <>
+                {paginatedData?.map((resultDetail, index) => (
+                  <AcmResultDetailCard key={index} {...resultDetail} />
+                ))}
+                <ClientSidePagination
+                  totalItems={data.length}
+                  pageSize={ITEMS_PER_PAGE}
+                  page={page}
+                  setPage={setPage}
+                />
+              </>
+            )}
           </div>
         </div>
       </section>
