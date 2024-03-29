@@ -5,25 +5,22 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../assets/images/logo.webp";
-import {
-  GalleryHorizontalEnd,
-  SquareUserRound,
-  UserIcon,
-} from "lucide-react";
+import { GalleryHorizontalEnd, SquareUserRound, UserIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 const Header = () => {
   const { data: session } = useSession();
   const menu = [
-    // { name: "Home", url: "/" },
+    { name: "Home", url: "/" },
+    { name: "Empresa", url: "/company", icon: <GalleryHorizontalEnd /> },
     { name: "Portafolio", url: "/portfolio", icon: <GalleryHorizontalEnd /> },
     {
       name: "Contactanos",
       url: "https://wa.me/59541638",
       icon: <SquareUserRound />,
     },
-    {name: session ? "Oficina" : "Ingresa",
-    url: session ? "/dashboard" : "/api/auth/signin", icon: <UserIcon /> },
+    // {name: session ? "Oficina" : "Ingresa",
+    // url: session ? "/dashboard" : "/api/auth/signin", icon: <UserIcon /> },
   ];
   return (
     <nav className="w-full bg-transparent">
@@ -53,7 +50,7 @@ const Header = () => {
                 >
                   <Link className="flex items-center" href={url}>
                     {" "}
-                    {name} 
+                    {name}
                   </Link>
                 </li>
               ))}

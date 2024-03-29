@@ -44,9 +44,9 @@ export const AcmResultDetailCard = ({
           alt="image"
         />
         <Link href={url} target="_blank">
-          <p className="font-semibold text-slate-700 md:text-[18px] xl:text-[16px] 2xl:text-[18px]">
+          <span className="inline-block w-full break-words font-semibold text-slate-700 md:text-[18px] xl:text-[16px] 2xl:text-[18px]">
             {address}
-          </p>
+          </span>
           <div className="flex">
             {numberOfRooms > 0 && (
               <div className="pr-4 font-bold">

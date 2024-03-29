@@ -56,10 +56,18 @@ const Footer = () => {
                   >
                     <LinkedinIcon />
                   </Link>
-                  <Link className="text-[26px]" href={"#"}>
+                  <Link
+                    className="text-[26px]"
+                    href={
+                      "https://www.facebook.com/profile.php?id=61554847057891"
+                    }
+                  >
                     <FacebookIcon />
                   </Link>
-                  <Link className="text-[28px]" href={"#"}>
+                  <Link
+                    className="text-[28px]"
+                    href={"https://www.instagram.com/_techosdigitales/"}
+                  >
                     <InstagramIcon />
                   </Link>
                   <Link className="text-[28px]" href={"https://wa.me/59541638"}>

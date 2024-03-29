@@ -9,8 +9,8 @@ import { Loader } from "~/components/system/layouts/Loader";
 import { ClientSidePagination } from "~/components/system/ui/ClientSidePagination";
 
 const ITEMS_PER_PAGE = 4;
-
 type RequirementsGetI = RouterInputs["requirements"]["get"];
+
 export default function Requirements() {
   const [page, setPage] = React.useState<number>(0);
 
