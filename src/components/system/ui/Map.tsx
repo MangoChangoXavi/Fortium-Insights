@@ -2,8 +2,8 @@ import React from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 const containerStyle = {
-  width: "100vh",
-  height: "100vh",
+  width: "75vh",
+  height: "50vh",
 };
 
 interface PropsI {

@@ -8,17 +8,12 @@ import { Loader } from "~/components/system/layouts/Loader";
 import { ClientSidePagination } from "~/components/system/ui/ClientSidePagination";
 import Header from "~/features/landingPage/components/Header";
 import Footer from "~/features/landingPage/components/Footer";
-import Map from "~/components/system/ui/Map";
 
-const ITEMS_PER_PAGE = 4;
+const ITEMS_PER_PAGE = 6;
 type RequirementsGetI = RouterInputs["requirements"]["get"];
 
 export default function Index() {
   const [page, setPage] = React.useState<number>(0);
-  const [markerPosition, setMarkerPosition] = React.useState<{
-    lat: number;
-    lng: number;
-  }>({ lat: 0, lng: 0 });
 
   const [searchParameters, setSearchParemeters] =
     React.useState<RequirementsGetI | null>(null);
@@ -41,10 +36,6 @@ export default function Index() {
     <>
       <Header />
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
-        <Map
-          markerPosition={markerPosition}
-          setMarkerPosition={setMarkerPosition}
-        />
         <div className="flex h-fit w-full flex-col justify-between gap-16 rounded-lg bg-white p-10 md:flex-row">
           <div className="w-full md:w-[40%]">
             <RequirementsForm handleSubmit={handleSubmit} />

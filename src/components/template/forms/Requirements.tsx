@@ -33,25 +33,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import MapSelect from "~/components/system/ui/MapSelect";
 import { useState } from "react";
+import Map from "~/components/system/ui/Map";
 
 const FormSchema = z.object({
-  address: z.string({ required_error: "La ubicacion es requerida" }).max(5000, {
-    message: "La ubicacion no pueden ser mayor a 5000 caracteres",
-  }),
   operationType: z
     .string({ required_error: "El tipo de operacion es requerida" })
     .max(5000, {
       message: "El tipo de operacion no puede ser mayor a 5000 caracteres",
-    })
-    .optional(),
+    }),
   buildingType: z
     .string({ required_error: "El tipo de inmueble es requerida" })
     .max(5000, {
       message: "El tipo de inmueble no puede ser mayor a 5000 caracteres",
-    })
-    .optional(),
+    }),
   minNumberOfRooms: z
     .preprocess(
       // Use this for numbers
@@ -59,7 +54,8 @@ const FormSchema = z.object({
       z.coerce
         .number({})
         .positive("El numero de cuartos tiene que ser positiva")
-        .max(99, "El numero de cuartos no puede ser mayor a 99"),
+        .max(99, "El numero de cuartos no puede ser mayor a 99")
+        .optional(),
     )
     .optional(),
   maxNumberOfRooms: z
@@ -69,7 +65,8 @@ const FormSchema = z.object({
       z.coerce
         .number({})
         .positive("El numero de cuartos tiene que ser positiva")
-        .max(99, "El numero de cuartos no puede ser mayor a 99"),
+        .max(99, "El numero de cuartos no puede ser mayor a 99")
+        .optional(),
     )
     .optional(),
   minNumberOfBathrooms: z
@@ -79,7 +76,8 @@ const FormSchema = z.object({
       z.coerce
         .number({})
         .positive("El numero de baños tiene que ser positiva")
-        .max(99, "El numero de baños no puede ser mayor a 99"),
+        .max(99, "El numero de baños no puede ser mayor a 99")
+        .optional(),
     )
     .optional(),
   maxNumberOfBathrooms: z
@@ -89,7 +87,8 @@ const FormSchema = z.object({
       z.coerce
         .number({})
         .positive("El numero de baños tiene que ser positiva")
-        .max(99, "El numero de baños no puede ser mayor a 99"),
+        .max(99, "El numero de baños no puede ser mayor a 99")
+        .optional(),
     )
     .optional(),
   minNumberOfParkingLots: z
@@ -99,7 +98,8 @@ const FormSchema = z.object({
       z.coerce
         .number({})
         .positive("El numero de parqueos tiene que ser positiva")
-        .max(999, "El numero de parqueos no puede ser mayor a 999"),
+        .max(999, "El numero de parqueos no puede ser mayor a 999")
+        .optional(),
     )
     .optional(),
   maxNumberOfParkingLots: z
@@ -109,7 +109,8 @@ const FormSchema = z.object({
       z.coerce
         .number({})
         .positive("El numero de parqueos tiene que ser positiva")
-        .max(999, "El numero de parqueos no puede ser mayor a 999"),
+        .max(999, "El numero de parqueos no puede ser mayor a 999")
+        .optional(),
     )
     .optional(),
   minTotalArea: z
@@ -119,7 +120,8 @@ const FormSchema = z.object({
       z.coerce
         .number({})
         .positive("El area total tiene que ser positiva")
-        .max(9999, "El area total no puede ser mayor a 9999"),
+        .max(9999, "El area total no puede ser mayor a 9999")
+        .optional(),
     )
     .optional(),
   maxTotalArea: z
@@ -129,9 +131,12 @@ const FormSchema = z.object({
       z.coerce
         .number({})
         .positive("El area total tiene que ser positiva")
-        .max(9999, "El area total no puede ser mayor a 9999"),
+        .max(9999, "El area total no puede ser mayor a 9999")
+        .optional(),
     )
     .optional(),
+  lat: z.number(),
+  lng: z.number(),
 });
 
 interface PropsI {
@@ -139,12 +144,15 @@ interface PropsI {
 }
 
 export function RequirementsForm({ handleSubmit }: PropsI) {
-  const [value, setValue] = useState<{ label: string } | null>(null);
-  const addressValue = value?.label ?? "";
+  const [markerPosition, setMarkerPosition] = useState<{
+    lat: number;
+    lng: number;
+  }>({ lat: 0, lng: 0 });
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     values: {
-      address: addressValue,
+      lat: markerPosition.lat,
+      lng: markerPosition.lng,
     },
   });
 
@@ -165,21 +173,9 @@ export function RequirementsForm({ handleSubmit }: PropsI) {
         </div>
         {/* inputs group */}
         <div className="space-y-4">
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="flex flex-row gap-2">
-                  <MapIcon className="h-4 w-4" /> Ubicacion
-                </FormLabel>
-                <MapSelect value={value} setValue={setValue} />
-                <FormControl className="hidden">
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <Map
+            markerPosition={markerPosition}
+            setMarkerPosition={setMarkerPosition}
           />
           <div className="grid grid-cols-2 gap-4">
             <FormField
