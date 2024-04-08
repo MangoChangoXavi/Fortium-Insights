@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { getCoordinates } from "~/utils/googleMaps";
 import { getRequirementsFromMongo } from "../mongodb";
 export const maxDuration = 200; // This function can run for a maximum of 5 seconds
 export const requirementsRouter = createTRPCRouter({
   get: publicProcedure
     .input(
       z.object({
-        address: z.string().optional(),
+        lat: z.number().optional(),
+        lng: z.number().optional(),
         buildingType: z.string().optional(),
         operationType: z.string().optional(),
         minNumberOfRooms: z.number().optional(),
@@ -22,19 +22,10 @@ export const requirementsRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      if (!input.address) {
-        return [];
-      }
-
-      // get the coordinates of the address
-      const coordinates = await getCoordinates(input.address);
-
-      if (!coordinates.lat || !coordinates.lng) {
-        throw new Error("Invalid address");
-      }
+      // if not location return empty array
+      if (!input.lat || !input.lng) return [];
 
       const data = {
-        address: input.address,
         operationType: input.operationType,
         buildingType: input.buildingType,
         minNumberOfRooms: input.minNumberOfRooms,
@@ -45,8 +36,8 @@ export const requirementsRouter = createTRPCRouter({
         maxNumberOfParkingLots: input.maxNumberOfParkingLots,
         minTotalArea: input.minTotalArea,
         maxTotalArea: input.maxTotalArea,
-        lat: coordinates.lat,
-        lng: coordinates.lng,
+        lat: input.lat,
+        lng: input.lng,
         radius: 2,
         userId: ctx.userId,
       };
