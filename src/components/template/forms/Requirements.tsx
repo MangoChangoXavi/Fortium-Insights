@@ -158,7 +158,7 @@ export function RequirementsForm({ handleSubmit }: PropsI) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className=" space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         {/* title and subtitle */}
         <div className="flex flex-col gap-[16px]">
           {/* title */}
@@ -178,7 +178,7 @@ export function RequirementsForm({ handleSubmit }: PropsI) {
             setMarkerPosition={setMarkerPosition}
           />
           {/* inputs group */}
-          <div className="w-full space-y-4 bg-white p-2">
+          <div className="w-full space-y-4 bg-white md:p-2">
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
