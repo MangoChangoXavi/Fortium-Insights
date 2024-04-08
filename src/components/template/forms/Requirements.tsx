@@ -160,18 +160,19 @@ export function RequirementsForm({ handleSubmit }: PropsI) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className=" space-y-6">
         {/* title and subtitle */}
-        <div className="flex flex-col gap-[16px] ">
+        <div className="flex flex-col gap-[16px]">
           {/* title */}
           <h1 className="text-xl font-semibold not-italic leading-[normal] text-[#2C2C2C]">
             Busqueda de Requerimientos
           </h1>
           {/* subtitle */}
           <article className="text-sm font-normal not-italic leading-[normal] text-[#808080]">
-            Deja que la inteligencia artificial busque en todo internet por ti,
-            no es necesario llenar todos los campos
+            Selecciona una ubicacion dando click en el mapa y deja que la
+            inteligencia artificial busque en todo internet por ti, no es
+            necesario llenar todos los campos.
           </article>
         </div>
-        <div className="flex flex-col gap-1 md:flex-row">
+        <div className="flex flex-col gap-6 md:flex-row">
           <Map
             markerPosition={markerPosition}
             setMarkerPosition={setMarkerPosition}
