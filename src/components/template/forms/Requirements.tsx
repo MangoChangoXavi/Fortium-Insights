@@ -174,6 +174,8 @@ export function RequirementsForm({ handleSubmit }: PropsI) {
         </div>
         <div className="flex flex-col gap-6 md:flex-row">
           <Map
+            width="100%"
+            height="400px"
             markerPosition={markerPosition}
             setMarkerPosition={setMarkerPosition}
           />

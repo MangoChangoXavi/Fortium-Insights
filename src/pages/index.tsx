@@ -35,8 +35,8 @@ export default function Index() {
   return (
     <>
       <Header />
-      <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
-        <div className="my-4 flex h-fit w-full flex-col justify-between gap-16 rounded-lg bg-white p-10">
+      <section className="mt-4 flex w-full flex-col gap-8 md:container md:mx-auto md:mt-10">
+        <div className="flex h-fit w-full flex-col justify-between gap-16 rounded-lg bg-white p-4 md:my-4 md:p-10">
           <RequirementsForm handleSubmit={handleSubmit} />
           <div className="flex w-full flex-col gap-2 overflow-auto">
             {isLoading && (

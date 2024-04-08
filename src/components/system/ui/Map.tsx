@@ -1,12 +1,9 @@
 import React from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
-const containerStyle = {
-  width: "80vw",
-  height: "30vw",
-};
-
 interface PropsI {
+  width?: string;
+  height?: string;
   markerPosition: {
     lat: number;
     lng: number;
@@ -19,9 +16,19 @@ interface PropsI {
   >;
 }
 
-function MyComponent({ markerPosition, setMarkerPosition }: PropsI) {
+function MyComponent({
+  markerPosition,
+  setMarkerPosition,
+  width,
+  height,
+}: PropsI) {
   const [map, setMap] = React.useState<google.maps.Map | null>(null);
   const [center, setCenter] = React.useState({ lat: 0, lng: 0 });
+
+  const containerStyle = {
+    width: width ? width : "80vw",
+    height: height ? height : "30vw",
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const { isLoaded } = useJsApiLoader({

@@ -32,18 +32,19 @@ export const AcmResultDetailCard = ({
 }: PropsI) => {
   return (
     <>
-      <div className="flex justify-between">
-        <div className="flex items-center gap-4">
-          <Image
-            className="h-[80px] w-[120px] rounded-xl"
-            width={500}
-            height={500}
-            src={
-              imagesUrl[0] ??
-              "https://dummyimage.com/600x400/000/fff&text=sin+imagen"
-            }
-            alt="image"
-          />
+      <div className="flex flex-col md:flex-row md:justify-between">
+        <div className="flex flex-col items-center gap-4 md:flex-row">
+          <div className="relative h-40 w-full md:h-full md:w-40">
+            <Image
+              src={
+                imagesUrl[0] ??
+                "https://dummyimage.com/600x400/000/fff&text=sin+imagen"
+              }
+              alt="image"
+              fill
+              objectFit="cover"
+            />
+          </div>
           <div className="gap-2">
             <Link
               href={url}
