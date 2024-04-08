@@ -9,7 +9,7 @@ import { ClientSidePagination } from "~/components/system/ui/ClientSidePaginatio
 import Header from "~/features/landingPage/components/Header";
 import Footer from "~/features/landingPage/components/Footer";
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 4;
 type RequirementsGetI = RouterInputs["requirements"]["get"];
 
 export default function Index() {
@@ -36,12 +36,14 @@ export default function Index() {
     <>
       <Header />
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
-        <div className="flex h-fit w-full flex-col justify-between gap-16 rounded-lg bg-white p-10 md:flex-row">
-          <div className="w-full md:w-[40%]">
-            <RequirementsForm handleSubmit={handleSubmit} />
-          </div>
-          <div className="flex w-full flex-col gap-2 overflow-auto md:w-[60%]">
-            {isLoading && <Loader />}
+        <div className="my-4 flex h-fit w-full flex-col justify-between gap-16 rounded-lg bg-white p-10">
+          <RequirementsForm handleSubmit={handleSubmit} />
+          <div className="flex w-full flex-col gap-2 overflow-auto">
+            {isLoading && (
+              <div className="flex w-full items-center justify-center">
+                <Loader />
+              </div>
+            )}
             {hasData && (
               <>
                 {paginatedData?.map((resultDetail, index) => (

@@ -171,200 +171,204 @@ export function RequirementsForm({ handleSubmit }: PropsI) {
             no es necesario llenar todos los campos
           </article>
         </div>
-        {/* inputs group */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-1 md:flex-row">
           <Map
             markerPosition={markerPosition}
             setMarkerPosition={setMarkerPosition}
           />
-          <div className="grid grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="operationType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <TagIcon className="h-4 w-4" /> Tipo de operacion
-                  </FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecciona un tipo de operacion" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="sell">Venta</SelectItem>
-                        <SelectItem value="rent">Renta</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="buildingType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <Building className="h-4 w-4" /> Tipo de inmueble
-                  </FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecciona un tipo de inmueble" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="apartment">Apartamento</SelectItem>
-                        <SelectItem value="house">Casa</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="minNumberOfRooms"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <BedIcon className="h-4 w-4" /> Numero de cuartos minimo
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="maxNumberOfRooms"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <BedIcon className="h-4 w-4" /> Numero de cuartos maximo
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="minNumberOfBathrooms"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <BathIcon className="h-4 w-4" /> Numero de baños minimo
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="maxNumberOfBathrooms"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <BathIcon className="h-4 w-4" /> Numero de baños maximo
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="minNumberOfParkingLots"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <CarIcon className="h-4 w-4" /> Numero de parqueos minimo
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="maxNumberOfParkingLots"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <CarIcon className="h-4 w-4" /> Numero de parqueos maximo
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="minTotalArea"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <RulerIcon className="h-4 w-4" /> Area total minima (mts2)
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="maxTotalArea"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex flex-row gap-2">
-                    <RulerIcon className="h-4 w-4" /> Area total maxima (mts2)
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          {/* inputs group */}
+          <div className="w-full space-y-4 bg-white p-2">
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="operationType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <TagIcon className="h-4 w-4" /> Tipo de operacion
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona un tipo de operacion" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="sell">Venta</SelectItem>
+                          <SelectItem value="rent">Renta</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="buildingType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <Building className="h-4 w-4" /> Tipo de inmueble
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona un tipo de inmueble" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="apartment">Apartamento</SelectItem>
+                          <SelectItem value="house">Casa</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="minNumberOfRooms"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <BedIcon className="h-4 w-4" /> Numero de cuartos minimo
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="maxNumberOfRooms"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <BedIcon className="h-4 w-4" /> Numero de cuartos maximo
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="minNumberOfBathrooms"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <BathIcon className="h-4 w-4" /> Numero de baños minimo
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="maxNumberOfBathrooms"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <BathIcon className="h-4 w-4" /> Numero de baños maximo
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="minNumberOfParkingLots"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <CarIcon className="h-4 w-4" /> Numero de parqueos minimo
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="maxNumberOfParkingLots"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <CarIcon className="h-4 w-4" /> Numero de parqueos maximo
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="minTotalArea"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <RulerIcon className="h-4 w-4" /> Area total minima (mts2)
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="maxTotalArea"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex flex-row gap-2">
+                      <RulerIcon className="h-4 w-4" /> Area total maxima (mts2)
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex w-full items-center justify-center">
+              <Button type="submit" variant={"primary"}>
+                Buscar &nbsp; <Search className="h-3 w-3" />
+              </Button>
+            </div>
           </div>
         </div>
-        <Button type="submit" variant={"primary"}>
-          Buscar &nbsp; <Search className="h-4 w-4" />
-        </Button>
       </form>
     </Form>
   );
