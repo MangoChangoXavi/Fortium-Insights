@@ -2,11 +2,13 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { getRequirementsFromMongo } from "../mongodb";
+import { getCoordinates } from "~/utils/googleMaps";
 export const maxDuration = 200; // This function can run for a maximum of 5 seconds
 export const requirementsRouter = createTRPCRouter({
   get: publicProcedure
     .input(
       z.object({
+        address: z.string().optional(),
         lat: z.number().optional(),
         lng: z.number().optional(),
         buildingType: z.string().optional(),
@@ -23,7 +25,15 @@ export const requirementsRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       // if not location return empty array
-      if (!input.lat || !input.lng) return [];
+      if (!input.address && (!input.lat || !input.lng)) return [];
+
+      // if input address then extrat the lat and the lng using the google maps api
+      if (input.address) {
+        const response = await getCoordinates(input.address);
+        if (!response) return [];
+        input.lat = response.lat;
+        input.lng = response.lng;
+      }
 
       const data = {
         operationType: input.operationType,

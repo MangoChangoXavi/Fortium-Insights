@@ -77,7 +77,7 @@ const Header = () => {
       <div
         className={`md:hidden ${
           isOpen ? "block" : "hidden"
-        } top-18 absolute left-0 right-0 z-10 bg-gradient-to-t from-green-200 to-teal-200 p-4 transition duration-300 ease-in-out animate-in `}
+        } absolute left-0 right-0 top-16 z-10 bg-gradient-to-t from-green-100 to-secondary-100 p-4 transition duration-300 ease-in-out animate-in `}
       >
         <ul className=" items-center justify-center space-y-8 py-6 ">
           {menu.map((item, index) => {
@@ -85,7 +85,7 @@ const Header = () => {
               <Link
                 key={index}
                 href={item.url}
-                className="flex w-full transform flex-row items-center space-x-3 rounded-full  font-semibold text-primary-600 duration-300 ease-in-out hover:ml-4 hover:text-secondary-100 dark:hover:text-blue-500"
+                className="flex w-full transform flex-row items-center space-x-3 rounded-full  font-semibold text-primary-500 duration-300 ease-in-out hover:ml-4 hover:text-secondary-100 dark:hover:text-blue-500"
               >
                 {item.icon}
                 <div>{item.name}</div>

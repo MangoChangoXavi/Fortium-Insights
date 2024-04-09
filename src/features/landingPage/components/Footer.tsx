@@ -13,7 +13,7 @@ const Footer = () => {
   //   ];
   return (
     <>
-      <div id="contact" className="footer-bg relative pt-14">
+      <div id="contact" className="footer-bg relative md:pt-14">
         <div className="pb-14 sm:px-10   lg:px-20">
           <div className="m-5 flex flex-col sm:grid md:grid-cols-2 xl:grid-cols-2 ">
             <div className="relative my-auto text-start">
@@ -25,9 +25,7 @@ const Footer = () => {
 
               <p className="mb-5 text-[16px] font-medium leading-6 text-gray-600">
                 ¡Techos Digitales es una solucion integral para que las empresas
-                <br /> de bienes raices obtengan soluciones y software
-                personalizados
-                <br /> para sus negocios!
+                bienes raices obtengan soluciones de software para sus negocios!
               </p>
             </div>
             <div className="relative text-start">
