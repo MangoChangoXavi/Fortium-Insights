@@ -48,7 +48,7 @@ const Header = () => {
         </div>
         {/* desktop menu */}
         <div
-          className={`mt-3 hidden justify-self-center pb-3 hover:block md:mt-0 md:block md:flex md:pb-0 lg:mt-8`}
+          className={`mt-3 hidden justify-self-center pb-3 hover:block md:mt-0 md:block md:pb-0 lg:mt-8`}
         >
           <ul className="items-center justify-center  md:flex md:space-x-6 md:space-y-0">
             {menu.map(({ name, url }, index) => (
@@ -65,7 +65,7 @@ const Header = () => {
           </ul>
         </div>
         {/* mobile menu */}
-        <div className="mt-1 md:hidden">
+        <div className="mt-2 md:hidden">
           <button
             className="rounded-md p-2 text-white outline-none focus:font-bold"
             onClick={() => setIsOpen((prev) => !prev)}
@@ -74,14 +74,18 @@ const Header = () => {
           </button>
         </div>
       </div>
-      <div className={`md:hidden ${isOpen ? "block" : "hidden"}  p-4`}>
+      <div
+        className={`md:hidden ${
+          isOpen ? "block" : "hidden"
+        } top-18 absolute left-0 right-0 z-10 bg-gradient-to-t from-green-200 to-teal-200 p-4 transition duration-300 ease-in-out animate-in `}
+      >
         <ul className=" items-center justify-center space-y-8 py-6 ">
           {menu.map((item, index) => {
             return (
               <Link
                 key={index}
                 href={item.url}
-                className="flex w-full transform flex-row items-center space-x-3 rounded-full  text-primary-500 duration-300 ease-in-out hover:ml-4 hover:text-secondary-100 dark:hover:text-blue-500"
+                className="flex w-full transform flex-row items-center space-x-3 rounded-full  font-semibold text-primary-600 duration-300 ease-in-out hover:ml-4 hover:text-secondary-100 dark:hover:text-blue-500"
               >
                 {item.icon}
                 <div>{item.name}</div>

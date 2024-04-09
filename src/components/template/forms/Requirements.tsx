@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import ReCAPTCHA from "react-google-recaptcha";
 
 import {
   Form,
@@ -14,14 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { RightArrowIcon } from "~/components/system/ui/Icons";
 import { Input } from "@/components/ui/input";
 import {
   BathIcon,
   BedIcon,
   Building,
   CarIcon,
-  MapIcon,
   RulerIcon,
   Search,
   TagIcon,
@@ -35,6 +32,7 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import Map from "~/components/system/ui/Map";
+import Image from "next/image";
 
 const FormSchema = z.object({
   operationType: z
