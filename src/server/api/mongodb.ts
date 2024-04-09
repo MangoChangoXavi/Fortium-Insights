@@ -46,6 +46,8 @@ async function getRequirementsFromMongo({
   maxNumberOfParkingLots,
   minTotalArea,
   maxTotalArea,
+  minPrice,
+  maxPrice,
   buildingType,
   operationType,
 }: {
@@ -60,6 +62,8 @@ async function getRequirementsFromMongo({
   maxNumberOfParkingLots?: number;
   minTotalArea?: number;
   maxTotalArea?: number;
+  minPrice?: number;
+  maxPrice?: number;
   buildingType?: string;
   operationType?: string;
 }): Promise<ScrappedPostI[]> {
@@ -167,6 +171,23 @@ async function getRequirementsFromMongo({
     where = {
       ...where,
       totalArea: { $lte: maxTotalArea },
+    };
+  }
+
+  if (minPrice && maxPrice) {
+    where = {
+      ...where,
+      price: { $gte: minPrice, $lte: maxPrice },
+    };
+  } else if (minPrice) {
+    where = {
+      ...where,
+      price: { $gte: minPrice },
+    };
+  } else if (maxPrice) {
+    where = {
+      ...where,
+      price: { $lte: maxPrice },
     };
   }
 

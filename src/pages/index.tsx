@@ -52,6 +52,8 @@ export default function Index() {
     React.useState<number>();
   const [minTotalArea, setMinTotalArea] = React.useState<number>();
   const [maxTotalArea, setMaxTotalArea] = React.useState<number>();
+  const [minPrice, setMinPrice] = React.useState<number>();
+  const [maxPrice, setMaxPrice] = React.useState<number>();
 
   const [searchParameters, setSearchParemeters] =
     React.useState<RequirementsGetI | null>(null);
@@ -267,6 +269,28 @@ export default function Index() {
                   onChange={(e) => setMaxTotalArea(parseInt(e.target.value))}
                 />
               </div>
+              {/* price */}
+              <div className="flex flex-row">
+                <Input
+                  id="minPrice"
+                  type="number"
+                  placeholder="Precio minimo"
+                  className="rounded-r-none border-r-0"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(parseInt(e.target.value))}
+                />
+                <div className="border-glow flex h-10 w-20 items-center justify-center">
+                  <span>$</span>
+                </div>
+                <Input
+                  id="maxPrice"
+                  type="number"
+                  placeholder="Precio maximo"
+                  className="rounded-l-none border-l-0"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                />
+              </div>
             </div>
             <Button
               onClick={() =>
@@ -282,6 +306,8 @@ export default function Index() {
                   maxNumberOfParkingLots,
                   minTotalArea,
                   maxTotalArea,
+                  minPrice,
+                  maxPrice,
                 })
               }
               variant={"primary"}

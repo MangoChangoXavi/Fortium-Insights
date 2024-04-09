@@ -21,6 +21,8 @@ export const requirementsRouter = createTRPCRouter({
         maxNumberOfParkingLots: z.number().optional(),
         minTotalArea: z.number().optional(),
         maxTotalArea: z.number().optional(),
+        minPrice: z.number().optional(),
+        maxPrice: z.number().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -46,6 +48,8 @@ export const requirementsRouter = createTRPCRouter({
         maxNumberOfParkingLots: input.maxNumberOfParkingLots,
         minTotalArea: input.minTotalArea,
         maxTotalArea: input.maxTotalArea,
+        minPrice: input.minPrice,
+        maxPrice: input.maxPrice,
         lat: input.lat,
         lng: input.lng,
         radius: 2,
