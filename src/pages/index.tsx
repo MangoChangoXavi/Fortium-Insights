@@ -108,6 +108,7 @@ export default function Index() {
   const paginatedData = hasData
     ? data.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE)
     : [];
+    
 
   return (
     <>
