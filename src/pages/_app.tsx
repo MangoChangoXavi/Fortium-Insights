@@ -42,7 +42,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
       >
         <Toaster />
-        <GoogleAdSense publisherId="pub-6713030727031078" />
+        <GoogleAdSense publisherId="ca-pub-6713030727031078" />
         <Component {...pageProps} />
       </main>
     </SessionProvider>
