@@ -8,6 +8,7 @@ import { Plus_Jakarta_Sans as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
+import { GoogleAdSense } from "nextjs-google-adsense";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -35,18 +36,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="keywords"
           content="solucion inmobiliaria, soluciones inmobiliarias, crm inmobiliario, crm inmobiliaria, software inmobiliario, crm para inmobiliarias, inmobiliaria solucion, que es un crm inmobiliario, mejor crm inmobiliario"
         />
-        <meta name="google-adsense-account" content="ca-pub-6713030727031078" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6713030727031078"
-          crossorigin="anonymous"
-        ></script>
         <link rel="icon" type="image/svg+xml" href="/g8.svg" />
       </Head>
       <main
         className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
       >
         <Toaster />
+        <GoogleAdSense publisherId="pub-6713030727031078" />
         <Component {...pageProps} />
       </main>
     </SessionProvider>
