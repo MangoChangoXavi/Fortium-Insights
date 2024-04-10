@@ -111,6 +111,11 @@ export default function Index() {
 
   return (
     <>
+      <ResponsiveAdUnit
+        publisherId="pub-6713030727031078"
+        slotId="5133228323"
+        type="after-home-hero"
+      />
       <Header />
       <div className="relative h-48 w-full md:h-96">
         <Image
