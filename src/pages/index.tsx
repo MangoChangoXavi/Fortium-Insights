@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { USD } from "~/utils/functions";
 import { Input } from "@/components/ui/input";
+import { ResponsiveAdUnit } from "nextjs-google-adsense";
 
 const ITEMS_PER_PAGE = 4;
 type RequirementsGetI = RouterInputs["requirements"]["get"];
@@ -110,6 +111,11 @@ export default function Index() {
 
   return (
     <>
+      <ResponsiveAdUnit
+        publisherId="pub-6713030727031078"
+        slotId="5133228323"
+        type="after-home-hero"
+      />
       <Header />
       <div className="relative h-48 w-full md:h-96">
         <Image
@@ -349,6 +355,11 @@ export default function Index() {
           </div>
         </div>
       </section>
+      <ResponsiveAdUnit
+        publisherId="pub-6713030727031078"
+        slotId="5133228323"
+        type="after-home-hero"
+      />
       <Footer />
     </>
   );
