@@ -36,6 +36,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
           content="solucion inmobiliaria, soluciones inmobiliarias, crm inmobiliario, crm inmobiliaria, software inmobiliario, crm para inmobiliarias, inmobiliaria solucion, que es un crm inmobiliario, mejor crm inmobiliario"
         />
         <meta name="google-adsense-account" content="ca-pub-6713030727031078" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6713030727031078"
+          crossorigin="anonymous"
+        ></script>
         <link rel="icon" type="image/svg+xml" href="/g8.svg" />
       </Head>
       <main
