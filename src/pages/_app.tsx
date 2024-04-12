@@ -26,28 +26,23 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <title>Techos Digitales</title>
         <meta
           name="title"
-          content="Techos Digitales - Eleve su negocio inmobiliario con nuestras soluciones"
+          content="Techos Digitales - Busca, analiza y valora inmuebles gratis!"
         />
         <meta
           name="description"
-          content="Techos Digitales is a one stop solution for real estate businesses to get customised solutions and software for their business!"
+          content="Techos Digitales busca inmuebles en varios portales inmobiliarios usando inteligencia artificial y asi mismo te devuelve valoraciones aproximadas del mercado inmobiliario!"
         />
         <meta
           name="keywords"
-          content="solucion inmobiliaria, soluciones inmobiliarias, crm inmobiliario, crm inmobiliaria, software inmobiliario, crm para inmobiliarias, inmobiliaria solucion, que es un crm inmobiliario, mejor crm inmobiliario"
+          content="busqueda inmobiliaria, buscar inmuebles, valorar inmuebles, valoracion de inmuebles, solucion inmobiliaria, soluciones inmobiliarias, crm inmobiliario, crm inmobiliaria, software inmobiliario, crm para inmobiliarias, inmobiliaria solucion, que es un crm inmobiliario, mejor crm inmobiliario"
         />
         <link rel="icon" type="image/svg+xml" href="/g8.svg" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6713030727031078"
-          crossorigin="anonymous"
-        ></script>
       </Head>
       <main
         className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
       >
         <Toaster />
-        <GoogleAdSense publisherId="ca-pub-6713030727031078" />
+        <GoogleAdSense publisherId="pub-6713030727031078" />
         <Component {...pageProps} />
       </main>
     </SessionProvider>

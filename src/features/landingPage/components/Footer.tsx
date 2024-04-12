@@ -24,8 +24,10 @@ const Footer = () => {
               </div>
 
               <p className="mb-5 text-[16px] font-medium leading-6 text-gray-600">
-                ¡Techos Digitales es una solucion integral para que las empresas
-                bienes raices obtengan soluciones de software para sus negocios!
+                ¡Techos Digitales realiza busquedas por ti en los portales
+                inmobiliarios de mayor prestigio, encontrando inmuebles de forma
+                rapida y gratis, dandote como resultados valoraciones gratis del
+                mercado. Investiga ahora cuanto cuesta tu casa o apartamento!
               </p>
             </div>
             <div className="relative text-start">
