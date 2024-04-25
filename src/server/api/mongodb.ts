@@ -294,4 +294,13 @@ async function getScrappedPostFromMongo({
   return await ScrappedPost.find(where);
 }
 
-export { getScrappedPostFromMongo, getRequirementsFromMongo };
+async function getItemFromMongo(id: string) {
+  await connectDB();
+  const response = await ScrappedPost.findById(id);
+  if (!response) {
+    throw new Error("Item not found");
+  }
+  return response;
+}
+
+export { getScrappedPostFromMongo, getRequirementsFromMongo, getItemFromMongo };

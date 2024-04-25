@@ -32,31 +32,29 @@ const Header = () => {
     // url: session ? "/dashboard" : "/api/auth/signin", icon: <UserIcon /> },
   ];
   return (
-    <nav className="w-full bg-transparent">
-      <div className="mx-auto flex justify-between px-4 md:items-center md:px-20 lg:max-w-7xl">
+    <nav className="w-full bg-transparent px-6 md:px-32">
+      <div className="mx-auto flex justify-between md:items-center">
         {/* logo */}
-        <div className="flex items-center justify-between py-3 md:block md:py-5">
+        <div className="flex items-center justify-between md:block">
           <Link href="/" className="">
             <div className="avatar">
               <div className="rounded">
                 {/* <img src="" /> */}
-                <Image className="w-[150px]" src={logo} alt="Logo Image" />
+                <Image className="w-[125px]" src={logo} alt="Logo Image" />
                 {/* <h1 className="text-3xl text-white font-bold">NEXT </h1> */}
               </div>
             </div>
           </Link>
         </div>
         {/* desktop menu */}
-        <div
-          className={`mt-3 hidden justify-self-center pb-3 hover:block md:mt-0 md:block md:pb-0 lg:mt-8`}
-        >
-          <ul className="items-center justify-center  md:flex md:space-x-6 md:space-y-0">
+        <div className={`hidden justify-self-center py-6 hover:block md:block`}>
+          <ul className="items-center justify-center md:flex md:space-x-6 md:space-y-0">
             {menu.map(({ name, url }, index) => (
               <li
                 key={index}
                 className="text-400 align-middle font-normal text-primary-500 hover:underline"
               >
-                <Link className="flex items-center" href={url}>
+                <Link className="flex items-center text-sm" href={url}>
                   {" "}
                   {name}
                 </Link>
@@ -65,7 +63,7 @@ const Header = () => {
           </ul>
         </div>
         {/* mobile menu */}
-        <div className="mt-2 md:hidden">
+        <div className="md:hidden">
           <button
             className="rounded-md p-2 text-white outline-none focus:font-bold"
             onClick={() => setIsOpen((prev) => !prev)}
@@ -77,7 +75,7 @@ const Header = () => {
       <div
         className={`md:hidden ${
           isOpen ? "block" : "hidden"
-        } absolute left-0 right-0 top-16 z-10 bg-gradient-to-t from-green-100 to-secondary-100 p-4 transition duration-300 ease-in-out animate-in `}
+        } absolute left-0 right-0 top-11 z-10 bg-gradient-to-t from-green-100 to-secondary-100 p-4 transition duration-300 ease-in-out animate-in `}
       >
         <ul className=" items-center justify-center space-y-8 py-6 ">
           {menu.map((item, index) => {

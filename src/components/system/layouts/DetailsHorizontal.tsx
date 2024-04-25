@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import React from "react";
+import Map from "~/components/system/ui/Map";
 
 const PropTitle = ({ text }: { text: string }) => {
   return (
@@ -20,8 +22,9 @@ const PropSubtitle = ({ text }: { text: string }) => {
 
 interface ButtonI {
   label: string;
-  color?: "primary" | "secondary" | "default" | "dark" | "disabled" | "error";
+  variant?: "primary" | "secondary" | "default" | "dark" | "disabled" | "error";
   className?: string;
+  href?: string;
   handleClick?: () => void;
 }
 
@@ -31,85 +34,110 @@ interface ItemI {
 }
 
 interface PropsI {
-  imageUrl?: string | StaticImageData;
+  images?: string[] | StaticImageData[];
   title?: string;
   subtitle?: string;
   items?: ItemI[];
   buttons?: ButtonI[];
+  lat?: number;
+  lng?: number;
+  url: string;
 }
 
 export const DetailsHorizontal = ({
-  imageUrl,
+  images,
   title,
   subtitle,
   items,
   buttons,
+  lat,
+  lng,
+  url,
 }: PropsI) => {
   return (
-    <div className="flex w-full flex-col  gap-[32px] bg-white pb-[16px]">
+    <div className="flex w-full flex-col gap-[32px] bg-white pb-[16px]">
       {/* header image */}
-      {imageUrl && (
-        <div className="relative h-[15rem] w-full">
-          <Image src={imageUrl} fill objectFit="cover" alt="header iamge" />
+      {images && (
+        <div className="relative flex h-[306px] w-full flex-row overflow-hidden">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className="relative flex h-[306px] w-full transition-transform duration-300 ease-in-out hover:z-50 hover:scale-150"
+            >
+              <Image src={image} alt="image" fill objectFit="cover" />
+            </div>
+          ))}
         </div>
       )}
 
-      <div className="flex flex-row gap-[32px]">
-        <div className="flex flex-col gap-[32px]">
+      <div className="flex flex-col gap-[32px] px-6 md:px-32 xl:flex-row">
+        <div className="flex flex-col gap-[32px] md:w-2/3">
           {/* title and subtitle */}
-          <div className="flex flex-col gap-[8px] ">
-            {/* subtitle */}
-            {subtitle && (
-              <h1 className="text-xl font-semibold not-italic leading-[normal] text-[#2C2C2C]">
-                {subtitle}
-              </h1>
-            )}
+          <div className="flex  flex-col gap-[8px]">
             {/* title */}
             {title && (
-              <article className="text-sm font-normal not-italic leading-[normal] text-[#808080]">
+              <h1 className="text-xl font-semibold not-italic leading-[normal] text-[#2C2C2C]">
                 {title}
+              </h1>
+            )}
+            {/* subtitle */}
+            {subtitle && (
+              <article className="text-sm font-normal not-italic leading-[normal] text-[#808080]">
+                {subtitle}
               </article>
             )}
           </div>
 
           {/* properties */}
-          <div className="flex w-full flex-row gap-[64px] ">
-            {items?.map((item) => (
-              <div
-                key={item.title}
-                className="flex flex-col items-start justify-center gap-0.5 self-stretch"
-              >
-                <PropTitle text={item.title} />
-                <PropSubtitle text={item.subtitle} />
-              </div>
-            ))}
+          <div className="grid w-full grid-cols-2 md:flex  md:flex-row md:gap-[64px] ">
+            {items?.map((item) => {
+              if (!item.title || !item.subtitle) return null;
+              return (
+                <div
+                  key={item.title}
+                  className="flex flex-col items-start justify-center gap-0.5 self-stretch"
+                >
+                  <PropTitle text={item.title} />
+                  <PropSubtitle text={item.subtitle} />
+                </div>
+              );
+            })}
           </div>
 
           {/* buttons */}
           <div className="flex flex-row items-start justify-start gap-[12px] ">
-            {buttons?.map((button) => (
-              <Button
-                variant={"primary"}
-                key={button.label}
-                color={button.color}
-                className={button.className}
-                onClick={button.handleClick}
-              >
-                {button.label}
-              </Button>
-            ))}
+            {buttons?.map((button) => {
+              if (button.href) {
+                return (
+                  <Link key={button.label} href={button.href} target="_blank">
+                    <Button
+                      className={button.className}
+                      variant={button.variant}
+                    >
+                      {button.label}
+                    </Button>
+                  </Link>
+                );
+              } else {
+                return (
+                  <Button
+                    key={button.label}
+                    className={button.className}
+                    onClick={button.handleClick}
+                    variant={button.variant}
+                  >
+                    {button.label}
+                  </Button>
+                );
+              }
+            })}
           </div>
         </div>
-        {/* <div className="relative h-[306px] w-[336px]">
-          <Image
-            src={
-              "https://images.unsplash.com/photo-1704629803946-04b543133943?q=80&w=1675&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            }
-            fill
-            objectFit="cover"
-            alt="header iamge"
-          />
-        </div> */}
+        {lat && lng && (
+          <div className="flex h-full items-center justify-center md:w-1/3">
+            <Map lat={lat} lng={lng} />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -3,9 +3,9 @@ import Link from "next/link";
 export const PageNotFound = () => {
   return (
     <>
-      <section className="dark:bg-tertiary-900 bg-white">
-        <div className="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
-          <div className="mx-auto max-w-screen-sm text-center">
+      <section className="dark:bg-tertiary-900 h-[100vh] w-full bg-white">
+        <div className="flex h-full items-center justify-center px-4 py-8 lg:px-6 lg:py-16">
+          <div className="text-center">
             <h1 className="mb-4 text-7xl font-extrabold tracking-tight text-primary-600 lg:text-9xl dark:text-primary-500">
               404
             </h1>

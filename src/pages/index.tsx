@@ -108,7 +108,6 @@ export default function Index() {
   const paginatedData = hasData
     ? data.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE)
     : [];
-    
 
   return (
     <>
@@ -338,7 +337,11 @@ export default function Index() {
                   </span>
                 </div>
                 {paginatedData?.map((resultDetail, index) => (
-                  <AcmResultDetailCard key={index} {...resultDetail} />
+                  <AcmResultDetailCard
+                    key={index}
+                    {...resultDetail}
+                    url={`/listing/${resultDetail._id}`}
+                  />
                 ))}
                 <ClientSidePagination
                   totalItems={data.length}
