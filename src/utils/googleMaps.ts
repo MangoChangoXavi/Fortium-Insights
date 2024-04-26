@@ -4,7 +4,7 @@ const getCoordinates = async (address: string) => {
     `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.GOOGLE_MAPS_API_KEY}`,
   );
   const data = await response.json();
-  console.log({ data }, 'function googleMap');
+  console.log({ data }, "function googleMap");
 
   return data.results[0].geometry.location;
 };

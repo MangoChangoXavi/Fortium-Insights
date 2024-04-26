@@ -26,7 +26,7 @@ export default function Proposal(props: PageProps) {
   return (
     <>
       {/* <Hero/> */}
-      <section className="w-100 relative   bg-cover bg-center bg-no-repeat">
+      <section className="w-100 relative bg-cover bg-center bg-no-repeat">
         <Header />
         <div className="relative mx-auto max-w-screen-xl px-4 pt-24 sm:px-10 lg:px-20">
           <div className=" mx-auto mb-5 w-full text-center ltr:sm:text-left rtl:sm:text-right">

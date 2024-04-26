@@ -135,7 +135,18 @@ export const DetailsHorizontal = ({
         </div>
         {lat && lng && (
           <div className="flex h-full items-center justify-center md:w-1/3">
-            <Map lat={lat} lng={lng} />
+            <Map
+              center={{
+                lat,
+                lng,
+              }}
+              markers={[
+                {
+                  lat,
+                  lng,
+                },
+              ]}
+            />
           </div>
         )}
       </div>

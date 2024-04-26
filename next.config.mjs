@@ -23,6 +23,7 @@ const config = {
       "scontent.faep24-1.fna.fbcdn.net",
       "mapainmueble.com",
       "listacasas.com",
+      "listacasas.com",
     ],
   },
 
