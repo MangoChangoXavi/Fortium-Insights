@@ -15,16 +15,19 @@ import { GTQ, USD } from "~/utils/functions";
 import { OperationTypeDropdown } from "~/components/template/layouts/OperationTypeDropdown";
 import { Loader } from "~/components/system/layouts/Loader";
 import { PriceRangeDropdown } from "~/components/template/layouts/PriceRangeDropdown";
+import { BuildingTypeDropdown } from "~/components/template/layouts/BulidingTypeDropdown";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Address(props: PageProps) {
   const { location } = props;
   const [address, setAddress] = useState<string>(props.address);
   const [operationType, setOperationType] = useState("");
+  const [buildingType, setBuildingType] = useState("");
 
   const { data, isLoading } = api.requirements.get.useQuery({
     lat: location.lat,
     lng: location.lng,
     operationType,
+    buildingType,
   });
 
   const markers = data?.map((i) => ({
@@ -54,7 +57,10 @@ export default function Address(props: PageProps) {
           setOperationType={setOperationType}
           operationType={operationType}
         />
-        <PriceRangeDropdown />
+        <BuildingTypeDropdown
+          buildingType={buildingType}
+          setBuildingType={setBuildingType}
+        />
       </div>
       {isLoading && (
         <div className="flex h-screen w-full items-center justify-center">
@@ -78,11 +84,21 @@ export default function Address(props: PageProps) {
             <div className="flex flex-col gap-[8px]">
               {/* title */}
               <h1 className="text-xl font-semibold not-italic leading-[normal] text-[#2C2C2C]">
-                Casas y Apartamentos disponibles en {address}
+                {
+                  {
+                    "": "Propiedades",
+                    apartment: "Apartamentos",
+                    house: "Casas",
+                    land: "Terrenos",
+                    warehouse: "Bodegas",
+                    office: "Oficinas",
+                  }[buildingType]
+                }{" "}
+                disponibles en {address}
               </h1>
               {/* subtitle */}
               <article className="text-sm font-normal not-italic leading-[normal] text-[#808080]">
-                {markers.length} propiedades encontradas
+                {markers.length} resultados encontrados
               </article>
             </div>
             {/* cards */}
