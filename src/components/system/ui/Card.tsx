@@ -10,6 +10,8 @@ interface Props {
   totalArea: number;
   address: string;
   imageUrl: string;
+  operationType: string;
+  buildingType: string;
 }
 export const Card = ({
   url,
@@ -19,6 +21,8 @@ export const Card = ({
   totalArea,
   address,
   imageUrl,
+  operationType,
+  buildingType,
 }: Props) => {
   return (
     <Link
@@ -45,7 +49,23 @@ export const Card = ({
           </div>
           <div className="flex flex-row gap-2 text-center text-xs font-normal text-neutral-500">
             {numberOfRooms} <BedIcon size={16} /> | {numberOfBathrooms}{" "}
-            <BathIcon size={16} /> | {totalArea} mt2 | Casa en venta
+            <BathIcon size={16} /> | {totalArea} mt2 |{" "}
+            {
+              {
+                apartment: "Apartamento",
+                house: "Casa",
+                office: "Oficina",
+                land: "Terreno",
+                warehouse: "Bodega",
+              }[buildingType.trim()]
+            }{" "}
+            en{" "}
+            {
+              {
+                sell: "Venta",
+                rent: "Renta",
+              }[operationType]
+            }
           </div>
           <div className="flex flex-row gap-2 text-start text-xs font-normal text-neutral-400">
             {address}

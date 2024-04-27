@@ -12,21 +12,31 @@ import { getCoordinates } from "~/utils/googleMaps";
 import { api } from "~/utils/api";
 import { Card } from "~/components/system/ui/Card";
 import { GTQ, USD } from "~/utils/functions";
-
+import { OperationTypeDropdown } from "~/components/template/layouts/OperationTypeDropdown";
+import { Loader } from "~/components/system/layouts/Loader";
+import { PriceRangeDropdown } from "~/components/template/layouts/PriceRangeDropdown";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Address(props: PageProps) {
   const { location } = props;
   const [address, setAddress] = useState<string>(props.address);
+  const [operationType, setOperationType] = useState("");
 
   const { data, isLoading } = api.requirements.get.useQuery({
     lat: location.lat,
     lng: location.lng,
+    operationType,
   });
 
   const markers = data?.map((i) => ({
     lat: i.location.coordinates[1],
     lng: i.location.coordinates[0],
   }));
+
+  useEffect(() => {
+    if (address !== props.address) {
+      window.location.href = `/search/${address}`;
+    }
+  }, [address, props.address]);
 
   const hasData = data && data.length > 0 && markers && markers.length > 0;
 
@@ -40,7 +50,17 @@ export default function Address(props: PageProps) {
         <div className="w-96">
           <MapSelect setAddress={setAddress} address={address} />
         </div>
+        <OperationTypeDropdown
+          setOperationType={setOperationType}
+          operationType={operationType}
+        />
+        <PriceRangeDropdown />
       </div>
+      {isLoading && (
+        <div className="flex h-screen w-full items-center justify-center">
+          <Loader />
+        </div>
+      )}
       {hasData && (
         <section className="flex min-h-screen flex-row gap-2">
           {/* map */}
@@ -80,7 +100,9 @@ export default function Address(props: PageProps) {
                   numberOfBathrooms={i.numberOfBathrooms}
                   totalArea={i.totalArea}
                   address={i.address}
-                  imageUrl={i.imagesUrl[0]}
+                  imageUrl={i.imagesUrl ? i.imagesUrl[0] : ""}
+                  operationType={i.operationType}
+                  buildingType={i.buildingType}
                 />
               ))}
             </div>
