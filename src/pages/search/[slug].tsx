@@ -16,18 +16,24 @@ import { OperationTypeDropdown } from "~/components/template/layouts/OperationTy
 import { Loader } from "~/components/system/layouts/Loader";
 import { PriceRangeDropdown } from "~/components/template/layouts/PriceRangeDropdown";
 import { BuildingTypeDropdown } from "~/components/template/layouts/BulidingTypeDropdown";
+import { BedsBathsDropdown } from "~/components/template/layouts/BedsBathsDropdown";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Address(props: PageProps) {
   const { location } = props;
   const [address, setAddress] = useState<string>(props.address);
   const [operationType, setOperationType] = useState("");
   const [buildingType, setBuildingType] = useState("");
+  const [numberOfRooms, setNumberOfRooms] = useState("all");
+  const [numberOfBathrooms, setNumberOfBathrooms] = useState("all");
 
   const { data, isLoading } = api.requirements.get.useQuery({
     lat: location.lat,
     lng: location.lng,
     operationType,
     buildingType,
+    minNumberOfRooms: numberOfRooms === "all" ? 0 : parseInt(numberOfRooms),
+    minNumberOfBathrooms:
+      numberOfBathrooms === "all" ? 0 : parseInt(numberOfBathrooms),
   });
 
   const markers = data?.map((i) => ({
@@ -57,9 +63,16 @@ export default function Address(props: PageProps) {
           setOperationType={setOperationType}
           operationType={operationType}
         />
+        <PriceRangeDropdown />
         <BuildingTypeDropdown
           buildingType={buildingType}
           setBuildingType={setBuildingType}
+        />
+        <BedsBathsDropdown
+          numberOfBathrooms={numberOfBathrooms}
+          setNumberOfBathrooms={setNumberOfBathrooms}
+          numberOfRooms={numberOfRooms}
+          setNumberOfRooms={setNumberOfRooms}
         />
       </div>
       {isLoading && (
