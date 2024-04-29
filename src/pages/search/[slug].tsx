@@ -17,7 +17,34 @@ import { Loader } from "~/components/system/layouts/Loader";
 import { PriceRangeDropdown } from "~/components/template/layouts/PriceRangeDropdown";
 import { BuildingTypeDropdown } from "~/components/template/layouts/BulidingTypeDropdown";
 import { BedsBathsDropdown } from "~/components/template/layouts/BedsBathsDropdown";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerPortal,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ToggleGroupButtons } from "~/components/template/ui/ToggleGroupButtons";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
+
+const BUTTON_ITEMS_FILTER = [
+  { value: "all", label: "Todos" },
+  { value: "1", label: "1+" },
+  { value: "2", label: "2+" },
+  { value: "3", label: "3+" },
+  { value: "4", label: "4+" },
+  { value: "5", label: "5+" },
+];
+
 export default function Address(props: PageProps) {
   const { location } = props;
   const [address, setAddress] = useState<string>(props.address);
@@ -25,6 +52,8 @@ export default function Address(props: PageProps) {
   const [buildingType, setBuildingType] = useState("");
   const [numberOfRooms, setNumberOfRooms] = useState("all");
   const [numberOfBathrooms, setNumberOfBathrooms] = useState("all");
+  const [minPrice, setMinPrice] = useState("0");
+  const [maxPrice, setMaxPrice] = useState("400000");
 
   const { data, isLoading } = api.requirements.get.useQuery({
     lat: location.lat,
@@ -55,7 +84,8 @@ export default function Address(props: PageProps) {
       <section className="w-100 relative  bg-cover bg-center bg-no-repeat">
         <Header />
       </section>
-      <div className="flex h-fit w-full flex-row gap-4 border-b-2 border-t-2 bg-white px-8 py-2">
+      {/* desktop filters */}
+      <div className="hidden h-fit w-full flex-row gap-4 border-b-2 border-t-2 bg-white px-8 py-2 md:flex">
         <div className="w-96">
           <MapSelect setAddress={setAddress} address={address} />
         </div>
@@ -63,7 +93,12 @@ export default function Address(props: PageProps) {
           setOperationType={setOperationType}
           operationType={operationType}
         />
-        <PriceRangeDropdown />
+        <PriceRangeDropdown
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+        />
         <BuildingTypeDropdown
           buildingType={buildingType}
           setBuildingType={setBuildingType}
@@ -73,7 +108,40 @@ export default function Address(props: PageProps) {
           setNumberOfBathrooms={setNumberOfBathrooms}
           numberOfRooms={numberOfRooms}
           setNumberOfRooms={setNumberOfRooms}
+          buttonItems={BUTTON_ITEMS_FILTER}
         />
+      </div>
+      {/* mobile filters */}
+      <div className="flex flex-col gap-4 border-b-2 border-t-2 bg-white px-8 py-2 md:hidden">
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button variant="outline">Filtros</Button>
+          </DrawerTrigger>
+          <DrawerPortal>
+            <DrawerContent>
+              <section className="flex h-96 flex-col gap-5 px-8">
+                {/* number of rooms */}
+                <div className="flex flex-col items-start justify-start gap-3">
+                  <label htmlFor="">Numero de dormitorios</label>
+                  <ToggleGroupButtons
+                    valueState={numberOfRooms}
+                    setValueState={setNumberOfRooms}
+                    items={BUTTON_ITEMS_FILTER}
+                  />
+                </div>
+                {/* number of bathrooms */}
+                <div className="flex flex-col items-start justify-start gap-3">
+                  <label htmlFor="">Numero de baños</label>
+                  <ToggleGroupButtons
+                    valueState={numberOfBathrooms}
+                    setValueState={setNumberOfBathrooms}
+                    items={BUTTON_ITEMS_FILTER}
+                  />
+                </div>
+              </section>
+            </DrawerContent>
+          </DrawerPortal>
+        </Drawer>
       </div>
       {isLoading && (
         <div className="flex h-screen w-full items-center justify-center">

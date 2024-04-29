@@ -5,95 +5,90 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+import { FormControl } from "@/components/ui/form";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
-import { FormControl } from "@/components/ui/form";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { USD } from "~/utils/functions";
 
-export const PriceRangeDropdown = () => {
+interface PropsI {
+  minPrice: string;
+  maxPrice: string;
+  setMinPrice: (value: string) => void;
+  setMaxPrice: (value: string) => void;
+}
+
+export const PriceRangeDropdown = ({
+  minPrice,
+  maxPrice,
+  setMinPrice,
+  setMaxPrice,
+}: PropsI) => {
   const [operationType, setOperationType] = React.useState("sell");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Precio</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="ml-10">
+      <DropdownMenuContent className="ml-10 space-y-4">
         <DropdownMenuLabel>Rango de Precios</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <ToggleGroup
           type="single"
           value={operationType}
-          onChange={(e) => setOperationType(e.target.value)}
+          onValueChange={(value) => setOperationType(value)}
         >
           <ToggleGroupItem value="sell">Compra</ToggleGroupItem>
           <ToggleGroupItem value="rent">Alquiler</ToggleGroupItem>
         </ToggleGroup>
         <div className="mx-2 flex flex-row gap-2">
-          <Select
-          // onValueChange={field.onChange}
-          // defaultValue={field.value}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Minimo" />
-            </SelectTrigger>
-            <SelectContent className="bg-white">
-              <SelectItem value="0">0</SelectItem>
-              <SelectItem value="10000">100,000</SelectItem>
-              <SelectItem value="20000">200,000</SelectItem>
-              <SelectItem value="30000">300,000</SelectItem>
-              <SelectItem value="40000">400,000</SelectItem>
-              <SelectItem value="50000">500,000</SelectItem>
-              <SelectItem value="60000">600,000</SelectItem>
-              <SelectItem value="70000">700,000</SelectItem>
-              <SelectItem value="80000">800,000</SelectItem>
-              <SelectItem value="90000">900,000</SelectItem>
-              <SelectItem value="100000">1,000,000</SelectItem>
-              <SelectItem value="150000">1,500,000</SelectItem>
-              <SelectItem value="200000">2,000,000</SelectItem>
-              <SelectItem value="250000">2,500,000</SelectItem>
-              <SelectItem value="300000">3,000,000</SelectItem>
-              <SelectItem value="350000">3,500,000</SelectItem>
-              <SelectItem value="400000">4,000,000</SelectItem>
-            </SelectContent>
-          </Select>
-          <span>-</span>
-          <Select
-          // onValueChange={field.onChange}
-          // defaultValue={field.value}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Maximo" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="10000">100,000</SelectItem>
-              <SelectItem value="20000">200,000</SelectItem>
-              <SelectItem value="30000">300,000</SelectItem>
-              <SelectItem value="40000">400,000</SelectItem>
-              <SelectItem value="50000">500,000</SelectItem>
-              <SelectItem value="60000">600,000</SelectItem>
-              <SelectItem value="70000">700,000</SelectItem>
-              <SelectItem value="80000">800,000</SelectItem>
-              <SelectItem value="90000">900,000</SelectItem>
-              <SelectItem value="100000">1,000,000</SelectItem>
-              <SelectItem value="150000">1,500,000</SelectItem>
-              <SelectItem value="200000">2,000,000</SelectItem>
-              <SelectItem value="250000">2,500,000</SelectItem>
-              <SelectItem value="300000">3,000,000</SelectItem>
-              <SelectItem value="350000">3,500,000</SelectItem>
-              <SelectItem value="400000">4,000,000</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="space-y-1">
+            <label htmlFor="">Minimo</label>
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Precio Minimo" />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectGroup>
+                  <SelectItem value="50000">{USD.format(50000)}</SelectItem>
+                  <SelectItem value="100000">{USD.format(100000)}</SelectItem>
+                  <SelectItem value="200000">{USD.format(200000)}</SelectItem>
+                  <SelectItem value="300000">{USD.format(300000)}</SelectItem>
+                  <SelectItem value="400000">{USD.format(400000)}</SelectItem>
+                  <SelectItem value="500000">{USD.format(500000)}</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="">Maximo</label>
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Precio Maximo" />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectGroup>
+                  <SelectItem value="50000">{USD.format(50000)}</SelectItem>
+                  <SelectItem value="100000">{USD.format(100000)}</SelectItem>
+                  <SelectItem value="200000">{USD.format(200000)}</SelectItem>
+                  <SelectItem value="300000">{USD.format(300000)}</SelectItem>
+                  <SelectItem value="400000">{USD.format(400000)}</SelectItem>
+                  <SelectItem value="500000">{USD.format(500000)}</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

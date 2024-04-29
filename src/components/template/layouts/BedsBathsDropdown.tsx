@@ -8,13 +8,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ToggleGroupButtons } from "../ui/ToggleGroupButtons";
 
 interface Props {
   numberOfRooms: string;
   setNumberOfRooms: (value: string) => void;
   numberOfBathrooms: string;
   setNumberOfBathrooms: (value: string) => void;
+  buttonItems: { value: string; label: string }[];
 }
 
 export const BedsBathsDropdown = ({
@@ -22,6 +23,7 @@ export const BedsBathsDropdown = ({
   setNumberOfRooms,
   numberOfBathrooms,
   setNumberOfBathrooms,
+  buttonItems,
 }: Props) => {
   return (
     <DropdownMenu>
@@ -31,37 +33,19 @@ export const BedsBathsDropdown = ({
       <DropdownMenuContent className="ml-48 p-4">
         <DropdownMenuLabel>Numero de Baños</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <ToggleGroup
-          type="single"
-          variant={"outline"}
-          className="gap-1"
-          value={numberOfRooms}
-          onValueChange={(value) => setNumberOfRooms(value)}
-        >
-          <ToggleGroupItem value="all">Todos</ToggleGroupItem>
-          <ToggleGroupItem value="1">1+</ToggleGroupItem>
-          <ToggleGroupItem value="2">2+</ToggleGroupItem>
-          <ToggleGroupItem value="3">3+</ToggleGroupItem>
-          <ToggleGroupItem value="4">4+</ToggleGroupItem>
-          <ToggleGroupItem value="5">5+</ToggleGroupItem>
-        </ToggleGroup>
+        <ToggleGroupButtons
+          valueState={numberOfBathrooms}
+          setValueState={setNumberOfBathrooms}
+          items={buttonItems}
+        />
         <DropdownMenuSeparator />
         <DropdownMenuLabel>Numero de Cuartos</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <ToggleGroup
-          type="single"
-          variant={"outline"}
-          className="gap-1"
-          value={numberOfBathrooms}
-          onValueChange={(value) => setNumberOfBathrooms(value)}
-        >
-          <ToggleGroupItem value="all">Todos</ToggleGroupItem>
-          <ToggleGroupItem value="1">1+</ToggleGroupItem>
-          <ToggleGroupItem value="2">2+</ToggleGroupItem>
-          <ToggleGroupItem value="3">3+</ToggleGroupItem>
-          <ToggleGroupItem value="4">4+</ToggleGroupItem>
-          <ToggleGroupItem value="5">5+</ToggleGroupItem>
-        </ToggleGroup>
+        <ToggleGroupButtons
+          valueState={numberOfRooms}
+          setValueState={setNumberOfRooms}
+          items={buttonItems}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );
