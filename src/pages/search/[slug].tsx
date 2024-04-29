@@ -20,20 +20,14 @@ import { BedsBathsDropdown } from "~/components/template/layouts/BedsBathsDropdo
 
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Drawer,
   DrawerContent,
   DrawerPortal,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { ToggleGroupButtons } from "~/components/template/ui/ToggleGroupButtons";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 const BUTTON_ITEMS_FILTER = [
@@ -43,6 +37,15 @@ const BUTTON_ITEMS_FILTER = [
   { value: "3", label: "3+" },
   { value: "4", label: "4+" },
   { value: "5", label: "5+" },
+];
+
+const BUILDING_TYPES = [
+  { value: "", label: "Todos" },
+  { value: "apartment", label: "Apartamentos" },
+  { value: "house", label: "Casas" },
+  { value: "land", label: "Terrenos" },
+  { value: "warehouse", label: "Bodegas" },
+  { value: "office", label: "Oficinas" },
 ];
 
 export default function Address(props: PageProps) {
@@ -102,6 +105,7 @@ export default function Address(props: PageProps) {
         <BuildingTypeDropdown
           buildingType={buildingType}
           setBuildingType={setBuildingType}
+          items={BUILDING_TYPES}
         />
         <BedsBathsDropdown
           numberOfBathrooms={numberOfBathrooms}
@@ -119,7 +123,7 @@ export default function Address(props: PageProps) {
           </DrawerTrigger>
           <DrawerPortal>
             <DrawerContent>
-              <section className="flex h-96 flex-col gap-5 px-8">
+              <section className="flex h-[32rem] flex-col gap-5 px-8">
                 {/* number of rooms */}
                 <div className="flex flex-col items-start justify-start gap-3">
                   <label htmlFor="">Numero de dormitorios</label>
@@ -137,6 +141,25 @@ export default function Address(props: PageProps) {
                     setValueState={setNumberOfBathrooms}
                     items={BUTTON_ITEMS_FILTER}
                   />
+                </div>
+                {/* building type radio buttons */}
+                <div className="flex flex-col items-start justify-start gap-3">
+                  <label htmlFor="">Tipo de propiedad</label>
+                  <RadioGroup
+                    defaultValue="comfortable"
+                    value={buildingType}
+                    onValueChange={(value) => setBuildingType(value)}
+                  >
+                    {BUILDING_TYPES.map((item) => (
+                      <div
+                        key={item.value}
+                        className="flex items-center space-x-2"
+                      >
+                        <RadioGroupItem value={item.value} id={item.value} />
+                        <Label htmlFor={item.value}>{item.label}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
                 </div>
               </section>
             </DrawerContent>

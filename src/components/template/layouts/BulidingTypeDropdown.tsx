@@ -11,14 +11,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+interface ItemI {
+  value: string;
+  label: string;
+}
 interface Props {
   buildingType: string;
   setBuildingType: (buildingType: string) => void;
+  items: ItemI[];
 }
 
 export const BuildingTypeDropdown = ({
   buildingType,
   setBuildingType,
+  items,
 }: Props) => {
   return (
     <DropdownMenu>
@@ -43,16 +49,11 @@ export const BuildingTypeDropdown = ({
           value={buildingType}
           onValueChange={setBuildingType}
         >
-          <DropdownMenuRadioItem value="">Todos</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="apartment">
-            Apartamento
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="house">Casa</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="land">Terreno</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="warehouse">
-            Bodega
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="office">Oficina</DropdownMenuRadioItem>
+          {items.map((item) => (
+            <DropdownMenuRadioItem key={item.value} value={item.value}>
+              {item.label}
+            </DropdownMenuRadioItem>
+          ))}
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
