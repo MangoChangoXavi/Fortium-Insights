@@ -26,7 +26,7 @@ export const OperationTypeDropdown = ({
         <Button variant="outline">
           {
             {
-              "": "Venta/Renta",
+              all: "Venta/Renta",
               rent: "En renta",
               sell: "En venta",
             }[operationType]
@@ -40,7 +40,7 @@ export const OperationTypeDropdown = ({
           value={operationType}
           onValueChange={setOperationType}
         >
-          <DropdownMenuRadioItem value="">Todos</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="all">Todos</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="rent">En renta</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="sell">En venta</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>

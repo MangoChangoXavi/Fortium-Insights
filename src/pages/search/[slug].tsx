@@ -97,12 +97,12 @@ export default function Address(props: PageProps) {
           setOperationType={setOperationType}
           operationType={operationType}
         />
-        <PriceRangeDropdown
+        {/* <PriceRangeDropdown
           minPrice={minPrice}
           setMinPrice={setMinPrice}
           maxPrice={maxPrice}
           setMaxPrice={setMaxPrice}
-        />
+        /> */}
         <BuildingTypeDropdown
           buildingType={buildingType}
           setBuildingType={setBuildingType}
