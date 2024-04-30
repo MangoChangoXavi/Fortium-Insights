@@ -56,8 +56,8 @@ export default function Address(props: PageProps) {
   const [buildingType, setBuildingType] = useState("");
   const [numberOfRooms, setNumberOfRooms] = useState("all");
   const [numberOfBathrooms, setNumberOfBathrooms] = useState("all");
-  const [minPrice, setMinPrice] = useState("0");
-  const [maxPrice, setMaxPrice] = useState("400000");
+  const [minPrice, setMinPrice] = useState("all");
+  const [maxPrice, setMaxPrice] = useState("all");
 
   const { data, isLoading } = api.requirements.get.useQuery({
     lat: location.lat,
@@ -67,6 +67,8 @@ export default function Address(props: PageProps) {
     minNumberOfRooms: numberOfRooms === "all" ? 0 : parseInt(numberOfRooms),
     minNumberOfBathrooms:
       numberOfBathrooms === "all" ? 0 : parseInt(numberOfBathrooms),
+    minPrice: minPrice === "all" ? undefined : parseInt(minPrice),
+    maxPrice: maxPrice === "all" ? undefined : parseInt(maxPrice),
   });
 
   const markers = data?.map((i) => ({
@@ -97,12 +99,12 @@ export default function Address(props: PageProps) {
           setOperationType={setOperationType}
           operationType={operationType}
         />
-        {/* <PriceRangeDropdown
+        <PriceRangeDropdown
           minPrice={minPrice}
           setMinPrice={setMinPrice}
           maxPrice={maxPrice}
           setMaxPrice={setMaxPrice}
-        /> */}
+        />
         <BuildingTypeDropdown
           buildingType={buildingType}
           setBuildingType={setBuildingType}
