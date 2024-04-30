@@ -28,6 +28,7 @@ import {
 import { ToggleGroupButtons } from "~/components/template/ui/ToggleGroupButtons";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 const BUTTON_ITEMS_FILTER = [
@@ -51,7 +52,7 @@ const BUILDING_TYPES = [
 export default function Address(props: PageProps) {
   const { location } = props;
   const [address, setAddress] = useState<string>(props.address);
-  const [operationType, setOperationType] = useState("");
+  const [operationType, setOperationType] = useState("all");
   const [buildingType, setBuildingType] = useState("");
   const [numberOfRooms, setNumberOfRooms] = useState("all");
   const [numberOfBathrooms, setNumberOfBathrooms] = useState("all");
@@ -61,7 +62,7 @@ export default function Address(props: PageProps) {
   const { data, isLoading } = api.requirements.get.useQuery({
     lat: location.lat,
     lng: location.lng,
-    operationType,
+    operationType: operationType === "all" ? "" : operationType,
     buildingType,
     minNumberOfRooms: numberOfRooms === "all" ? 0 : parseInt(numberOfRooms),
     minNumberOfBathrooms:
@@ -124,6 +125,19 @@ export default function Address(props: PageProps) {
           <DrawerPortal>
             <DrawerContent>
               <section className="flex h-[32rem] flex-col gap-5 px-8">
+                {/* operation type */}
+                <div className="flex flex-col items-start justify-start gap-3">
+                  <label htmlFor="">Tipo de Operacion</label>
+                  <ToggleGroup
+                    type="single"
+                    value={operationType}
+                    onValueChange={(value) => setOperationType(value)}
+                  >
+                    <ToggleGroupItem value="all">Todas</ToggleGroupItem>
+                    <ToggleGroupItem value="sell">Compra</ToggleGroupItem>
+                    <ToggleGroupItem value="rent">Alquiler</ToggleGroupItem>
+                  </ToggleGroup>
+                </div>
                 {/* number of rooms */}
                 <div className="flex flex-col items-start justify-start gap-3">
                   <label htmlFor="">Numero de dormitorios</label>

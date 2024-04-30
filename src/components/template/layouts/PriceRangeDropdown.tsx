@@ -41,7 +41,7 @@ export const PriceRangeDropdown = ({
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Precio</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="ml-10 space-y-4">
+      <DropdownMenuContent className="ml-80 space-y-4">
         <DropdownMenuLabel>Rango de Precios</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <ToggleGroup
