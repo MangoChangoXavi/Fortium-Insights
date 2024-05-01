@@ -29,6 +29,14 @@ import { ToggleGroupButtons } from "~/components/template/ui/ToggleGroupButtons"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { PricesSelectFilter } from "~/components/template/ui/PricesSelectFilter";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 const BUTTON_ITEMS_FILTER = [
@@ -99,12 +107,21 @@ export default function Address(props: PageProps) {
           setOperationType={setOperationType}
           operationType={operationType}
         />
-        <PriceRangeDropdown
-          minPrice={minPrice}
-          setMinPrice={setMinPrice}
-          maxPrice={maxPrice}
-          setMaxPrice={setMaxPrice}
-        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Precio</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="ml-80 space-y-4 pb-4">
+            <DropdownMenuLabel>Rango de Precios</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <PriceRangeDropdown
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              maxPrice={maxPrice}
+              setMaxPrice={setMaxPrice}
+            />
+          </DropdownMenuContent>
+        </DropdownMenu>
         <BuildingTypeDropdown
           buildingType={buildingType}
           setBuildingType={setBuildingType}
@@ -120,13 +137,24 @@ export default function Address(props: PageProps) {
       </div>
       {/* mobile filters */}
       <div className="flex flex-col gap-4 border-b-2 border-t-2 bg-white px-8 py-2 md:hidden">
+        <div className="w-full">
+          <MapSelect setAddress={setAddress} address={address} />
+        </div>
         <Drawer>
           <DrawerTrigger asChild>
             <Button variant="outline">Filtros</Button>
           </DrawerTrigger>
           <DrawerPortal>
             <DrawerContent>
-              <section className="flex h-[32rem] flex-col gap-5 px-8">
+              <section className="flex h-[90vh] flex-col gap-5 px-8">
+                {/* price range */}
+                <label htmlFor="">Rango de precios</label>
+                <PriceRangeDropdown
+                  minPrice={minPrice}
+                  setMinPrice={setMinPrice}
+                  maxPrice={maxPrice}
+                  setMaxPrice={setMaxPrice}
+                />
                 {/* operation type */}
                 <div className="flex flex-col items-start justify-start gap-3">
                   <label htmlFor="">Tipo de Operacion</label>

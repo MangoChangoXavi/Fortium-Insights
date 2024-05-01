@@ -1,14 +1,4 @@
 import React from "react";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   Select,
   SelectContent,
@@ -18,40 +8,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { USD } from "~/utils/functions";
-import { MinusIcon } from "lucide-react";
-interface PropsI {
+
+interface PricesSelectFilterProps {
   minPrice: string;
   maxPrice: string;
   setMinPrice: (value: string) => void;
   setMaxPrice: (value: string) => void;
+  prices: number[];
 }
 
-export const PriceRangeDropdown = ({
+export const PricesSelectFilter = ({
   minPrice,
   maxPrice,
   setMinPrice,
   setMaxPrice,
-}: PropsI) => {
-  const [operationType, setOperationType] = React.useState("sell");
-  const SELL_PRICES = [
-    50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000,
-    900000, 1000000,
-  ];
-  const RENT_PRICES = [
-    0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300,
-  ];
-  const prices = operationType === "sell" ? SELL_PRICES : RENT_PRICES;
+  prices,
+}: PricesSelectFilterProps) => {
   return (
     <>
-      <ToggleGroup
-        type="single"
-        value={operationType}
-        onValueChange={(value) => setOperationType(value)}
-      >
-        <ToggleGroupItem value="sell">Compra</ToggleGroupItem>
-        <ToggleGroupItem value="rent">Alquiler</ToggleGroupItem>
-      </ToggleGroup>
-      <div className="flex flex-row gap-2">
+      <div className="mx-2 flex flex-row gap-2">
         <div className="space-y-1">
           <label htmlFor="minPrice">Minimo</label>
           <Select
@@ -59,7 +34,7 @@ export const PriceRangeDropdown = ({
             value={minPrice}
             onValueChange={(value) => setMinPrice(value)}
           >
-            <SelectTrigger className="">
+            <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Precio Minimo" />
             </SelectTrigger>
             <SelectContent className="bg-white">
@@ -81,7 +56,7 @@ export const PriceRangeDropdown = ({
             value={maxPrice}
             onValueChange={(value) => setMaxPrice(value)}
           >
-            <SelectTrigger className="">
+            <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Precio Maximo" />
             </SelectTrigger>
             <SelectContent className="bg-white">
