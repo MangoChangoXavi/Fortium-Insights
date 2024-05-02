@@ -59,14 +59,17 @@ export const DetailsHorizontal = ({
       {/* header image */}
       {images && (
         <div className="relative flex h-[306px] w-full flex-row overflow-hidden">
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className="relative flex h-[306px] w-full transition-transform duration-300 ease-in-out hover:z-50 hover:scale-150"
-            >
-              <Image src={image} alt="image" fill objectFit="cover" />
-            </div>
-          ))}
+          {images.map((image, index) => {
+            if (!image || image == "null") return null;
+            return (
+              <div
+                key={index}
+                className="relative flex h-[306px] w-full transition-transform duration-300 ease-in-out hover:z-50 hover:scale-150"
+              >
+                <Image src={image} alt="image" fill objectFit="cover" />
+              </div>
+            );
+          })}
         </div>
       )}
 

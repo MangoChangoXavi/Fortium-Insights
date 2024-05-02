@@ -263,7 +263,7 @@ export default function Address(props: PageProps) {
                   numberOfRooms={i.numberOfRooms}
                   numberOfBathrooms={i.numberOfBathrooms}
                   totalArea={i.totalArea}
-                  address={i.address}
+                  address={i.title ? i.title : i.address}
                   imageUrl={i.imagesUrl ? i.imagesUrl[0] : ""}
                   operationType={i.operationType}
                   buildingType={i.buildingType}

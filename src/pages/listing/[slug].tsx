@@ -33,7 +33,7 @@ export default function Listing(props: PageProps) {
       </section>
       <section className="">
         <DetailsHorizontal
-          title={listing.address}
+          title={listing.title ? listing.title : listing.address}
           images={
             listing.imagesUrl.length > 4
               ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -65,7 +65,11 @@ export default function Listing(props: PageProps) {
               subtitle: "Metros Cuadrados",
             },
           ]}
-          subtitle="Compra esta propiedad con la ayuda de techos digitales."
+          subtitle={
+            listing.description
+              ? listing.description
+              : "Compra esta propiedad con la ayuda de techos digitales."
+          }
           buttons={[
             {
               label: "Ver mas",

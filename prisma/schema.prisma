@@ -103,6 +103,17 @@ model proposal {
   proposalServices proposalService[]
 }
 
+model request {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  message     String
+  url         String
+  status      String   @default("initial") // Initial, Sent, Accepted, Rejected
+  createdAt   DateTime @default(now()) @map("created_at")
+}
+
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
