@@ -72,15 +72,12 @@ export default function Listing(props: PageProps) {
           }
           buttons={[
             {
-              label: "Ver mas",
-              variant: "primary",
-              href: listing.url,
+              label: "Pedir Informacion",
+              variant: "dark",
+              href: `https://wa.me/+59541638?text=${encodeURI(
+                `Hola me gustaria mas informacion sobre esta propiedad: https://www.techosdigitales.com/listing/${listing._id}`,
+              )}`,
             },
-            // {
-            //   label: "Contactar",
-            //   variant: "dark",
-            //   href: `https://wa.me/+59541638?text=Hola me gustaria mas informacion sobre esta propiedad: https://www.techosdigitales.com/listing/${listing._id}`,
-            // },
             // {
             //   label: "Compartir",
             //   variant: "secondary",

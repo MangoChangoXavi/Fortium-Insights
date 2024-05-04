@@ -13,6 +13,8 @@ interface PropsI {
   totalArea?: number;
   price?: number;
   currency?: string;
+  title?: string;
+  description?: string;
 }
 
 interface ScrappedPostI {

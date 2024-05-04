@@ -22,7 +22,14 @@ const PropSubtitle = ({ text }: { text: string }) => {
 
 interface ButtonI {
   label: string;
-  variant?: "primary" | "secondary" | "default" | "dark" | "disabled" | "error";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "default"
+    | "dark"
+    | "disabled"
+    | "error"
+    | "ghost";
   className?: string;
   href?: string;
   handleClick?: () => void;
@@ -79,9 +86,11 @@ export const DetailsHorizontal = ({
           <div className="flex  flex-col gap-[8px]">
             {/* title */}
             {title && (
-              <h1 className="text-xl font-semibold not-italic leading-[normal] text-[#2C2C2C]">
-                {title}
-              </h1>
+              <Link href={url}>
+                <h1 className="text-xl font-semibold not-italic leading-[normal] text-[#2C2C2C] hover:underline">
+                  {title}
+                </h1>
+              </Link>
             )}
             {/* subtitle */}
             {subtitle && (
