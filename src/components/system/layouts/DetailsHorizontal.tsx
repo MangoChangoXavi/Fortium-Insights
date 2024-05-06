@@ -104,9 +104,8 @@ export const DetailsHorizontal = ({
                   <Image
                     src={image}
                     layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
-                    alt=""
+                    alt="property image"
+                    className="object-cover"
                   />
                 </div>
               </CarouselItem>

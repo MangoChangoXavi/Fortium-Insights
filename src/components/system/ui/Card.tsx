@@ -37,10 +37,9 @@ export const Card = ({
         >
           <Image
             src={imageUrl}
-            objectFit="cover"
             fill
             alt="property image"
-            className="rounded-tl-lg rounded-tr-lg"
+            className="rounded-tl-lg rounded-tr-lg object-cover"
           />
         </div>
         <div className="flex w-full flex-col items-start justify-start gap-1 p-4">
