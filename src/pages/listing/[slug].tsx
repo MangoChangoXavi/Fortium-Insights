@@ -34,12 +34,7 @@ export default function Listing(props: PageProps) {
       <section className="">
         <DetailsHorizontal
           title={listing.title ? listing.title : listing.address}
-          images={
-            listing.imagesUrl.length > 4
-              ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-                listing.imagesUrl.slice(0, 4)
-              : listing.imagesUrl
-          }
+          images={listing.imagesUrl}
           url={listing.url}
           lat={listing.location.coordinates[1]}
           lng={listing.location.coordinates[0]}

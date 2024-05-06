@@ -3,6 +3,7 @@ import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import React from "react";
 import Map from "~/components/system/ui/Map";
+import Slider from "../ui/Slider";
 
 const PropTitle = ({ text }: { text: string }) => {
   return (
@@ -51,6 +52,90 @@ interface PropsI {
   url: string;
 }
 
+const SingleImage = ({ image }: { image: string }) => {
+  return (
+    <div className="relative h-[300px] md:h-[35rem]">
+      <Image
+        src={image}
+        layout="fill"
+        objectFit="cover"
+        objectPosition="center"
+        alt=""
+      />
+    </div>
+  );
+};
+
+const TwoImages = ({ images }: { images: string[] }) => {
+  return (
+    <div className="grid h-[300px] grid-rows-2 sm:h-[35rem] sm:grid-cols-2 sm:grid-rows-1">
+      {images.map((image, index) => {
+        return (
+          <div key={index} className="relative h-full">
+            <Image
+              src={image}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+              alt=""
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const MultipleImages = ({ images }: { images: string[] }) => {
+  const [start, setStart] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setStart((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [images]);
+
+  return (
+    <>
+      {/* desktop */}
+      <div className="hidden h-[300px] sm:h-[25rem] sm:grid-cols-3 sm:grid-rows-1 md:grid">
+        {/* show only 3 to 4 images at a time */}
+        {images.slice(start, start + 3).map((image, index) => {
+          return (
+            <div key={index} className="relative h-full">
+              <Image
+                src={image}
+                layout="fill"
+                objectFit="cover"
+                objectPosition="center"
+                alt=""
+              />
+            </div>
+          );
+        })}
+      </div>
+      {/* mobile */}
+      <div className="h-[300px] sm:hidden">
+        {/* show only 1 image at a time */}
+        {images.slice(start, start + 1).map((image, index) => {
+          return (
+            <div key={index} className="relative h-full">
+              <Image
+                src={image}
+                layout="fill"
+                objectFit="cover"
+                objectPosition="center"
+                alt=""
+              />
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+};
+
 export const DetailsHorizontal = ({
   images,
   title,
@@ -61,25 +146,16 @@ export const DetailsHorizontal = ({
   lng,
   url,
 }: PropsI) => {
+  const hasSingleImage = images && images.length < 2;
+  const hasTwoImages = images && images.length === 2;
+  const hasMultipleImages = images && images.length > 2;
   return (
     <div className="flex w-full flex-col gap-[32px] bg-white pb-[16px]">
       {/* header image */}
-      {images && (
-        <div className="relative flex h-[306px] w-full flex-row overflow-hidden">
-          {images.map((image, index) => {
-            if (!image || image == "null") return null;
-            return (
-              <div
-                key={index}
-                className="relative flex h-[306px] w-full transition-transform duration-300 ease-in-out hover:z-50 hover:scale-150"
-              >
-                <Image src={image} alt="image" fill objectFit="cover" />
-              </div>
-            );
-          })}
-        </div>
-      )}
-
+      {hasSingleImage && SingleImage({ image: images[0] as string })}
+      {hasTwoImages && TwoImages({ images: images as string[] })}
+      {hasMultipleImages && MultipleImages({ images: images as string[] })}
+      {/* content */}
       <div className="flex flex-col gap-[32px] px-6 md:px-32 xl:flex-row">
         <div className="flex flex-col gap-[32px] md:w-2/3">
           {/* title and subtitle */}
