@@ -37,6 +37,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ScrollArea } from "@/components/ui/scroll-area";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 const BUTTON_ITEMS_FILTER = [
@@ -250,26 +251,28 @@ export default function Address(props: PageProps) {
               </article>
             </div>
             {/* cards */}
-            <div className="grid h-screen grid-cols-1 gap-2 overflow-y-scroll align-middle lg:grid-cols-2">
-              {data.map((i) => (
-                <Card
-                  key={i._id}
-                  url={`/listing/${i._id}`}
-                  formattedPrice={
-                    i.currency === "GTQ"
-                      ? GTQ.format(i.price)
-                      : USD.format(i.price)
-                  }
-                  numberOfRooms={i.numberOfRooms}
-                  numberOfBathrooms={i.numberOfBathrooms}
-                  totalArea={i.totalArea}
-                  address={i.title ? i.title : i.address}
-                  imageUrl={i.imagesUrl ? i.imagesUrl[0] : ""}
-                  operationType={i.operationType}
-                  buildingType={i.buildingType}
-                />
-              ))}
-            </div>
+            <ScrollArea>
+              <div className="grid h-screen grid-cols-1 gap-2 align-middle lg:grid-cols-2">
+                {data.map((i) => (
+                  <Card
+                    key={i._id}
+                    url={`/listing/${i._id}`}
+                    formattedPrice={
+                      i.currency === "GTQ"
+                        ? GTQ.format(i.price)
+                        : USD.format(i.price)
+                    }
+                    numberOfRooms={i.numberOfRooms}
+                    numberOfBathrooms={i.numberOfBathrooms}
+                    totalArea={i.totalArea}
+                    address={i.title ? i.title : i.address}
+                    imageUrl={i.imagesUrl ? i.imagesUrl[0] : ""}
+                    operationType={i.operationType}
+                    buildingType={i.buildingType}
+                  />
+                ))}
+              </div>
+            </ScrollArea>
           </div>
         </section>
       )}
