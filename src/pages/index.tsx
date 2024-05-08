@@ -18,96 +18,46 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import {
-  BathIcon,
-  Bed,
-  Building,
-  Car,
-  Home,
-  Ruler,
-  Search,
-} from "lucide-react";
-import { USD } from "~/utils/functions";
-import { Input } from "@/components/ui/input";
-import { ResponsiveAdUnit } from "nextjs-google-adsense";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Label } from "@/components/ui/label";
+import { ToggleGroupButtons } from "~/components/template/ui/ToggleGroupButtons";
+import { PriceRangeDropdown } from "~/components/template/layouts/PriceRangeDropdown";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { MobileFilters } from "~/components/system/layouts/MobileFilters";
 
-const ITEMS_PER_PAGE = 4;
+const BUTTON_ITEMS_FILTER = [
+  { value: "all", label: "Todos" },
+  { value: "1", label: "1+" },
+  { value: "2", label: "2+" },
+  { value: "3", label: "3+" },
+  { value: "4", label: "4+" },
+  { value: "5", label: "5+" },
+];
+
+const BUILDING_TYPES = [
+  { value: "", label: "Todos" },
+  { value: "apartment", label: "Apartamentos" },
+  { value: "house", label: "Casas" },
+  { value: "land", label: "Terrenos" },
+  { value: "warehouse", label: "Bodegas" },
+  { value: "office", label: "Oficinas" },
+];
+
 type RequirementsGetI = RouterInputs["requirements"]["get"];
 
 export default function Index() {
-  const [page, setPage] = React.useState<number>(0);
-
   // Search parameters
   const [operationType, setOperationType] = React.useState<string>("sell"); // ["sell", "rent"]
   const [buildingType, setBuildingType] = React.useState<string>("apartment"); // ["apartment", "house"]
   const [address, setAddress] = React.useState<string>("");
-  const [minNumberOfRooms, setminNumberOfRooms] = React.useState<number>();
-  const [maxNumberOfRooms, setmaxNumberOfRooms] = React.useState<number>();
-  const [minNumberOfBathrooms, setminNumberOfBathrooms] =
-    React.useState<number>();
-  const [maxNumberOfBathrooms, setmaxNumberOfBathrooms] =
-    React.useState<number>();
-  const [minNumberOfParkingLots, setminNumberOfParkingLots] =
-    React.useState<number>();
-  const [maxNumberOfParkingLots, setmaxNumberOfParkingLots] =
-    React.useState<number>();
-  const [minTotalArea, setMinTotalArea] = React.useState<number>();
-  const [maxTotalArea, setMaxTotalArea] = React.useState<number>();
-  const [minPrice, setMinPrice] = React.useState<number>();
-  const [maxPrice, setMaxPrice] = React.useState<number>();
-
-  const [searchParameters, setSearchParemeters] =
-    React.useState<RequirementsGetI | null>(null);
-
-  const { data, isLoading } = api.requirements.get.useQuery({
-    ...searchParameters,
-  });
-
-  const handleSubmit = (values: RequirementsGetI) => {
-    setPage(0);
-    setSearchParemeters(values);
-  };
-
-  const getMinimumPriceInDollars = () => {
-    if (!data) return 0;
-    return Math.min(
-      ...data.map((i) => {
-        if (i.currency === "GTQ") {
-          return i.price / 7.8;
-        }
-        return i.price;
-      }),
-    );
-  };
-
-  const getMaximumPriceInDollars = () => {
-    if (!data) return 0;
-    return Math.max(
-      ...data.map((i) => {
-        if (i.currency === "GTQ") {
-          return i.price / 7.8;
-        }
-        return i.price;
-      }),
-    );
-  };
-
-  const getMeanPriceInDollars = () => {
-    if (!data) return 0;
-    return (
-      data.reduce((acc, i) => {
-        if (i.currency === "GTQ") {
-          return acc + i.price / 7.8;
-        }
-        return acc + i.price;
-      }, 0) / data.length
-    );
-  };
-
-  const hasData = data && data.length > 0;
-  const paginatedData = hasData
-    ? data.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE)
-    : [];
+  const [numberOfRooms, setNumberOfRooms] = React.useState<string>("");
+  React.useState<string>("");
+  const [numberOfBathrooms, setNumberOfBathrooms] = React.useState<string>("");
+  const [numberOfParkingLots, setNumberOfParkingLots] =
+    React.useState<string>("");
+  const [totalArea, setTotalArea] = React.useState<string>("");
+  const [minPrice, setMinPrice] = React.useState<string>("");
+  const [maxPrice, setMaxPrice] = React.useState<string>("");
 
   // on address change go to search/:address
   React.useEffect(() => {
@@ -117,7 +67,7 @@ export default function Index() {
   }, [address]);
 
   return (
-    <>
+    <Drawer direction="right">
       <Header />
       <div className="relative h-40 w-full md:h-80">
         <Image
@@ -130,7 +80,33 @@ export default function Index() {
           <MapSelect setAddress={setAddress} />
         </div>
       </div>
+      <div className="flex h-10 w-full items-center justify-center gap-3 bg-gray-700 px-5 py-10 text-sm font-semibold text-white">
+        No encuentras lo que buscas?, nuestros asesores te ayudan{" "}
+        <DrawerTrigger>
+          <Button variant={"dark"} size={"sm"}>
+            Pedir requerimiento
+          </Button>
+        </DrawerTrigger>
+      </div>
+      <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full rounded-none px-5 md:w-[500px]">
+        <MobileFilters
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+          operationType={operationType}
+          setOperationType={setOperationType}
+          numberOfRooms={numberOfRooms}
+          setNumberOfRooms={setNumberOfRooms}
+          numberOfBathrooms={numberOfBathrooms}
+          setNumberOfBathrooms={setNumberOfBathrooms}
+          buildingType={buildingType}
+          setBuildingType={setBuildingType}
+          numberOfRoomsAndBathroomsItems={BUTTON_ITEMS_FILTER}
+          buildingTypes={BUILDING_TYPES}
+        />
+      </DrawerContent>
       <Footer />
-    </>
+    </Drawer>
   );
 }

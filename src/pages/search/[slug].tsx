@@ -38,6 +38,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { MobileFilters } from "~/components/system/layouts/MobileFilters";
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 const BUTTON_ITEMS_FILTER = [
@@ -65,6 +66,7 @@ export default function Address(props: PageProps) {
   const [buildingType, setBuildingType] = useState("");
   const [numberOfRooms, setNumberOfRooms] = useState("all");
   const [numberOfBathrooms, setNumberOfBathrooms] = useState("all");
+  const [numberOfParkingLots, setNumberOfParkingLots] = useState("all");
   const [minPrice, setMinPrice] = useState("all");
   const [maxPrice, setMaxPrice] = useState("all");
 
@@ -76,6 +78,8 @@ export default function Address(props: PageProps) {
     minNumberOfRooms: numberOfRooms === "all" ? 0 : parseInt(numberOfRooms),
     minNumberOfBathrooms:
       numberOfBathrooms === "all" ? 0 : parseInt(numberOfBathrooms),
+    minNumberOfParkingLots:
+      numberOfParkingLots === "all" ? 0 : parseInt(numberOfParkingLots),
     minPrice: minPrice === "all" ? undefined : parseInt(minPrice),
     maxPrice: maxPrice === "all" ? undefined : parseInt(maxPrice),
   });
@@ -141,72 +145,30 @@ export default function Address(props: PageProps) {
         <div className="w-full">
           <MapSelect setAddress={setAddress} address={address} />
         </div>
-        <Drawer>
+        <Drawer direction="right">
           <DrawerTrigger asChild>
             <Button variant="outline">Filtros</Button>
           </DrawerTrigger>
           <DrawerPortal>
-            <DrawerContent>
-              <section className="flex h-[90vh] flex-col gap-5 px-8">
-                {/* price range */}
-                <label htmlFor="">Rango de precios</label>
-                <PriceRangeDropdown
-                  minPrice={minPrice}
-                  setMinPrice={setMinPrice}
-                  maxPrice={maxPrice}
-                  setMaxPrice={setMaxPrice}
-                />
-                {/* operation type */}
-                <div className="flex flex-col items-start justify-start gap-3">
-                  <label htmlFor="">Tipo de Operacion</label>
-                  <ToggleGroup
-                    type="single"
-                    value={operationType}
-                    onValueChange={(value) => setOperationType(value)}
-                  >
-                    <ToggleGroupItem value="all">Todas</ToggleGroupItem>
-                    <ToggleGroupItem value="sell">Compra</ToggleGroupItem>
-                    <ToggleGroupItem value="rent">Alquiler</ToggleGroupItem>
-                  </ToggleGroup>
-                </div>
-                {/* number of rooms */}
-                <div className="flex flex-col items-start justify-start gap-3">
-                  <label htmlFor="">Numero de dormitorios</label>
-                  <ToggleGroupButtons
-                    valueState={numberOfRooms}
-                    setValueState={setNumberOfRooms}
-                    items={BUTTON_ITEMS_FILTER}
-                  />
-                </div>
-                {/* number of bathrooms */}
-                <div className="flex flex-col items-start justify-start gap-3">
-                  <label htmlFor="">Numero de baños</label>
-                  <ToggleGroupButtons
-                    valueState={numberOfBathrooms}
-                    setValueState={setNumberOfBathrooms}
-                    items={BUTTON_ITEMS_FILTER}
-                  />
-                </div>
-                {/* building type radio buttons */}
-                <div className="flex flex-col items-start justify-start gap-3">
-                  <label htmlFor="">Tipo de propiedad</label>
-                  <RadioGroup
-                    defaultValue="comfortable"
-                    value={buildingType}
-                    onValueChange={(value) => setBuildingType(value)}
-                  >
-                    {BUILDING_TYPES.map((item) => (
-                      <div
-                        key={item.value}
-                        className="flex items-center space-x-2"
-                      >
-                        <RadioGroupItem value={item.value} id={item.value} />
-                        <Label htmlFor={item.value}>{item.label}</Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </div>
-              </section>
+            <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full rounded-none px-5 md:hidden">
+              <MobileFilters
+                minPrice={minPrice}
+                setMinPrice={setMinPrice}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+                operationType={operationType}
+                setOperationType={setOperationType}
+                numberOfRooms={numberOfRooms}
+                setNumberOfRooms={setNumberOfRooms}
+                numberOfBathrooms={numberOfBathrooms}
+                setNumberOfBathrooms={setNumberOfBathrooms}
+                numberOfParkingLots={numberOfParkingLots}
+                setNumberOfParkingLots={setNumberOfParkingLots}
+                buildingType={buildingType}
+                setBuildingType={setBuildingType}
+                numberOfRoomsAndBathroomsItems={BUTTON_ITEMS_FILTER}
+                buildingTypes={BUILDING_TYPES}
+              />
             </DrawerContent>
           </DrawerPortal>
         </Drawer>
@@ -251,8 +213,8 @@ export default function Address(props: PageProps) {
               </article>
             </div>
             {/* cards */}
-            <ScrollArea>
-              <div className="grid h-screen grid-cols-1 gap-2 align-middle lg:grid-cols-2">
+            <ScrollArea className="w-full">
+              <div className="grid h-screen w-full grid-cols-1 gap-2 px-4 align-middle lg:grid-cols-2">
                 {data.map((i) => (
                   <Card
                     key={i._id}
@@ -264,6 +226,7 @@ export default function Address(props: PageProps) {
                     }
                     numberOfRooms={i.numberOfRooms}
                     numberOfBathrooms={i.numberOfBathrooms}
+                    numberOfParkingLots={i.numberOfParkingLots}
                     totalArea={i.totalArea}
                     address={i.title ? i.title : i.address}
                     imageUrl={i.imagesUrl ? i.imagesUrl[0] : ""}

@@ -1,4 +1,4 @@
-import { BathIcon, BedIcon } from "lucide-react";
+import { BathIcon, BedIcon, Car } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
@@ -7,6 +7,7 @@ interface Props {
   formattedPrice: string;
   numberOfRooms: number;
   numberOfBathrooms: number;
+  numberOfParkingLots: number;
   totalArea: number;
   address: string;
   imageUrl: string;
@@ -18,6 +19,7 @@ export const Card = ({
   formattedPrice,
   numberOfBathrooms,
   numberOfRooms,
+  numberOfParkingLots,
   totalArea,
   address,
   imageUrl,
@@ -48,7 +50,8 @@ export const Card = ({
           </div>
           <div className="flex flex-row gap-2 text-center text-xs font-normal text-neutral-500">
             {numberOfRooms} <BedIcon size={16} /> | {numberOfBathrooms}{" "}
-            <BathIcon size={16} /> | {totalArea} mt2 |{" "}
+            <BathIcon size={16} /> | {numberOfParkingLots} <Car size={16} /> |{" "}
+            {totalArea} mt2 |{" "}
             {
               {
                 apartment: "Apartamento",

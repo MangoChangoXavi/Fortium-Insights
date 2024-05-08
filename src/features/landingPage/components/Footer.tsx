@@ -23,11 +23,10 @@ const Footer = () => {
                 {/* <h1 className="text-3xl text-white font-bold">NEXT </h1> */}
               </div>
 
-              <p className="mb-5 font-medium leading-6 text-gray-600">
+              <p className="mb-5 text-sm font-medium leading-6 text-gray-600">
                 ¡Techos Digitales realiza busquedas por ti en los portales
                 inmobiliarios de mayor prestigio, encontrando inmuebles de forma
-                rapida y gratis, dandote como resultados valoraciones gratis del
-                mercado. Investiga ahora cuanto cuesta tu casa o apartamento!
+                rapida y gratis!
               </p>
             </div>
             <div className="relative text-start">
