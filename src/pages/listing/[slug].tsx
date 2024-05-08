@@ -16,7 +16,7 @@ export default function Listing(props: PageProps) {
   const { listing } = props;
 
   const formattedPrice =
-    listing.currency === "USD"
+    listing.currency === "$"
       ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         USD.format(listing.price)
       : // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
