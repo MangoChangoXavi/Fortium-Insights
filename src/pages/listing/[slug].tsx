@@ -16,13 +16,11 @@ export default function Listing(props: PageProps) {
   const { listing } = props;
 
   const formattedPrice =
-    listing.currency === "$"
+    listing.currency === "Q"
       ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        USD.format(listing.price)
+        GTQ.format(listing.price)
       : // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        GTQ.format(listing.price);
-
-  console.log(listing);
+        USD.format(listing.price);
 
   if (!listing) return <PageNotFound />;
   return (
