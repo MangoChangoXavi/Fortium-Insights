@@ -181,3 +181,13 @@ h2,
 h3 {
   font-family: var(--roboto-font);
 }
+
+.css-13cymwt-control,
+.css-t3ipsp-control {
+  border: none !important;
+  height: 100% !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding-left: 4px !important;
+}

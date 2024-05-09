@@ -25,6 +25,10 @@ import { PriceRangeDropdown } from "~/components/template/layouts/PriceRangeDrop
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { MobileFilters } from "~/components/system/layouts/MobileFilters";
 
+// assets/img
+import Client1 from "~/assets/img/client-1.png";
+import Client2 from "~/assets/img/client-2.png";
+
 const BUTTON_ITEMS_FILTER = [
   { value: "all", label: "Todos" },
   { value: "1", label: "1+" },
@@ -67,46 +71,42 @@ export default function Index() {
   }, [address]);
 
   return (
-    <Drawer direction="right">
+    <>
       <Header />
-      <div className="relative h-40 w-full md:h-80">
-        <Image
-          src="https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?q=80&w=1910&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="image"
-          fill
-          objectFit="cover"
-        />
-        <div className="absolute right-1/2 top-1/2 w-full -translate-y-1/2 translate-x-1/2 p-4 md:w-1/3 md:p-0">
-          <MapSelect setAddress={setAddress} />
+      <div className="relative flex h-[400px] w-full items-center overflow-hidden bg-white px-6 md:px-32">
+        <div className="space-y-5">
+          <div className="space-y-3">
+            <h1 className="w-[550px] text-[41px] font-extrabold leading-[50px] text-slate-800">
+              Todos los bienes raices, en un solo lugar.
+            </h1>
+            <h2 className=" text-xl font-semibold text-slate-600 ">
+              Busca ahora usando inteligencia artificial
+            </h2>
+          </div>
+          <MapSelect
+            setAddress={setAddress}
+            className="h-20 w-[493px] rounded-2xl border border-black "
+          />
         </div>
-      </div>
-      <div className="flex h-10 w-full items-center justify-center gap-3 bg-gray-700 px-5 py-10 text-sm font-semibold text-white">
-        No encuentras lo que buscas?, nuestros asesores te ayudan{" "}
-        <DrawerTrigger>
-          <Button variant={"dark"} size={"sm"}>
-            Pedir requerimiento
-          </Button>
-        </DrawerTrigger>
-      </div>
-      <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-full rounded-none px-5 md:w-[500px]">
-        <MobileFilters
-          minPrice={minPrice}
-          setMinPrice={setMinPrice}
-          maxPrice={maxPrice}
-          setMaxPrice={setMaxPrice}
-          operationType={operationType}
-          setOperationType={setOperationType}
-          numberOfRooms={numberOfRooms}
-          setNumberOfRooms={setNumberOfRooms}
-          numberOfBathrooms={numberOfBathrooms}
-          setNumberOfBathrooms={setNumberOfBathrooms}
-          buildingType={buildingType}
-          setBuildingType={setBuildingType}
-          numberOfRoomsAndBathroomsItems={BUTTON_ITEMS_FILTER}
-          buildingTypes={BUILDING_TYPES}
+        <div className="absolute -top-60 right-20 h-[954px] w-[619.98px] rotate-[22.53deg] rounded-full bg-gradient-to-b from-slate-400 via-teal-400 to-lime-400" />
+        <Image
+          src={Client1}
+          alt="Client1"
+          className="absolute -right-10 bottom-0 h-[442px] w-[610px]"
         />
-      </DrawerContent>
+        <Image
+          src={Client2}
+          alt="Client2"
+          className="absolute bottom-0 right-40  h-[362px] w-[545px]"
+        />
+      </div>
+      <div className="flex  w-full items-center justify-center bg-neutral-900 p-4">
+        <p className="text-xl font-semibold text-white">
+          Miles de personas usan nuestra plataforma semanalmente para buscar su
+          proximo hogar.
+        </p>
+      </div>
       <Footer />
-    </Drawer>
+    </>
   );
 }
