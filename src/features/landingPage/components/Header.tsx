@@ -16,6 +16,9 @@ import {
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 
+// assets/svg
+import HeaderCircle from "../assets/svg/header-triangle.svg";
+
 const Header = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = React.useState(false);
@@ -32,22 +35,16 @@ const Header = () => {
     // url: session ? "/dashboard" : "/api/auth/signin", icon: <UserIcon /> },
   ];
   return (
-    <nav className="w-full bg-transparent px-6 md:px-32">
-      <div className="mx-auto flex justify-between md:items-center">
-        {/* logo */}
-        <div className="flex items-center justify-between md:block">
-          <Link href="/" className="">
-            <div className="avatar">
-              <div className="rounded">
-                {/* <img src="" /> */}
-                <Image className="w-[125px]" src={logo} alt="Logo Image" />
-                {/* <h1 className="text-3xl text-white font-bold">NEXT </h1> */}
-              </div>
-            </div>
-          </Link>
-        </div>
+    <nav className="w-full bg-black px-6 md:px-32">
+      <div className="mx-auto flex items-center justify-start">
+        <Image src={HeaderCircle} alt="Header Circle" />
+        <Image
+          className="absolute left-[255px] top-5 w-[125px]"
+          src={logo}
+          alt="Logo Image"
+        />
         {/* desktop menu */}
-        <div className={`hidden justify-self-center py-6 hover:block md:block`}>
+        {/* <div className={`hidden justify-self-center py-6 hover:block md:block`}>
           <ul className="items-center justify-center md:flex md:space-x-6 md:space-y-0">
             {menu.map(({ name, url }, index) => (
               <li
@@ -61,18 +58,18 @@ const Header = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
         {/* mobile menu */}
-        <div className="md:hidden">
+        {/* <div className="md:hidden">
           <button
             className="rounded-md p-2 text-white outline-none focus:font-bold"
             onClick={() => setIsOpen((prev) => !prev)}
           >
             <MenuIcon className="h-8 w-8 stroke-primary-500" />
           </button>
-        </div>
+        </div> */}
       </div>
-      <div
+      {/* <div
         className={`md:hidden ${
           isOpen ? "block" : "hidden"
         } absolute left-0 right-0 top-11 z-10 bg-gradient-to-t from-green-100 to-secondary-100 p-4 transition duration-300 ease-in-out animate-in `}
@@ -91,7 +88,7 @@ const Header = () => {
             );
           })}
         </ul>
-      </div>
+      </div> */}
     </nav>
   );
 };

@@ -85,7 +85,7 @@ export default function Index() {
           </div>
           <MapSelect
             setAddress={setAddress}
-            className="h-20 w-[493px] rounded-2xl border border-black "
+            className="h-16 w-[493px] rounded-2xl border border-black "
           />
         </div>
         <div className="absolute -top-60 right-20 h-[954px] w-[619.98px] rotate-[22.53deg] rounded-full bg-gradient-to-b from-slate-400 via-teal-400 to-lime-400" />
