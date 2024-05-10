@@ -1,0 +1,7 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cube-group">
+<rect id="top-face" width="28.8444" height="28.8444" transform="matrix(0.83205 0.5547 -0.83205 0.5547 24 0)" fill="#44D0A9"/>
+<rect id="left-face" width="28.8444" height="16" transform="matrix(0.83205 0.5547 0 1 0 16)" fill="#7CDF7A"/>
+<rect id="right-face" width="28.8444" height="16" transform="matrix(0.83205 -0.5547 0 1 24 32)" fill="#3FC3B8"/>
+</g>
+</svg>

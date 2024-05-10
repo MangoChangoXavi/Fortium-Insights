@@ -191,3 +191,21 @@ h3 {
   box-shadow: none !important;
   padding-left: 4px !important;
 }
+
+/* floating animation */
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating {
+  animation: float 3s infinite;
+}
