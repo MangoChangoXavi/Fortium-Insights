@@ -35,14 +35,16 @@ const Header = () => {
     // url: session ? "/dashboard" : "/api/auth/signin", icon: <UserIcon /> },
   ];
   return (
-    <nav className="w-full bg-black px-6 md:px-32">
+    <nav className="w-full bg-transparent px-6 md:px-32">
       <div className="mx-auto flex items-center justify-start">
         <Image src={HeaderCircle} alt="Header Circle" />
-        <Image
-          className="absolute left-[255px] top-5 w-[125px]"
-          src={logo}
-          alt="Logo Image"
-        />
+        <Link href={"/"}>
+          <Image
+            className="absolute left-[160px] top-5 w-[125px] md:left-[255px]"
+            src={logo}
+            alt="Logo Image"
+          />
+        </Link>
         {/* desktop menu */}
         {/* <div className={`hidden justify-self-center py-6 hover:block md:block`}>
           <ul className="items-center justify-center md:flex md:space-x-6 md:space-y-0">

@@ -82,53 +82,55 @@ export default function Index() {
   return (
     <>
       <Header />
-      <section className="relative flex h-[400px] w-full items-center overflow-hidden bg-white px-6 md:px-32">
+      <section className="relative flex w-full flex-col items-center overflow-hidden bg-white p-6 lg:h-[400px] lg:flex-row lg:px-32">
         <div className="space-y-5">
-          <div className="space-y-3">
-            <h1 className="w-[550px] text-[41px] font-extrabold leading-[50px] text-slate-800">
+          <div className="space-y-3 text-center md:text-start">
+            <h1 className="text-[35px] font-extrabold leading-10 text-slate-800 sm:text-[41px] sm:leading-[50px] lg:w-[550px]">
               Todos los bienes raices, en un solo lugar.
             </h1>
-            <h2 className=" text-xl font-semibold text-slate-600 ">
+            <h2 className="text-lg font-semibold text-slate-600 sm:text-xl ">
               Busca ahora usando inteligencia artificial
             </h2>
           </div>
           <MapSelect
             setAddress={setAddress}
-            className="h-16 w-[493px] rounded-2xl border border-black "
+            className="h-16 rounded-2xl border border-black lg:w-[493px] "
           />
         </div>
-        <div className="absolute  -top-60 right-20 h-[954px] w-[619.98px] rotate-[22.53deg] rounded-full bg-gradient-to-b from-slate-400 via-teal-400 to-lime-400" />
-        <Image
-          src={Client1}
-          alt="Client1"
-          className="absolute -right-10 bottom-0 h-[442px] w-[610px]"
-          draggable={false}
-        />
-        <Image
-          src={Client2}
-          alt="Client2"
-          className="absolute bottom-0 right-40  h-[362px] w-[545px]"
-          draggable={false}
-        />
+        <div className="mt-72 lg:mt-0">
+          <div className="absolute right-10  h-[566.79px] w-[368.35px] rotate-90 rounded-full bg-gradient-to-b from-slate-400 via-teal-400 to-lime-400 md:-top-[80px] lg:rotate-[22.53deg] 2xl:-top-60 2xl:right-20 2xl:h-[954px] 2xl:w-[619.98px]" />
+          <Image
+            src={Client1}
+            alt="Client1"
+            className="absolute -right-20 bottom-0 h-[326px] w-[450px] 2xl:-right-10 2xl:h-[442px] 2xl:w-[610px] "
+            draggable={false}
+          />
+          <Image
+            src={Client2}
+            alt="Client2"
+            className="sm:right-30 absolute bottom-0 right-20 h-[253px] w-[381px] 2xl:right-40 2xl:h-[362px] 2xl:w-[545px]"
+            draggable={false}
+          />
+        </div>
       </section>
       <section className="flex  w-full items-center justify-center bg-neutral-900 p-4">
-        <p className="text-xl font-semibold text-white">
+        <p className="font-semibold text-white sm:text-xl">
           Miles de personas usan nuestra plataforma semanalmente para buscar su
           proximo hogar.
         </p>
       </section>
-      <section className="flex h-[400px] w-full items-center overflow-hidden bg-white px-6 md:px-32">
-        <div className="relative flex w-1/2 items-center justify-center">
+      <section className="flex w-full flex-col items-center overflow-hidden bg-white p-6 lg:h-[400px] lg:flex-row lg:px-32">
+        <div className="relative flex w-full items-center justify-center lg:w-1/2">
           <Image
             src={Home}
             alt="Home"
-            className="mr-24 h-[319px] w-[426px]"
+            className="w-[300px] lg:mr-24 lg:h-[319px] lg:w-[426px] "
             draggable={false}
           />
           <Image
             src={Object1}
             alt="Object1"
-            className="floating absolute right-24 top-0"
+            className="floating absolute right-5 top-0 sm:right-24"
           />
           <Image
             src={Object2}
@@ -138,12 +140,12 @@ export default function Index() {
           <Image
             src={Object3}
             alt="Object3"
-            className="floating absolute right-44 top-60"
+            className="floating absolute right-0 top-20 sm:right-44 lg:top-60"
           />
           <Image
             src={Object4}
             alt="Object4"
-            className="floating absolute left-36 top-0"
+            className="floating absolute left-0 top-0 sm:left-36"
           />
           <Image
             src={Object5}
@@ -151,12 +153,12 @@ export default function Index() {
             className="floating absolute bottom-10 left-10"
           />
         </div>
-        <div className="w-1/2 space-y-5">
-          <div className="space-y-3">
-            <h1 className="w-[550px] text-[41px] font-extrabold leading-[50px] text-slate-800">
+        <div className="space-y-5 lg:w-1/2">
+          <div className="space-y-3 text-center md:text-start">
+            <h1 className="text-[35px] font-extrabold leading-10 text-slate-800 sm:text-[41px] sm:leading-[50px]">
               ¿No sabes cuanto vale tu casa?
             </h1>
-            <h2 className=" text-xl font-semibold text-slate-600 ">
+            <h2 className="text-lg font-semibold text-slate-600 sm:text-xl ">
               Solicita una valoracion con nosotros
             </h2>
           </div>
@@ -174,8 +176,8 @@ export default function Index() {
           </div>
         </div>
       </section>
-      <section className="flex  w-full items-center justify-center bg-neutral-900 p-4">
-        <p className="text-xl font-semibold text-white">
+      <section className="flex w-full items-center justify-center bg-neutral-900 p-4">
+        <p className="font-semibold text-white sm:text-xl">
           Nuestras valoraciones estan certificadas por un experto, son 100%
           legales y al mejor precio del mercado
         </p>
