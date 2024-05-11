@@ -60,17 +60,8 @@ type RequirementsGetI = RouterInputs["requirements"]["get"];
 
 export default function Index() {
   // Search parameters
-  const [operationType, setOperationType] = React.useState<string>("sell"); // ["sell", "rent"]
-  const [buildingType, setBuildingType] = React.useState<string>("apartment"); // ["apartment", "house"]
   const [address, setAddress] = React.useState<string>("");
-  const [numberOfRooms, setNumberOfRooms] = React.useState<string>("");
-  React.useState<string>("");
-  const [numberOfBathrooms, setNumberOfBathrooms] = React.useState<string>("");
-  const [numberOfParkingLots, setNumberOfParkingLots] =
-    React.useState<string>("");
-  const [totalArea, setTotalArea] = React.useState<string>("");
-  const [minPrice, setMinPrice] = React.useState<string>("");
-  const [maxPrice, setMaxPrice] = React.useState<string>("");
+  const [valuationAddress, setValuationAddress] = React.useState<string>("");
 
   // on address change go to search/:address
   React.useEffect(() => {
@@ -119,7 +110,7 @@ export default function Index() {
           proximo hogar.
         </p>
       </section>
-      <section className="flex w-full flex-col items-center overflow-hidden bg-white p-6 lg:h-[400px] lg:flex-row lg:px-32">
+      <section className="flex w-full flex-col items-center bg-white p-6 md:overflow-hidden lg:h-[400px] lg:flex-row lg:px-32">
         <div className="relative flex w-full items-center justify-center lg:w-1/2">
           <Image
             src={Home}
@@ -164,12 +155,21 @@ export default function Index() {
           </div>
           <div className="flex flex-row space-x-4">
             <MapSelect
-              setAddress={setAddress}
+              setAddress={setValuationAddress}
               className="h-16 w-2/3 rounded-2xl border border-black "
             />
             <Button
               className="h-16 w-16 rounded-[50px] border border-black"
               variant={"outline"}
+              onClick={() => {
+                if (!valuationAddress) {
+                  alert("Por favor ingrese una direccion");
+                  return;
+                }
+                window.location.href = `https://wa.me/+59541638?text=${encodeURI(
+                  `Hola me gustaria solicitar una valoracion en esta direccion: ${valuationAddress}`,
+                )}`;
+              }}
             >
               <SendIcon />
             </Button>

@@ -100,9 +100,7 @@ export default function Address(props: PageProps) {
   return (
     <>
       {/* <Hero/> */}
-      <section className="w-100 relative  bg-cover bg-center bg-no-repeat">
-        <Header />
-      </section>
+      <Header />
       {/* desktop filters */}
       <div className="hidden h-fit w-full flex-row gap-4 border-b-2 border-t-2 bg-white px-8 py-2 md:flex">
         <div className="w-96">
@@ -141,7 +139,7 @@ export default function Address(props: PageProps) {
         />
       </div>
       {/* mobile filters */}
-      <div className="flex flex-col gap-4 border-b-2 border-t-2 bg-white px-8 py-4 md:hidden">
+      <div className="-mt-1 flex flex-col gap-4 border-b-2 border-t-2 bg-white px-8 py-4 md:hidden">
         <div className="w-full">
           <MapSelect setAddress={setAddress} address={address} />
         </div>
