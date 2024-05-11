@@ -102,13 +102,13 @@ export default function Index() {
           <Image
             src={Client1}
             alt="Client1"
-            className="absolute -right-20 bottom-0 h-[226px] w-[350px] sm:-right-20 sm:h-[326px] sm:w-[450px]  2xl:-right-10 2xl:h-[442px] 2xl:w-[610px] "
+            className="absolute -right-12 bottom-0 h-[226px] w-[350px] sm:-right-20 sm:h-[326px] sm:w-[450px]  2xl:-right-10 2xl:h-[442px] 2xl:w-[610px] "
             draggable={false}
           />
           <Image
             src={Client2}
             alt="Client2"
-            className="sm:right-30 absolute bottom-0 right-10 h-[170px] w-[281px] sm:right-20 sm:h-[253px] sm:w-[381px] 2xl:right-40 2xl:h-[362px] 2xl:w-[545px]"
+            className="sm:right-30 absolute bottom-0 right-16 h-[170px] w-[281px] sm:right-20 sm:h-[253px] sm:w-[381px] 2xl:right-40 2xl:h-[362px] 2xl:w-[545px]"
             draggable={false}
           />
         </div>
