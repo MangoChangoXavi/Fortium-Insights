@@ -19,5 +19,6 @@ const scrappedPostSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
-export default mongoose.models.ScrappedPost ??
-  mongoose.model("ScrappedPost", scrappedPostSchema);
+// Here you define the name of the collection twice
+export default mongoose.models.ScrappedPostsV2 ??
+  mongoose.model("ScrappedPostsV2", scrappedPostSchema);

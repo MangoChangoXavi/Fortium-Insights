@@ -36,11 +36,11 @@ const Header = () => {
   ];
   return (
     <nav className="w-full bg-transparent px-6 md:px-32">
-      <div className="mx-auto flex items-center justify-start">
+      <div className="mx-auto flex items-center justify-center">
         <Image src={HeaderCircle} alt="Header Circle" />
         <Link href={"/"}>
           <Image
-            className="absolute left-[160px] top-5 w-[125px] md:left-[255px]"
+            className="absolute left-0 right-0 top-5 mx-auto w-[125px] "
             src={logo}
             alt="Logo Image"
           />

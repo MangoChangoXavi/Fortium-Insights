@@ -141,7 +141,7 @@ export default function Address(props: PageProps) {
         />
       </div>
       {/* mobile filters */}
-      <div className="flex flex-col gap-4 border-b-2 border-t-2 bg-white px-8 py-2 md:hidden">
+      <div className="flex flex-col gap-4 border-b-2 border-t-2 bg-white px-8 py-4 md:hidden">
         <div className="w-full">
           <MapSelect setAddress={setAddress} address={address} />
         </div>
@@ -190,7 +190,7 @@ export default function Address(props: PageProps) {
             />
           </div>
           {/* results */}
-          <div className="flex min-h-screen flex-col gap-[16px] ">
+          <div className="flex min-h-screen flex-col gap-[16px] px-4 pt-2">
             {/* title and subtitle */}
             <div className="flex flex-col gap-[8px]">
               {/* title */}
@@ -214,7 +214,7 @@ export default function Address(props: PageProps) {
             </div>
             {/* cards */}
             <ScrollArea className="w-full">
-              <div className="grid h-screen w-full grid-cols-1 gap-2 px-4 align-middle lg:grid-cols-2">
+              <div className="grid h-screen w-full grid-cols-1 gap-2  align-middle lg:grid-cols-2">
                 {data.map((i) => (
                   <Card
                     key={i._id}

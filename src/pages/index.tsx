@@ -97,18 +97,18 @@ export default function Index() {
             className="h-16 rounded-2xl border border-black lg:w-[493px] "
           />
         </div>
-        <div className="mt-72 lg:mt-0">
-          <div className="absolute right-10  h-[566.79px] w-[368.35px] rotate-90 rounded-full bg-gradient-to-b from-slate-400 via-teal-400 to-lime-400 md:-top-[80px] lg:rotate-[22.53deg] 2xl:-top-60 2xl:right-20 2xl:h-[954px] 2xl:w-[619.98px]" />
+        <div className="mt-60 sm:mt-72 lg:mt-0">
+          <div className="absolute -bottom-[360px] right-10  h-[566.79px] w-[368.35px] rotate-[22.53deg] rounded-full bg-gradient-to-b from-slate-400 via-teal-400 to-lime-400 lg:-top-[80px] 2xl:-top-60 2xl:right-20 2xl:h-[954px] 2xl:w-[619.98px]" />
           <Image
             src={Client1}
             alt="Client1"
-            className="absolute -right-20 bottom-0 h-[326px] w-[450px] 2xl:-right-10 2xl:h-[442px] 2xl:w-[610px] "
+            className="absolute -right-20 bottom-0 h-[226px] w-[350px] sm:-right-20 sm:h-[326px] sm:w-[450px]  2xl:-right-10 2xl:h-[442px] 2xl:w-[610px] "
             draggable={false}
           />
           <Image
             src={Client2}
             alt="Client2"
-            className="sm:right-30 absolute bottom-0 right-20 h-[253px] w-[381px] 2xl:right-40 2xl:h-[362px] 2xl:w-[545px]"
+            className="sm:right-30 absolute bottom-0 right-10 h-[170px] w-[281px] sm:right-20 sm:h-[253px] sm:w-[381px] 2xl:right-40 2xl:h-[362px] 2xl:w-[545px]"
             draggable={false}
           />
         </div>
