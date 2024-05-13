@@ -139,7 +139,7 @@ export default function Address(props: PageProps) {
         />
       </div>
       {/* mobile filters */}
-      <div className="-mt-1 flex flex-col gap-4 border-b-2 border-t-2 bg-white px-8 py-4 md:hidden">
+      <ScrollArea className="-mt-1 flex flex-col gap-4 border-b-2 border-t-2 bg-white px-8 py-4 md:hidden">
         <div className="w-full">
           <MapSelect setAddress={setAddress} address={address} />
         </div>
@@ -170,7 +170,7 @@ export default function Address(props: PageProps) {
             </DrawerContent>
           </DrawerPortal>
         </Drawer>
-      </div>
+      </ScrollArea>
       {isLoading && (
         <div className="flex h-screen w-full items-center justify-center">
           <Loader />
