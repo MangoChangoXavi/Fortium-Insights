@@ -26,15 +26,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <title>Techos Digitales</title>
         <meta
           name="title"
-          content="Techos Digitales - Busca, analiza y valora inmuebles gratis!"
+          content="Techos Digitales - compra, vende o alquila tu inmueble en Guatemala"
         />
         <meta
           name="description"
-          content="Techos Digitales busca inmuebles en varios portales inmobiliarios usando inteligencia artificial y asi mismo te devuelve valoraciones aproximadas del mercado inmobiliario!"
+          content="Encuentra facilmente el inmueble que buscas en Guatemala. Busca casas en ventas y en alquiler o apartamentos en venta o en alquiler en Guatemala."
         />
         <meta
           name="keywords"
-          content="busqueda inmobiliaria, buscar inmuebles, valorar inmuebles, valoracion de inmuebles, solucion inmobiliaria, soluciones inmobiliarias, crm inmobiliario, crm inmobiliaria, software inmobiliario, crm para inmobiliarias, inmobiliaria solucion, que es un crm inmobiliario, mejor crm inmobiliario"
+          content="busca inmuebles en guatemala, venta de apartamentos, renta de apartamentos, alquier de casas, casas en venta, venta de casas, buscar casas, buscar apartamentos, alquiler en guatemala, propiedades en alquiler, buscar alquiler"
         />
         <link rel="icon" type="image/svg+xml" href="/g8.svg" />
       </Head>

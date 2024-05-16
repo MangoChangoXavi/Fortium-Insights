@@ -37,6 +37,7 @@ import Object5 from "~/assets/svg/object-5.svg";
 import Client1 from "~/assets/img/client-1.png";
 import Client2 from "~/assets/img/client-2.png";
 import Home from "~/assets/img/home.png";
+import Link from "next/link";
 
 const BUTTON_ITEMS_FILTER = [
   { value: "all", label: "Todos" },
@@ -77,10 +78,10 @@ export default function Index() {
         <div className="space-y-5">
           <div className="space-y-3 text-center md:text-start">
             <h1 className="text-[35px] font-extrabold leading-10 text-slate-800 sm:text-[41px] sm:leading-[50px] lg:w-[550px]">
-              Todos los bienes raices, en un solo lugar.
+              Busca casa o apartamento en Guatemala.
             </h1>
             <h2 className="text-lg font-semibold text-slate-600 sm:text-xl ">
-              Busca ahora usando inteligencia artificial
+              Propiedades en venta o en alquiler en ciudad de Guatemala.
             </h2>
           </div>
           <MapSelect
@@ -181,6 +182,141 @@ export default function Index() {
           Nuestras valoraciones estan certificadas por un experto, son 100%
           legales y al mejor precio del mercado
         </p>
+      </section>
+      {/* link tags  */}
+      <section className="flex w-full flex-col items-center justify-center gap-10 p-16 md:flex-row">
+        {/* ciudad de guatemala */}
+        <div className="flex flex-col gap-2">
+          <Link
+            href={encodeURI("/search/Guatemala City, Guatemala")}
+            className="text-blue-500"
+          >
+            Casas en venta en Ciudad de Guatemala
+          </Link>
+          <Link
+            href={encodeURI("/search/Guatemala City, Guatemala")}
+            className="text-blue-500"
+          >
+            Apartamentos en venta en Ciudad de Guatemala
+          </Link>
+          <Link
+            href={encodeURI("/search/Guatemala City, Guatemala")}
+            className="text-blue-500"
+          >
+            Terrenos en venta en Ciudad de Guatemala
+          </Link>
+          <Link
+            href={encodeURI("/search/Guatemala City, Guatemala")}
+            className="text-blue-500"
+          >
+            Bodegas en venta en Ciudad de Guatemala
+          </Link>
+          <Link
+            href={encodeURI("/search/Guatemala City, Guatemala")}
+            className="text-blue-500"
+          >
+            Oficinas en venta en Ciudad de Guatemala
+          </Link>
+        </div>
+        {/* antigua guatemala */}
+        <div className="flex flex-col gap-2">
+          <Link
+            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
+            className="text-blue-500"
+          >
+            Casas en venta en Antigua Guatemala
+          </Link>
+          <Link
+            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
+            className="text-blue-500"
+          >
+            Apartamentos en venta en Antigua Guatemala
+          </Link>
+          <Link
+            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
+            className="text-blue-500"
+          >
+            Terrenos en venta en Antigua Guatemala
+          </Link>
+          <Link
+            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
+            className="text-blue-500"
+          >
+            Bodegas en venta en Antigua Guatemala
+          </Link>
+          <Link
+            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
+            className="text-blue-500"
+          >
+            Oficinas en venta en Antigua Guatemala
+          </Link>
+        </div>
+        {/* Mixco  */}
+        <div className="flex flex-col gap-2">
+          <Link
+            href={encodeURI("/search/Mixco, Guatemala")}
+            className="text-blue-500"
+          >
+            Casas en venta en Mixco
+          </Link>
+          <Link
+            href={encodeURI("/search/Mixco, Guatemala")}
+            className="text-blue-500"
+          >
+            Apartamentos en venta en Mixco
+          </Link>
+          <Link
+            href={encodeURI("/search/Mixco, Guatemala")}
+            className="text-blue-500"
+          >
+            Terrenos en venta en Mixco
+          </Link>
+          <Link
+            href={encodeURI("/search/Mixco, Guatemala")}
+            className="text-blue-500"
+          >
+            Bodegas en venta en Mixco
+          </Link>
+          <Link
+            href={encodeURI("/search/Mixco, Guatemala")}
+            className="text-blue-500"
+          >
+            Oficinas en venta en Mixco
+          </Link>
+        </div>
+        {/* Villa Nueva */}
+        <div className="flex flex-col gap-2">
+          <Link
+            href={encodeURI("/search/Villa Nueva, Guatemala")}
+            className="text-blue-500"
+          >
+            Casas en venta en Villa Nueva
+          </Link>
+          <Link
+            href={encodeURI("/search/Villa Nueva, Guatemala")}
+            className="text-blue-500"
+          >
+            Apartamentos en venta en Villa Nueva
+          </Link>
+          <Link
+            href={encodeURI("/search/Villa Nueva, Guatemala")}
+            className="text-blue-500"
+          >
+            Terrenos en venta en Villa Nueva
+          </Link>
+          <Link
+            href={encodeURI("/search/Villa Nueva, Guatemala")}
+            className="text-blue-500"
+          >
+            Bodegas en venta en Villa Nueva
+          </Link>
+          <Link
+            href={encodeURI("/search/Villa Nueva, Guatemala")}
+            className="text-blue-500"
+          >
+            Oficinas en venta en Villa Nueva
+          </Link>
+        </div>
       </section>
       <Footer />
     </>
