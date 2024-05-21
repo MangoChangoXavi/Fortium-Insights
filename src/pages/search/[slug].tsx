@@ -177,7 +177,7 @@ export default function Address(props: PageProps) {
         </div>
       )}
       {hasData && (
-        <section className="flex min-h-screen flex-row gap-2">
+        <section className="flex h-[50vw] flex-row gap-2">
           {/* map */}
           <div className="hidden md:block">
             <Map
@@ -188,9 +188,9 @@ export default function Address(props: PageProps) {
             />
           </div>
           {/* results */}
-          <div className="flex min-h-screen flex-col gap-[16px] px-4 pt-2">
+          <div className="flex min-h-screen w-full flex-col gap-[16px] p-2 px-4 md:h-[50vw]">
             {/* title and subtitle */}
-            <div className="flex flex-col gap-[8px]">
+            <div className="flex w-full flex-col gap-[8px]">
               {/* title */}
               <h1 className="text-xl font-semibold not-italic leading-[normal] text-[#2C2C2C]">
                 {
@@ -211,8 +211,8 @@ export default function Address(props: PageProps) {
               </article>
             </div>
             {/* cards */}
-            <ScrollArea className="w-full">
-              <div className="grid h-screen w-full grid-cols-1 gap-2  align-middle lg:grid-cols-2">
+            <ScrollArea className=" md:h-[45vw]">
+              <div className="grid h-screen w-full grid-cols-1 gap-3 align-middle lg:grid-cols-2">
                 {data.map((i) => (
                   <Card
                     key={i._id}
