@@ -26,15 +26,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <title>Techos Digitales</title>
         <meta
           name="title"
-          content="Techos Digitales - compra, vende o alquila tu inmueble en Guatemala"
+          content="Techos Digitales - compra, busca o alquila casas y apartamentos en Guatemala"
         />
         <meta
           name="description"
-          content="Encuentra facilmente el inmueble que buscas en Guatemala. Busca casas en ventas y en alquiler o apartamentos en venta o en alquiler en Guatemala."
+          content="busca facilmente casas y apartamentos en Guatemala. Busca propiedades en ventas y en alquiler de manera facil."
         />
         <meta
           name="keywords"
-          content="busca inmuebles en guatemala, venta de apartamentos, renta de apartamentos, alquier de casas, casas en venta, venta de casas, buscar casas, buscar apartamentos, alquiler en guatemala, propiedades en alquiler, buscar alquiler"
+          content="busca inmuebles en guatemala, venta de apartamentos, renta de apartamentos, alquier de casas, casas en venta, venta de casas, buscar casas, buscar apartamentos, alquiler en guatemala, propiedades en alquiler, buscar alquiler, bienes raices inteligencia artificial"
         />
         <link rel="icon" type="image/svg+xml" href="/g8.svg" />
       </Head>
