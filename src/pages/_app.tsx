@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleAdSense } from "nextjs-google-adsense";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
       >
         <Toaster />
+        <GoogleTagManager gtmId="GTM-PCRDHGT9" />
         <GoogleAdSense publisherId="pub-6713030727031078" />
         <Component {...pageProps} />
       </main>
