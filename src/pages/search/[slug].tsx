@@ -177,7 +177,7 @@ export default function Address(props: PageProps) {
         </div>
       )}
       {hasData && (
-        <section className="flex h-[50vw] flex-row gap-2">
+        <section className="flex h-screen flex-row gap-2 md:h-[50vw]">
           {/* map */}
           <div className="hidden md:block">
             <Map
@@ -211,7 +211,7 @@ export default function Address(props: PageProps) {
               </article>
             </div>
             {/* cards */}
-            <ScrollArea className=" md:h-[45vw]">
+            <ScrollArea className="h-screen md:h-[45vw]">
               <div className="grid h-screen w-full grid-cols-1 gap-3 align-middle lg:grid-cols-2">
                 {data.map((i) => (
                   <Card
