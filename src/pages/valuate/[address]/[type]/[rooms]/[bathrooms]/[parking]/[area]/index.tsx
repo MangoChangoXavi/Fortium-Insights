@@ -8,6 +8,8 @@ import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { USD } from "~/utils/functions";
 import houseSvg from "~/assets/svg/bi_house-fill.svg";
 import Image from "next/image";
+import { api } from "~/utils/api";
+import { Loader } from "~/components/system/layouts/Loader";
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -38,12 +40,38 @@ const Property = ({ title, value }: { title: string; value: string }) => {
 };
 
 export default function Address(props: PageProps) {
+  const {
+    address,
+    buildingType,
+    numberOfRooms,
+    numberOfBathrooms,
+    numberOfParkingLots,
+    totalArea,
+  } = props;
+
+  const { data, isLoading } = api.acm.getFromModel.useQuery({
+    address,
+    buildingType,
+    numberOfRooms,
+    numberOfBathrooms,
+    numberOfParkingLots,
+    totalArea,
+    operationType: "sell",
+  });
+
+  console.log(data);
+
   return (
     <>
       {/* <Hero/> */}
       <Header />
       {/* result */}
       <section className="flex h-full w-full items-center justify-center bg-white px-4">
+        {isLoading && (
+          <div className="flex h-full w-full items-center justify-center">
+            <Loader />
+          </div>
+        )}
         {/* result card */}
         <div className="relative mt-20 flex h-fit w-full flex-col items-center gap-5 rounded-2xl border bg-white p-12  drop-shadow-xl md:mt-32 md:w-[620px]">
           {/* house svg */}
@@ -83,15 +111,15 @@ export const getStaticProps = (ctx: GetServerSidePropsContext) => {
   const helpers = generateSSGHelper();
 
   const address = ctx.params?.address as string;
-  const typeOfBuilding = ctx.params?.type as string;
-  const numberOfRooms = ctx.params?.rooms as string;
-  const numberOfBathrooms = ctx.params?.bathrooms as string;
-  const numberOfParkingLots = ctx.params?.parking as string;
-  const totalArea = ctx.params?.area as string;
+  const buildingType = ctx.params?.type as string;
+  const numberOfRooms = parseInt(ctx.params?.rooms as string);
+  const numberOfBathrooms = parseInt(ctx.params?.bathrooms as string);
+  const numberOfParkingLots = parseInt(ctx.params?.parking as string);
+  const totalArea = parseInt(ctx.params?.area as string);
 
   const hasAllParams =
     address &&
-    typeOfBuilding &&
+    buildingType &&
     numberOfRooms &&
     numberOfBathrooms &&
     numberOfParkingLots &&
@@ -99,11 +127,28 @@ export const getStaticProps = (ctx: GetServerSidePropsContext) => {
 
   if (!hasAllParams) throw new Error("Params are missing");
 
+  helpers.acm.getFromModel
+    .prefetch({
+      address,
+      buildingType,
+      numberOfRooms,
+      numberOfBathrooms,
+      numberOfParkingLots,
+      totalArea,
+      operationType: "sell",
+    })
+    .catch(console.error);
+
   return {
     props: {
       // very important - use `trpcState` as the key
       trpcState: helpers.dehydrate(),
       address,
+      buildingType,
+      numberOfRooms,
+      numberOfBathrooms,
+      numberOfParkingLots,
+      totalArea,
     },
   };
 };

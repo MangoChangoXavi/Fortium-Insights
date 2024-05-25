@@ -9,6 +9,55 @@ import { getCoordinates } from "~/utils/googleMaps";
 import { getScrappedPostFromMongo } from "../mongodb";
 export const maxDuration = 200; // This function can run for a maximum of 5 seconds
 export const acmRouter = createTRPCRouter({
+  getFromModel: protectedProcedure
+    .input(
+      z.object({
+        address: z.string(),
+        buildingType: z.string(),
+        operationType: z.string(),
+        numberOfRooms: z.number().optional(),
+        numberOfBathrooms: z.number().optional(),
+        numberOfParkingLots: z.number().optional(),
+        totalArea: z.number().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const coordinates = await getCoordinates(input.address);
+
+      if (!coordinates.lat || !coordinates.lng) {
+        throw new Error("Invalid address");
+      }
+
+      // fetch prediction from the model
+      const response = await fetch(
+        "https://wfdues1rme.execute-api.us-east-1.amazonaws.com/main/api/prediction/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            longitude: coordinates.lng,
+            latitude: coordinates.lat,
+            minNumberOfRooms: input.numberOfRooms,
+            maxNumberOfRooms: input.numberOfRooms,
+            minNumberOfBathrooms: input.numberOfBathrooms,
+            maxNumberOfBathrooms: input.numberOfBathrooms,
+            minNumberOfParkingLots: input.numberOfParkingLots,
+            maxNumberOfParkingLots: input.numberOfParkingLots,
+            minTotalArea: input.totalArea,
+            maxTotalArea: input.totalArea,
+            buildingType: input.buildingType,
+            operationType: input.operationType,
+          }),
+        },
+      );
+
+      const prediction = await response.json();
+
+      return { prediction };
+    }),
+
   create: publicProcedure
     .input(
       z.object({
