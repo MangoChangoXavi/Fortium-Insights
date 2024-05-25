@@ -25,11 +25,6 @@ import {
   DrawerPortal,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { ToggleGroupButtons } from "~/components/template/ui/ToggleGroupButtons";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { PricesSelectFilter } from "~/components/template/ui/PricesSelectFilter";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -246,22 +241,11 @@ export default function Address(props: PageProps) {
 export const getStaticProps = async (ctx: GetServerSidePropsContext) => {
   const helpers = generateSSGHelper();
 
-  const address = ctx.params?.address as string;
-  const typeOfBuilding = ctx.params?.type as string;
-  const numberOfRooms = ctx.params?.rooms as string;
-  const numberOfBathrooms = ctx.params?.bathrooms as string;
-  const numberOfParkingLots = ctx.params?.parking as string;
-  const totalArea = ctx.params?.area as string;
+  const slug = ctx.params?.slug as string;
 
-  const hasAllParams =
-    address &&
-    typeOfBuilding &&
-    numberOfRooms &&
-    numberOfBathrooms &&
-    numberOfParkingLots &&
-    totalArea;
+  if (!slug) throw new Error("No slug provided");
 
-  if (!hasAllParams) throw new Error("Params are missing");
+  const address = slug;
 
   const location = await getCoordinates(address);
 
@@ -270,11 +254,6 @@ export const getStaticProps = async (ctx: GetServerSidePropsContext) => {
       // very important - use `trpcState` as the key
       trpcState: helpers.dehydrate(),
       address,
-      typeOfBuilding,
-      numberOfRooms,
-      numberOfBathrooms,
-      numberOfParkingLots,
-      totalArea,
       location: JSON.parse(JSON.stringify(location)),
     },
   };

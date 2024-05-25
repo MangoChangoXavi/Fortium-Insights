@@ -79,14 +79,25 @@ export default function Address(props: PageProps) {
 }
 
 // Fetch data before the page loads
-export const getStaticProps = async (ctx: GetServerSidePropsContext) => {
+export const getStaticProps = (ctx: GetServerSidePropsContext) => {
   const helpers = generateSSGHelper();
 
-  const slug = ctx.params?.slug as string;
+  const address = ctx.params?.address as string;
+  const typeOfBuilding = ctx.params?.type as string;
+  const numberOfRooms = ctx.params?.rooms as string;
+  const numberOfBathrooms = ctx.params?.bathrooms as string;
+  const numberOfParkingLots = ctx.params?.parking as string;
+  const totalArea = ctx.params?.area as string;
 
-  if (!slug) throw new Error("No slug provided");
+  const hasAllParams =
+    address &&
+    typeOfBuilding &&
+    numberOfRooms &&
+    numberOfBathrooms &&
+    numberOfParkingLots &&
+    totalArea;
 
-  const address = slug;
+  if (!hasAllParams) throw new Error("Params are missing");
 
   return {
     props: {
