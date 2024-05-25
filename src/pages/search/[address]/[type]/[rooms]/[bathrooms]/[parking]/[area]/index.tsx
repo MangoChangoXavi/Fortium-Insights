@@ -85,8 +85,8 @@ export default function Address(props: PageProps) {
   });
 
   const markers = data?.map((i) => ({
-    lat: i.location.coordinates[1],
-    lng: i.location.coordinates[0],
+    lat: i.location.coordinates[1] ?? 0,
+    lng: i.location.coordinates[0] ?? 0,
   }));
 
   useEffect(() => {
@@ -227,7 +227,7 @@ export default function Address(props: PageProps) {
                     numberOfParkingLots={i.numberOfParkingLots}
                     totalArea={i.totalArea}
                     address={i.title ? i.title : i.address}
-                    imageUrl={i.imagesUrl ? i.imagesUrl[0] : ""}
+                    imageUrl={i.imagesUrl[0] ?? ""}
                     operationType={i.operationType}
                     buildingType={i.buildingType}
                   />
@@ -246,11 +246,22 @@ export default function Address(props: PageProps) {
 export const getStaticProps = async (ctx: GetServerSidePropsContext) => {
   const helpers = generateSSGHelper();
 
-  const slug = ctx.params?.slug as string;
+  const address = ctx.params?.address as string;
+  const typeOfBuilding = ctx.params?.type as string;
+  const numberOfRooms = ctx.params?.rooms as string;
+  const numberOfBathrooms = ctx.params?.bathrooms as string;
+  const numberOfParkingLots = ctx.params?.parking as string;
+  const totalArea = ctx.params?.area as string;
 
-  if (!slug) throw new Error("No slug provided");
+  const hasAllParams =
+    address &&
+    typeOfBuilding &&
+    numberOfRooms &&
+    numberOfBathrooms &&
+    numberOfParkingLots &&
+    totalArea;
 
-  const address = slug;
+  if (!hasAllParams) throw new Error("Params are missing");
 
   const location = await getCoordinates(address);
 
@@ -259,6 +270,11 @@ export const getStaticProps = async (ctx: GetServerSidePropsContext) => {
       // very important - use `trpcState` as the key
       trpcState: helpers.dehydrate(),
       address,
+      typeOfBuilding,
+      numberOfRooms,
+      numberOfBathrooms,
+      numberOfParkingLots,
+      totalArea,
       location: JSON.parse(JSON.stringify(location)),
     },
   };

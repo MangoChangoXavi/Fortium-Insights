@@ -34,6 +34,8 @@ interface ScrappedPostI {
   url: string;
   address: string;
   imagesUrl: string[];
+  title: string;
+  description: string;
 }
 
 async function getRequirementsFromMongo({
