@@ -249,6 +249,13 @@ export const getStaticProps = async (ctx: GetServerSidePropsContext) => {
 
   const location = await getCoordinates(address);
 
+  helpers.requirements.get
+    .prefetch({
+      lat: location.lat,
+      lng: location.lng,
+    })
+    .catch(console.error);
+
   return {
     props: {
       // very important - use `trpcState` as the key
