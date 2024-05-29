@@ -48,9 +48,8 @@ export default function Valuate(props: PageProps) {
     id: slug,
   });
 
-  console.log(data);
-  const sellPrice = data?.predictions[0]?.linearRegression;
-  const rentPrice = data?.predictions[1]?.linearRegression;
+  const sellPrice = data?.predictions[0]?.linearRegression?.linear_regression;
+  const rentPrice = data?.predictions[1]?.linearRegression?.linear_regression;
 
   return (
     <>
