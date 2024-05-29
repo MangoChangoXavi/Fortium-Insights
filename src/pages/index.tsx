@@ -1,31 +1,10 @@
-import { api, type RouterInputs } from "~/utils/api";
 import React from "react";
 import "chart.js/auto";
 
-import { AcmResultDetailCard } from "~/components/template/layouts/AcmResultDetailCard";
-import { Loader } from "~/components/system/layouts/Loader";
-import { ClientSidePagination } from "~/components/system/ui/ClientSidePagination";
 import Header from "~/features/landingPage/components/Header";
 import Footer from "~/features/landingPage/components/Footer";
 import Image from "next/image";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import MapSelect from "~/components/system/ui/MapSelect";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { Label } from "@/components/ui/label";
-import { ToggleGroupButtons } from "~/components/template/ui/ToggleGroupButtons";
-import { PriceRangeDropdown } from "~/components/template/layouts/PriceRangeDropdown";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { MobileFilters } from "~/components/system/layouts/MobileFilters";
-import { SendIcon } from "lucide-react";
-
 // assets/svg
 import Object1 from "~/assets/svg/object-1.svg";
 import Object2 from "~/assets/svg/object-2.svg";
@@ -38,26 +17,10 @@ import Client1 from "~/assets/img/client-1.png";
 import Client2 from "~/assets/img/client-2.png";
 import Home from "~/assets/img/home.png";
 import Link from "next/link";
-
-const BUTTON_ITEMS_FILTER = [
-  { value: "all", label: "Todos" },
-  { value: "1", label: "1+" },
-  { value: "2", label: "2+" },
-  { value: "3", label: "3+" },
-  { value: "4", label: "4+" },
-  { value: "5", label: "5+" },
-];
-
-const BUILDING_TYPES = [
-  { value: "", label: "Todos" },
-  { value: "apartment", label: "Apartamentos" },
-  { value: "house", label: "Casas" },
-  { value: "land", label: "Terrenos" },
-  { value: "warehouse", label: "Bodegas" },
-  { value: "office", label: "Oficinas" },
-];
-
-type RequirementsGetI = RouterInputs["requirements"]["get"];
+import ValuationPopover from "~/components/template/ui/ValuationPopover";
+import { api } from "~/utils/api";
+import { toast } from "@/components/ui/use-toast";
+import { Loader } from "~/components/system/layouts/Loader";
 
 export default function Index() {
   // Search parameters
@@ -78,10 +41,10 @@ export default function Index() {
         <div className="space-y-5">
           <div className="space-y-3 text-center md:text-start">
             <h1 className="text-[35px] font-extrabold leading-10 text-slate-800 sm:text-[41px] sm:leading-[50px] lg:w-[550px]">
-              Busca casa o apartamento en Guatemala.
+              Busca propiedades con Inteligencia Artificial
             </h1>
             <h2 className="text-lg font-semibold text-slate-600 sm:text-xl ">
-              Propiedades en venta o en alquiler en ciudad de Guatemala.
+              Portal de bienes raices unificado.
             </h2>
           </div>
           <MapSelect
@@ -148,10 +111,10 @@ export default function Index() {
         <div className="space-y-5 lg:w-1/2">
           <div className="space-y-3 text-center md:text-start">
             <h1 className="text-[35px] font-extrabold leading-10 text-slate-800 sm:text-[41px] sm:leading-[50px]">
-              ¿No sabes cuanto vale tu casa?
+              Valoraciones online
             </h1>
             <h2 className="text-lg font-semibold text-slate-600 sm:text-xl ">
-              Solicita una valoracion con nosotros
+              Valoramos tu propiedad usando machine learning.
             </h2>
           </div>
           <div className="flex flex-row space-x-4">
@@ -159,21 +122,7 @@ export default function Index() {
               setAddress={setValuationAddress}
               className="h-16 w-2/3 rounded-2xl border border-black "
             />
-            <Button
-              className="h-16 w-16 rounded-[50px] border border-black"
-              variant={"outline"}
-              onClick={() => {
-                if (!valuationAddress) {
-                  alert("Por favor ingrese una direccion");
-                  return;
-                }
-                window.location.href = `https://wa.me/+59541638?text=${encodeURI(
-                  `Hola me gustaria solicitar una valoracion en esta direccion: ${valuationAddress}`,
-                )}`;
-              }}
-            >
-              <SendIcon />
-            </Button>
+            <ValuationPopover address={valuationAddress} />
           </div>
         </div>
       </section>

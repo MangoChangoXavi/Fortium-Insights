@@ -9,10 +9,11 @@ import { getCoordinates } from "~/utils/googleMaps";
 import { getScrappedPostFromMongo } from "../mongodb";
 export const maxDuration = 200; // This function can run for a maximum of 5 seconds
 export const acmRouter = createTRPCRouter({
-  getFromModel: protectedProcedure
+  getFromModel: publicProcedure
     .input(
       z.object({
-        address: z.string(),
+        lat: z.number(),
+        lng: z.number(),
         buildingType: z.string(),
         operationType: z.string(),
         numberOfRooms: z.number().optional(),
@@ -22,12 +23,6 @@ export const acmRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const coordinates = await getCoordinates(input.address);
-
-      if (!coordinates.lat || !coordinates.lng) {
-        throw new Error("Invalid address");
-      }
-
       // fetch prediction from the model
       const response = await fetch(
         "https://wfdues1rme.execute-api.us-east-1.amazonaws.com/main/api/prediction/",
@@ -37,8 +32,8 @@ export const acmRouter = createTRPCRouter({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            longitude: coordinates.lng,
-            latitude: coordinates.lat,
+            longitude: input.lng,
+            latitude: input.lat,
             minNumberOfRooms: input.numberOfRooms,
             maxNumberOfRooms: input.numberOfRooms,
             minNumberOfBathrooms: input.numberOfBathrooms,
@@ -86,77 +81,13 @@ export const acmRouter = createTRPCRouter({
         totalArea: input.totalArea,
         lat: coordinates.lat,
         lng: coordinates.lng,
-        minRent: 0,
-        maxRent: 0,
-        rentCount: 0,
-        sellCount: 0,
-        minSell: 0,
-        maxSell: 0,
-        radius: 1,
-        userId: ctx.userId ?? "",
+        operationType: input.operationType,
       };
 
-      // from the table scrapedProperty locate all the properties that are close to the new property
-      // based on the coordinates lat and lng
-      // get all the properties that are close to the new property in a 5km radiu
       try {
-        const properties = await getScrappedPostFromMongo({ ...data });
-
-        const propertiesToSell = properties.filter(
-          (property) => property.operationType === "sell",
-        );
-
-        const propertiesToRent = properties.filter(
-          (property) => property.operationType === "rent",
-        );
-
-        // assign min rent, max rent and rent price
-        if (propertiesToRent.length > 0) {
-          const rentPrices = propertiesToRent.map((property) => {
-            return property.currency === "Q"
-              ? property.price * 0.13
-              : property.price;
-          });
-          data.minRent = Math.min(...rentPrices);
-          data.maxRent = Math.max(...rentPrices);
-          data.rentCount = propertiesToRent.length;
-        }
-
-        // assign min sell, max sell and sell price
-        if (propertiesToSell.length > 0) {
-          const sellPrices = propertiesToSell.map((property) => {
-            return property.currency === "Q"
-              ? property.price * 0.13
-              : property.price;
-          });
-          data.minSell = Math.min(...sellPrices);
-          data.maxSell = Math.max(...sellPrices);
-          data.sellCount = propertiesToSell.length;
-        }
-
-        const propertiesInTheSameOperationType =
-          input.operationType === "sell" ? propertiesToSell : propertiesToRent;
-
-        await ctx.db.acm.create({
+        return await ctx.db.acm.create({
           data: {
             ...data,
-            operationType: input.operationType,
-            acmResultDetail: {
-              create: propertiesInTheSameOperationType.map((property) => ({
-                lat: property.location.coordinates[1],
-                lng: property.location.coordinates[0],
-                price: property.price,
-                currency: property.currency,
-                address: property.address,
-                numberOfBathrooms: property.numberOfBathrooms ?? 0,
-                numberOfRooms: property.numberOfRooms ?? 0,
-                buildingType: property.buildingType ?? 0,
-                numberOfParkingLots: property.numberOfParkingLots ?? 0,
-                totalArea: property.totalArea ?? 0,
-                imagesUrl: property.imagesUrl,
-                url: property.url,
-              })),
-            },
           },
         });
       } catch (e) {
@@ -210,6 +141,77 @@ export const acmRouter = createTRPCRouter({
         moreThan1Year,
       };
     }),
+
+  get: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const acm = await ctx.db.acm.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!acm) {
+        return null;
+      }
+
+      const operationTypes = ["sell", "rent"];
+
+      // fetch predictions from the model
+      const predictions = await Promise.all(
+        operationTypes.map(async (operationType) => {
+          const response = await fetch(
+            "https://wfdues1rme.execute-api.us-east-1.amazonaws.com/main/api/prediction/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                longitude: acm.lng,
+                latitude: acm.lat,
+                minNumberOfRooms: acm.numberOfRooms,
+                maxNumberOfRooms: acm.numberOfRooms,
+                minNumberOfBathrooms: acm.numberOfBathrooms,
+                maxNumberOfBathrooms: acm.numberOfBathrooms,
+                minNumberOfParkingLots: acm.numberOfParkingLots,
+                maxNumberOfParkingLots: acm.numberOfParkingLots,
+                minTotalArea: acm.totalArea,
+                maxTotalArea: acm.totalArea,
+                buildingType: acm.buildingType,
+                operationType,
+              }),
+            },
+          );
+
+          const linearRegression = await response.json();
+
+          return {
+            operationType,
+            linearRegression,
+          };
+        }),
+      );
+
+      //  get scrapped posts from mongo
+      const scrappedPosts = await getScrappedPostFromMongo({
+        lat: acm.lat.toNumber(),
+        lng: acm.lng.toNumber(),
+        radius: 2,
+        numberOfRooms: acm.numberOfRooms,
+        numberOfBathrooms: acm.numberOfBathrooms,
+        numberOfParkingLots: acm.numberOfParkingLots,
+        totalArea: acm.totalArea,
+        buildingType: acm.buildingType,
+      });
+
+      return { ...acm, predictions, scrappedPosts };
+    }),
+
   countInfinite: protectedProcedure
     .input(
       z.object({

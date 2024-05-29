@@ -66,19 +66,13 @@ model acm {
   radius              Decimal            @default(0)
   operationType       String // Buy, Rent
   buildingType        String // Apartment, House, Office, Warehouse
-  numberOfRooms       Int?               @default(0)
-  numberOfBathrooms   Int?               @default(0)
-  numberOfParkingLots Int?               @default(0)
-  totalArea           Int?               @default(0)
-  minRent          Int?               @default(0)
-  maxRent          Int?               @default(0)
-  rentCount       Int?               @default(0)
-  minSell         Int?               @default(0)
-  maxSell         Int?               @default(0)
-  sellCount       Int?               @default(0)
+  numberOfRooms       Int               @default(0)
+  numberOfBathrooms   Int               @default(0)
+  numberOfParkingLots Int               @default(0)
+  totalArea           Int               @default(0)
   createdAt           DateTime           @default(now()) @map("created_at")
-  userId              String
-  user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // userId              String
+  // user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   acmResultDetail     acmResultDetail[]
 }
 
@@ -154,7 +148,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   createdAt     DateTime  @default(now()) @map("created_at")
-  acm           acm[]
+  // acm           acm[]
 }
 
 model VerificationToken {

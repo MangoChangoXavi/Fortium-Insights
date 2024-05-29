@@ -13,7 +13,7 @@ const Footer = () => {
   //   ];
   return (
     <>
-      <div id="contact" className="footer-bg relative mb-0 md:pt-14">
+      <div id="contact" className="footer-bg relative my-0 md:pt-14">
         <div className="pb-14 sm:px-10   lg:px-20">
           <div className="m-5 flex flex-col sm:grid md:grid-cols-2 xl:grid-cols-2 ">
             <div className="relative my-auto text-start">
