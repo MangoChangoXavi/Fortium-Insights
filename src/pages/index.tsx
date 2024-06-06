@@ -8,7 +8,8 @@ import BoxSvg from "~/assets/svg/box.svg";
 import StarSvg from "~/assets/svg/star.svg";
 import Image from "next/image";
 import { LandingArrowIcon } from "~/components/system/ui/Icons";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const HeroCTA = ({ handleClick }: { handleClick: () => void }) => {
   return (
@@ -204,6 +205,11 @@ const LandingFooter = () => {
 };
 
 export default function Index() {
+  const router = useRouter();
+  const { data: session } = useSession();
+  if (session) {
+    void router.push("/dashboard");
+  }
   const handleClick = () => signIn("google");
   return (
     <>

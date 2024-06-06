@@ -89,10 +89,6 @@
   line-height: 0px;
 }
 
-body {
-  background-color: theme("colors.secondary.100/10");
-}
-
 .bg-gray-gradiant {
   background: linear-gradient(253deg, #595959 0%, rgba(48, 48, 48, 0.64) 100%);
 }

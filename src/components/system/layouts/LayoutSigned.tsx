@@ -4,15 +4,7 @@ import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
 import { UsersIcon } from "../ui/Icons";
 import { Sidebar } from "./Sidebar";
-import {
-  AxeIcon,
-  CatIcon,
-  DatabaseIcon,
-  MicIcon,
-  SearchIcon,
-  TvIcon,
-  Wallet,
-} from "lucide-react";
+import { AxeIcon, CatIcon, SearchIcon, TvIcon, Wallet } from "lucide-react";
 const menuItems = [
   {
     name: "On Boards",
