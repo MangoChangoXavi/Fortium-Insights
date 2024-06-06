@@ -1,49 +1,9 @@
 import React, { type ReactNode } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
-import { UsersIcon } from "../ui/Icons";
-import { Sidebar } from "./Sidebar";
-import { AxeIcon, CatIcon, SearchIcon, TvIcon, Wallet } from "lucide-react";
-const menuItems = [
-  {
-    name: "On Boards",
-    icon: <AxeIcon className="h-5 w-5" />,
-    link: "/reports/onboards",
-    permissions: ["admin"],
-  },
-  {
-    name: "Propuestas",
-    icon: <CatIcon className="h-5 w-5" />,
-    link: "/reports/proposals",
-    permissions: ["admin"],
-  },
-  {
-    name: "Clientes",
-    icon: <TvIcon className="h-5 w-5" />,
-    link: "/clients",
-    permissions: ["admin"],
-  },
-  {
-    name: "Valoraciones",
-    icon: <Wallet className="h-5 w-5" />,
-    link: "/acms",
-    permissions: ["admin", "user"],
-  },
-  {
-    name: "Requerimientos",
-    icon: <SearchIcon className="h-5 w-5" />,
-    link: "/requirements",
-    permissions: ["admin", "user"],
-  },
-  {
-    name: "Usuarios",
-    icon: <UsersIcon className="h-5 w-5" />,
-    link: "/reports/users",
-    permissions: ["admin"],
-  },
-];
-
+import { Topbar } from "~/components/template/ui/Topbar";
+import { LoadingPage } from "./Loader";
 export const LayoutSigned = ({
   role = ["admin", "user", "disabled"],
   children,
@@ -54,15 +14,18 @@ export const LayoutSigned = ({
   role?: string | string[];
 }) => {
   const router = useRouter();
-  const { data: session } = useSession({
+  const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
       router.push("/");
     },
   });
-  if (!session?.user) return <PageNotFound />;
 
-  // Verify roles or roles
+  // wait to load the session
+  if (status === "loading") return <LoadingPage />;
+
+  // Verify if user is logged in and has the correct roles
+  if (!session?.user) return <PageNotFound />;
   if (role) {
     if (Array.isArray(role)) {
       if (!role.includes(session.user.role)) return <PageNotFound />;
@@ -70,17 +33,22 @@ export const LayoutSigned = ({
       if (role !== session.user.role) return <PageNotFound />;
     }
   }
+
+  const handleClickLogoTopBar = () => {
+    router.push("/dashboard");
+  };
+
+  const handleSignOut = () => {
+    void signOut();
+    router.push("/");
+  };
   return (
     <>
-      <Sidebar
-        userImage={
-          session.user.image ??
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+      <Topbar
+        handleClickSignOut={handleSignOut}
+        profileImgUrl={
+          session.user.image ?? "https://via.placeholder.com/33x33"
         }
-        userName={session.user.name ?? "Anonimo"}
-        userRole={session.user.role}
-        items={menuItems}
-        companyName="Techos Digitales"
       />
       <div className="w-full pt-2 md:pl-12 ">
         <div

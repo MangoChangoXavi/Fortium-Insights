@@ -4,7 +4,7 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/assets/styles/globals.css";
 import Head from "next/head";
-import { Plus_Jakarta_Sans as FontSans } from "next/font/google";
+import { Noto_Sans_JP as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";

@@ -10,6 +10,7 @@ import Image from "next/image";
 import { LandingArrowIcon } from "~/components/system/ui/Icons";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { LoadingPage } from "~/components/system/layouts/Loader";
 
 const HeroCTA = ({ handleClick }: { handleClick: () => void }) => {
   return (
@@ -17,14 +18,14 @@ const HeroCTA = ({ handleClick }: { handleClick: () => void }) => {
       <div className="flex flex-col items-center justify-center gap-4">
         <Image className="h-[59px] w-[203px]" src={LogoSvg} alt="logo" />
         <div className="flex flex-col items-center justify-center gap-3">
-          <h1 className="font-['Noto Sans JP'] w-[527px] text-center text-[25px] font-bold text-blue-950">
+          <h1 className="w-[527px] text-center text-[25px] font-bold text-blue-950">
             Get real time recommendations from others experts in Fortium
           </h1>
           <button
             className="group flex cursor-pointer items-center gap-3"
             onClick={handleClick}
           >
-            <h2 className="font-['Noto Sans JP'] text-xl font-medium text-indigo-400 group-hover:text-indigo-500">
+            <h2 className="text-xl font-medium text-indigo-400 transition duration-150 ease-out group-hover:text-indigo-500">
               Sign in with your google account
             </h2>
             <LandingArrowIcon className="h-4 w-4 fill-indigo-400 stroke-indigo-400 transition duration-150 ease-out group-hover:translate-x-2 group-hover:fill-indigo-500 group-hover:ease-in" />
@@ -37,7 +38,7 @@ const HeroCTA = ({ handleClick }: { handleClick: () => void }) => {
 
 const HeroImage = () => {
   return (
-    <div className="relative col-span-1 h-[80vh] overflow-hidden bg-[#093161a3]">
+    <div className="relative col-span-1 h-[80vh] overflow-hidden bg-[#466488]">
       {/* person background */}
       <div className="absolute -bottom-10 left-0 right-0 mx-auto h-[322.92px] w-[322.92px] -rotate-45 rounded-[50px] bg-slate-400/40" />
       {/* growth image */}
@@ -84,116 +85,112 @@ const LandingHero = ({ handleClick }: { handleClick: () => void }) => {
 const LandingFooter = () => {
   return (
     <div className="h-fit w-full bg-blue-950 p-8">
-      <span className="font-['Noto Sans JP'] text-base font-bold text-neutral-300">
+      <span className="text-base font-bold text-neutral-300">
         Elevate Your Decision-Making with Trusted Recommendations From Your Own
         Partners
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
-        - At{" "}
-      </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+      <span className="text-sm font-medium text-white">- At </span>
+      <span className="text-sm font-medium text-yellow-500">
         Fortium Partners
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         , we understand that making informed technology decisions is crucial for
         your clients&apos; success. <br />- That&apos;s why we&apos;ve developed
         the{" "}
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-sky-400">
+      <span className="text-sm font-medium text-sky-400">
         CTO Insights Platform <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-base font-bold text-neutral-300">
+      <span className="text-base font-bold text-neutral-300">
         Streamlined Recommendations
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         - As a CTO, you&apos;re constantly navigating a complex landscape of
         technology services and solutions to find the best fit for your
         clients&apos; needs. <br />- The{" "}
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-sky-400">
+      <span className="text-sm font-medium text-sky-400">
         CTO Insights Platform
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         {" "}
         gives you direct access to other{" "}
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+      <span className="text-sm font-medium text-yellow-500">
         Fortium Partners
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         &apos; experiences with technology service providers.
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-base font-bold text-neutral-300">
+      <span className="text-base font-bold text-neutral-300">
         Getting Started is Easy
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         - To get the most out of the{" "}
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-sky-400">
+      <span className="text-sm font-medium text-sky-400">
         CTO Insights Platform
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         , simply log in with your{" "}
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+      <span className="text-sm font-medium text-yellow-500">
         Fortium Partners
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         {" "}
         account. <br />
         - Once logged in, you can:
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         &emsp;- Start recording personal experiences and interactions with
         technology service providers that you may want to share with other{" "}
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+      <span className="text-sm font-medium text-yellow-500">
         Fortium Partners
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         &emsp;- Access the reviews and experiences of other{" "}
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+      <span className="text-sm font-medium text-yellow-500">
         Fortium Partners
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         {" "}
         to help you with your specific technology needs at your current client
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-base font-bold text-neutral-300">
+      <span className="text-base font-bold text-neutral-300">
         Your Technology Partner, Every Step of the Way
         <br />
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
-        - At{" "}
-      </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+      <span className="text-sm font-medium text-white">- At </span>
+      <span className="text-sm font-medium text-yellow-500">
         Fortium Partners
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         , we are committed to supporting your journey as a technology leader.{" "}
         <br />- Our{" "}
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-sky-400">
+      <span className="text-sm font-medium text-sky-400">
         CTO Insights Platform
       </span>
-      <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+      <span className="text-sm font-medium text-white">
         {" "}
         is intended to be more than just a tool—it&apos;s a community-driven
         ecosystem designed to help you make the best technology decisions for
@@ -206,10 +203,14 @@ const LandingFooter = () => {
 
 export default function Index() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  // wait to load the session
+  if (status === "loading") return <LoadingPage />;
   if (session) {
     void router.push("/dashboard");
+    return <LoadingPage />;
   }
+
   const handleClick = () => signIn("google");
   return (
     <>
