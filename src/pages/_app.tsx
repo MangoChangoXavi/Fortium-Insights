@@ -8,8 +8,6 @@ import { Plus_Jakarta_Sans as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
-import { GoogleAdSense } from "nextjs-google-adsense";
-import { GoogleTagManager } from "@next/third-parties/google";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,27 +22,31 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <Analytics />
       <Head>
-        <title>Techos Digitales</title>
+        <title>Fortium</title>
         <meta
           name="title"
-          content="Techos Digitales - compra, busca o alquila casas y apartamentos en Guatemala"
+          content="Fortium Partners - Elevate Your Decision-Making with Trusted Recommendations From Your Own Partners"
         />
         <meta
           name="description"
-          content="busca facilmente casas y apartamentos en Guatemala. Busca propiedades en ventas y en alquiler de manera facil."
+          content="Elevate Your Decision-Making with Trusted Recommendations From Your Own Partners
+          At Fortium Partners, we understand that making informed technology decisions is crucial for your clients success. 
+          Thats why we've developed the CTO Insights Platform
+          
+          Streamlined Recommendations
+          As a CTO, youre constantly navigating a complex landscape of technology services and solutions to find the best fit for your clients needs. 
+          The CTO Insights Platform gives you direct access to other Fortium Partners experiences with technology service providers."
         />
         <meta
           name="keywords"
-          content="busca inmuebles en guatemala, venta de apartamentos, renta de apartamentos, alquier de casas, casas en venta, venta de casas, buscar casas, buscar apartamentos, alquiler en guatemala, propiedades en alquiler, buscar alquiler, bienes raices inteligencia artificial"
+          content="fortium partners recommendations, fortium partners, fortium, fortium partners reviews, fortium partners insights, fortium partners platform, fortium partners technology, fortium partners technology insights, fortium partners technology recommendations, fortium partners technology reviews, fortium partners technology platform, fortium partners technology insights platform, fortium partners technology recommendations platform, fortium partners technology reviews platform, fortium partners technology platform, fortium partners technology insights platform, fortium partners technology recommendations platform, fortium partners technology reviews platform, fortium partners technology platform, fortium partners technology insights platform, fortium partners technology recommendations platform, fortium partners technology reviews platform"
         />
-        <link rel="icon" type="image/svg+xml" href="/g8.svg" />
+        <link rel="icon" type="image/svg+xml" href="/logo.svg" />
       </Head>
       <main
         className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
       >
         <Toaster />
-        <GoogleTagManager gtmId="GTM-PCRDHGT9" />
-        <GoogleAdSense publisherId="pub-6713030727031078" />
         <Component {...pageProps} />
       </main>
     </SessionProvider>

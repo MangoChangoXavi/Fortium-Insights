@@ -14,6 +14,23 @@ export const StarIcon = ({ ...other }: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
+export const LandingArrowIcon = ({ ...other }: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      viewBox="0 0 20 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...other}
+    >
+      <path
+        id="Arrow 1"
+        d="M19.7071 8.20711C20.0976 7.81658 20.0976 7.18342 19.7071 6.79289L13.3431 0.428932C12.9526 0.0384078 12.3195 0.0384078 11.9289 0.428932C11.5384 0.819457 11.5384 1.45262 11.9289 1.84315L17.5858 7.5L11.9289 13.1569C11.5384 13.5474 11.5384 14.1805 11.9289 14.5711C12.3195 14.9616 12.9526 14.9616 13.3431 14.5711L19.7071 8.20711ZM0 8.5H19V6.5H0V8.5Z"
+      />
+    </svg>
+  );
+};
+
 export const DashboardIcon = ({ ...other }: SVGProps<SVGSVGElement>) => {
   return (
     <svg

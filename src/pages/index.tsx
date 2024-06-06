@@ -1,273 +1,207 @@
 import React from "react";
-import "chart.js/auto";
-
-import Header from "~/features/landingPage/components/Header";
-import Footer from "~/features/landingPage/components/Footer";
+import LogoSvg from "~/assets/svg/logo.svg";
+import PersonImage from "~/assets/img/person.png";
+import StatsImageSvg from "~/assets/svg/stats.svg";
+import GrowthSvg from "~/assets/svg/growth.svg";
+import ChatSvg from "~/assets/svg/chat.svg";
+import BoxSvg from "~/assets/svg/box.svg";
+import StarSvg from "~/assets/svg/star.svg";
 import Image from "next/image";
-import MapSelect from "~/components/system/ui/MapSelect";
-// assets/svg
-import Object1 from "~/assets/svg/object-1.svg";
-import Object2 from "~/assets/svg/object-2.svg";
-import Object3 from "~/assets/svg/object-3.svg";
-import Object4 from "~/assets/svg/object-4.svg";
-import Object5 from "~/assets/svg/object-5.svg";
+import { LandingArrowIcon } from "~/components/system/ui/Icons";
 
-// assets/img
-import Client1 from "~/assets/img/client-1.png";
-import Client2 from "~/assets/img/client-2.png";
-import Home from "~/assets/img/home.png";
-import Link from "next/link";
-import ValuationPopover from "~/components/template/ui/ValuationPopover";
-import { api } from "~/utils/api";
-import { toast } from "@/components/ui/use-toast";
-import { Loader } from "~/components/system/layouts/Loader";
+const LandingFooter = () => {
+  return (
+    <div className="h-fit w-full bg-blue-950 p-8">
+      <div className="w-[1215px]">
+        <span className="font-['Noto Sans JP'] text-base font-bold text-neutral-300">
+          Elevate Your Decision-Making with Trusted Recommendations From Your
+          Own Partners
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          At{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+          Fortium Partners
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          , we understand that making informed technology decisions is crucial
+          for your clients’ success. <br />
+          That’s why we've developed the{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-sky-400">
+          CTO Insights Platform <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-base font-bold text-neutral-300">
+          Streamlined Recommendations
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          As a CTO, you’re constantly navigating a complex landscape of
+          technology services and solutions to find the best fit for your
+          clients’ needs. <br />
+          The{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-sky-400">
+          CTO Insights Platform
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          {" "}
+          gives you direct access to other{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+          Fortium Partners
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          ’ experiences with technology service providers.
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-base font-bold text-neutral-300">
+          Getting Started is Easy
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          To get the most out of the{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-sky-400">
+          CTO Insights Platform
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          , simply log in with your{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+          Fortium Partners
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          {" "}
+          account. <br />
+          Once logged in, you can:
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          Start recording personal experiences and interactions with technology
+          service providers that you may want to share with other{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+          Fortium Partners
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          Access the reviews and experiences of other{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+          Fortium Partners
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          {" "}
+          to help you with your specific technology needs at your current client
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-base font-bold text-neutral-300">
+          Your Technology Partner, Every Step of the Way
+          <br />
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          At{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-yellow-500">
+          Fortium Partners
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          , we are committed to supporting your journey as a technology leader.{" "}
+          <br />
+          Our{" "}
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-sky-400">
+          CTO Insights Platform
+        </span>
+        <span className="font-['Noto Sans JP'] text-sm font-medium text-white">
+          {" "}
+          is intended to be more than just a tool—it’s a community-driven
+          ecosystem designed to help you make the best technology decisions for
+          your clients.
+          <br />
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const HeroText = () => {
+  return (
+    <div className="flex flex-col items-center justify-center gap-3">
+      <h1 className="font-['Noto Sans JP'] w-[527px] text-center text-[25px] font-bold text-blue-950">
+        Get real time recommendations from others experts in Fortium
+      </h1>
+      <span className="group flex cursor-pointer items-center gap-3 ">
+        <h2 className="font-['Noto Sans JP'] text-xl font-medium text-indigo-400">
+          Sign in with your google account
+        </h2>
+        <LandingArrowIcon className="h-4 w-4 fill-indigo-400 stroke-indigo-400  group-hover:translate-x-2" />
+      </span>
+    </div>
+  );
+};
+
+const LandingHero = () => {
+  return (
+    <section className="grid grid-cols-2">
+      <div className="relative col-span-1 h-[80vh] overflow-hidden bg-[#093161a3]">
+        {/* person background */}
+        <div className="absolute -bottom-10 left-0 right-0 mx-auto h-[322.92px] w-[322.92px] -rotate-45 rounded-[50px] bg-slate-400/40" />
+        {/* growth image */}
+        <div className="pointer-events-none absolute bottom-20 right-24">
+          <Image src={GrowthSvg} alt="growth image" />
+        </div>
+        {/* person image */}
+        <Image
+          className="pointer-events-none absolute -bottom-2 left-0 right-0 mx-auto h-[324px] w-[398px]"
+          src={PersonImage}
+          alt="person image"
+        />
+        {/* stats image */}
+        <div className="pointer-events-none absolute bottom-0 left-40">
+          <Image src={StatsImageSvg} alt="stats image" />
+        </div>
+        {/* chat image */}
+        <div className="pointer-events-none absolute bottom-80 left-40">
+          <Image src={ChatSvg} alt="chat image" />
+        </div>
+        {/* box image */}
+        <div className="pointer-events-none absolute bottom-[400px] right-64">
+          <Image src={BoxSvg} alt="box image" />
+        </div>
+        {/* star image */}
+        <div className="pointer-events-none absolute bottom-72 right-24">
+          <Image src={StarSvg} alt="star image" />
+        </div>
+        {/* small background */}
+        <div className="absolute bottom-[420px] right-10 h-[100px] w-[100px] -rotate-45 rounded-[30px] bg-slate-400/40" />
+      </div>
+      <div className="col-span-1 flex items-center justify-center bg-white">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <Image className="h-[59px] w-[203px]" src={LogoSvg} alt="logo" />
+          <HeroText />
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default function Index() {
-  // Search parameters
-  const [address, setAddress] = React.useState<string>("");
-  const [valuationAddress, setValuationAddress] = React.useState<string>("");
-
-  // on address change go to search/:address
-  React.useEffect(() => {
-    if (address) {
-      window.location.href = `/search/${address}`;
-    }
-  }, [address]);
-
   return (
     <>
-      <Header />
-      <section className="relative flex w-full flex-col items-center overflow-hidden bg-white p-6 lg:h-[400px] lg:flex-row lg:px-32">
-        <div className="space-y-5">
-          <div className="space-y-3 text-center md:text-start">
-            <h1 className="text-[35px] font-extrabold leading-10 text-slate-800 sm:text-[41px] sm:leading-[50px] lg:w-[550px]">
-              Busca propiedades con Inteligencia Artificial
-            </h1>
-            <h2 className="text-lg font-semibold text-slate-600 sm:text-xl ">
-              Portal de bienes raices unificado.
-            </h2>
-          </div>
-          <MapSelect
-            setAddress={setAddress}
-            className="h-16 rounded-2xl border border-black lg:w-[493px] "
-          />
-        </div>
-        <div className="mt-60 sm:mt-72 lg:mt-0">
-          <div className="absolute -bottom-[360px] right-10  h-[566.79px] w-[368.35px] rotate-[22.53deg] rounded-full bg-gradient-to-b from-slate-400 via-teal-400 to-lime-400 lg:-top-[80px] 2xl:-top-60 2xl:right-20 2xl:h-[954px] 2xl:w-[619.98px]" />
-          <Image
-            src={Client1}
-            alt="Client1"
-            className="absolute -right-12 bottom-0 h-[226px] w-[350px] sm:-right-20 sm:h-[326px] sm:w-[450px]  2xl:-right-10 2xl:h-[442px] 2xl:w-[610px] "
-            draggable={false}
-          />
-          <Image
-            src={Client2}
-            alt="Client2"
-            className="sm:right-30 absolute bottom-0 right-16 h-[170px] w-[281px] sm:right-20 sm:h-[253px] sm:w-[381px] 2xl:right-40 2xl:h-[362px] 2xl:w-[545px]"
-            draggable={false}
-          />
-        </div>
-      </section>
-      <section className="flex  w-full items-center justify-center bg-neutral-900 p-4">
-        <p className="font-semibold text-white sm:text-xl">
-          Miles de personas usan nuestra plataforma semanalmente para buscar su
-          proximo hogar.
-        </p>
-      </section>
-      <section className="flex w-full flex-col items-center bg-white p-6 md:overflow-hidden lg:h-[400px] lg:flex-row lg:px-32">
-        <div className="relative flex w-full items-center justify-center lg:w-1/2">
-          <Image
-            src={Home}
-            alt="Home"
-            className="w-[300px] lg:mr-24 lg:h-[319px] lg:w-[426px] "
-            draggable={false}
-          />
-          <Image
-            src={Object1}
-            alt="Object1"
-            className="floating absolute right-5 top-0 sm:right-24"
-          />
-          <Image
-            src={Object2}
-            alt="Object2"
-            className="floating absolute right-20 top-40"
-          />
-          <Image
-            src={Object3}
-            alt="Object3"
-            className="floating absolute right-0 top-20 sm:right-44 lg:top-60"
-          />
-          <Image
-            src={Object4}
-            alt="Object4"
-            className="floating absolute left-0 top-0 sm:left-36"
-          />
-          <Image
-            src={Object5}
-            alt="Object5"
-            className="floating absolute bottom-10 left-10"
-          />
-        </div>
-        <div className="space-y-5 lg:w-1/2">
-          <div className="space-y-3 text-center md:text-start">
-            <h1 className="text-[35px] font-extrabold leading-10 text-slate-800 sm:text-[41px] sm:leading-[50px]">
-              Valoraciones online
-            </h1>
-            <h2 className="text-lg font-semibold text-slate-600 sm:text-xl ">
-              Valoramos tu propiedad usando machine learning.
-            </h2>
-          </div>
-          <div className="flex flex-row space-x-4">
-            <MapSelect
-              setAddress={setValuationAddress}
-              className="h-16 w-2/3 rounded-2xl border border-black "
-            />
-            <ValuationPopover address={valuationAddress} />
-          </div>
-        </div>
-      </section>
-      <section className="flex w-full items-center justify-center bg-neutral-900 p-4">
-        <p className="font-semibold text-white sm:text-xl">
-          Nuestras valoraciones estan certificadas por un experto, son 100%
-          legales y al mejor precio del mercado
-        </p>
-      </section>
-      {/* link tags  */}
-      <section className="flex w-full flex-col items-center justify-center gap-10 p-16 md:flex-row">
-        {/* ciudad de guatemala */}
-        <div className="flex flex-col gap-2">
-          <Link
-            href={encodeURI("/search/Guatemala City, Guatemala")}
-            className="text-blue-500"
-          >
-            Casas en venta en Ciudad de Guatemala
-          </Link>
-          <Link
-            href={encodeURI("/search/Guatemala City, Guatemala")}
-            className="text-blue-500"
-          >
-            Apartamentos en venta en Ciudad de Guatemala
-          </Link>
-          <Link
-            href={encodeURI("/search/Guatemala City, Guatemala")}
-            className="text-blue-500"
-          >
-            Terrenos en venta en Ciudad de Guatemala
-          </Link>
-          <Link
-            href={encodeURI("/search/Guatemala City, Guatemala")}
-            className="text-blue-500"
-          >
-            Bodegas en venta en Ciudad de Guatemala
-          </Link>
-          <Link
-            href={encodeURI("/search/Guatemala City, Guatemala")}
-            className="text-blue-500"
-          >
-            Oficinas en venta en Ciudad de Guatemala
-          </Link>
-        </div>
-        {/* antigua guatemala */}
-        <div className="flex flex-col gap-2">
-          <Link
-            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
-            className="text-blue-500"
-          >
-            Casas en venta en Antigua Guatemala
-          </Link>
-          <Link
-            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
-            className="text-blue-500"
-          >
-            Apartamentos en venta en Antigua Guatemala
-          </Link>
-          <Link
-            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
-            className="text-blue-500"
-          >
-            Terrenos en venta en Antigua Guatemala
-          </Link>
-          <Link
-            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
-            className="text-blue-500"
-          >
-            Bodegas en venta en Antigua Guatemala
-          </Link>
-          <Link
-            href={encodeURI("/search/Antigua Guatemala, Guatemala")}
-            className="text-blue-500"
-          >
-            Oficinas en venta en Antigua Guatemala
-          </Link>
-        </div>
-        {/* Mixco  */}
-        <div className="flex flex-col gap-2">
-          <Link
-            href={encodeURI("/search/Mixco, Guatemala")}
-            className="text-blue-500"
-          >
-            Casas en venta en Mixco
-          </Link>
-          <Link
-            href={encodeURI("/search/Mixco, Guatemala")}
-            className="text-blue-500"
-          >
-            Apartamentos en venta en Mixco
-          </Link>
-          <Link
-            href={encodeURI("/search/Mixco, Guatemala")}
-            className="text-blue-500"
-          >
-            Terrenos en venta en Mixco
-          </Link>
-          <Link
-            href={encodeURI("/search/Mixco, Guatemala")}
-            className="text-blue-500"
-          >
-            Bodegas en venta en Mixco
-          </Link>
-          <Link
-            href={encodeURI("/search/Mixco, Guatemala")}
-            className="text-blue-500"
-          >
-            Oficinas en venta en Mixco
-          </Link>
-        </div>
-        {/* Villa Nueva */}
-        <div className="flex flex-col gap-2">
-          <Link
-            href={encodeURI("/search/Villa Nueva, Guatemala")}
-            className="text-blue-500"
-          >
-            Casas en venta en Villa Nueva
-          </Link>
-          <Link
-            href={encodeURI("/search/Villa Nueva, Guatemala")}
-            className="text-blue-500"
-          >
-            Apartamentos en venta en Villa Nueva
-          </Link>
-          <Link
-            href={encodeURI("/search/Villa Nueva, Guatemala")}
-            className="text-blue-500"
-          >
-            Terrenos en venta en Villa Nueva
-          </Link>
-          <Link
-            href={encodeURI("/search/Villa Nueva, Guatemala")}
-            className="text-blue-500"
-          >
-            Bodegas en venta en Villa Nueva
-          </Link>
-          <Link
-            href={encodeURI("/search/Villa Nueva, Guatemala")}
-            className="text-blue-500"
-          >
-            Oficinas en venta en Villa Nueva
-          </Link>
-        </div>
-      </section>
-      <Footer />
+      <LandingHero />
+      <LandingFooter />
     </>
   );
 }
