@@ -22,7 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <Analytics />
       <Head>
-        <title>Fortium</title>
+        <title>Fortium - CTOs Insights</title>
         <meta
           name="title"
           content="Fortium Partners - Elevate Your Decision-Making with Trusted Recommendations From Your Own Partners"
