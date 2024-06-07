@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
 import { Topbar } from "~/components/template/layouts/Topbar";
 import { LoadingPage } from "./Loader";
+import { Footer } from "~/components/template/layouts/Footer";
 export const LayoutSigned = ({
   role = ["admin", "user", "disabled"],
   children,
@@ -55,7 +56,8 @@ export const LayoutSigned = ({
           session.user.image ?? "https://via.placeholder.com/33x33"
         }
       />
-      {children}
+      <div className="min-h-screen overflow-hidden">{children}</div>
+      <Footer />
     </>
   );
 };

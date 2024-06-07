@@ -45,7 +45,7 @@ const categories: Category[] = [
 
 export const CategoriesBar = () => {
   return (
-    <ScrollArea className="w-screen whitespace-nowrap rounded-md border">
+    <ScrollArea className="w-screen whitespace-nowrap ">
       <div className="flex w-max space-x-4 p-4">
         {categories.map((category, index) => (
           <div
