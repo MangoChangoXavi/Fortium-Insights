@@ -205,3 +205,18 @@ h3 {
 .floating {
   animation: float 3s infinite;
 }
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.topbar-overlay {
+  animation: slideDown 0.2s ease-out forwards;
+}
