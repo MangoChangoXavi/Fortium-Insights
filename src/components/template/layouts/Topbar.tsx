@@ -10,6 +10,9 @@ export const Topbar = ({
   profileImgUrl: string;
   handleClickSignOut: () => void;
 }) => {
+  /**
+   * Represents the state of hover options in the topbar.
+   */
   const [hoverOptions, setHoverOptions] = React.useState(false);
   return (
     <div onMouseLeave={() => setHoverOptions(false)}>
@@ -62,7 +65,7 @@ export const Topbar = ({
       </div>
       {/* overlay */}
       {hoverOptions && (
-        <div className="fixed top-[60px] h-fit w-full bg-slate-950 p-16">
+        <div className="fixed top-[60px] z-20 h-fit w-full bg-slate-950 p-16">
           <div className="inline-flex h-[95px] w-[348px] items-start justify-start gap-[72px]">
             <div className="inline-flex flex-col items-start justify-start gap-4">
               <div className="font-['Noto Sans JP'] text-[17px] font-bold text-white">

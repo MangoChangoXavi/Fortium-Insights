@@ -1,11 +1,14 @@
 import React from "react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
+import { CategoriesBar } from "~/components/template/layouts/CategoriesBar";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 
 export default function Dashboard() {
   return (
     <>
-      <LayoutSigned>hello</LayoutSigned>
+      <LayoutSigned>
+        <CategoriesBar />
+      </LayoutSigned>
     </>
   );
 }

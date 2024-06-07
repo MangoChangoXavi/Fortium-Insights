@@ -2,18 +2,22 @@ import React, { type ReactNode } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
-import { Topbar } from "~/components/template/ui/Topbar";
+import { Topbar } from "~/components/template/layouts/Topbar";
 import { LoadingPage } from "./Loader";
 export const LayoutSigned = ({
   role = ["admin", "user", "disabled"],
   children,
-  noPadding = false,
 }: {
   children: ReactNode;
   noPadding?: boolean;
   role?: string | string[];
 }) => {
   const router = useRouter();
+  /**
+   * Renders the signed layout component.
+   *
+   * @returns The JSX element representing the signed layout.
+   */
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
@@ -34,14 +38,15 @@ export const LayoutSigned = ({
     }
   }
 
-  const handleClickLogoTopBar = () => {
-    router.push("/dashboard");
-  };
-
-  const handleSignOut = () => {
-    void signOut();
+  /**
+   * Handles the sign out functionality.
+   * This function signs out the user and redirects them to the home page.
+   */
+  const handleSignOut = async () => {
+    await signOut();
     router.push("/");
   };
+
   return (
     <>
       <Topbar
@@ -50,15 +55,7 @@ export const LayoutSigned = ({
           session.user.image ?? "https://via.placeholder.com/33x33"
         }
       />
-      <div className="w-full pt-2 md:pl-12 ">
-        <div
-          className={`${
-            noPadding ? "" : "mx-auto w-full px-2 md:px-4 lg:px-12"
-          }`}
-        >
-          {children}
-        </div>
-      </div>
+      {children}
     </>
   );
 };

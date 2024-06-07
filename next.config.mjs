@@ -10,20 +10,9 @@ const config = {
   images: {
     domains: [
       "lh3.googleusercontent.com",
-      "dummyimage.com",
+      "via.placeholder.com",
       "images.unsplash.com",
       "plus.unsplash.com",
-      "bucketproyectoespecial.s3.us-east-2.amazonaws.com",
-      "res.akamaized.net",
-      "i.insider.com",
-      "d7lrki2kktov4uja.public.blob.vercel-storage.com",
-      "mancro.com",
-      "photos.encuentra24.com",
-      "scontent.faep24-2.fna.fbcdn.net",
-      "scontent.faep24-1.fna.fbcdn.net",
-      "mapainmueble.com",
-      "listacasas.com",
-      "i.imgur.com",
     ],
   },
 
