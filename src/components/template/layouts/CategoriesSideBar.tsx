@@ -67,8 +67,8 @@ export const CategoriesSideBar = () => {
           {categoriesToDisplay.map((category, index) => (
             <RadioButton
               key={index}
-              checked={categoryId === index}
-              handleChange={() => setCategoryId(index)}
+              checked={categoryId === index + 1}
+              handleChange={() => setCategoryId(index + 1)}
               label={category.name}
             />
           ))}
