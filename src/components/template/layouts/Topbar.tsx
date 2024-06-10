@@ -3,10 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { set } from "zod";
 import LogoSvg from "~/assets/svg/logo.svg";
 import { Loader } from "~/components/system/layouts/Loader";
 import { Debouncer } from "~/components/system/ui/Debouncer";
+import { useSearchStore } from "~/stores/useSearchStore";
 export const Topbar = ({
   profileImgUrl,
   handleClickSignOut,
@@ -21,20 +21,25 @@ export const Topbar = ({
   const [searchValue, setSearchValue] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
+  // zustand state
+  const { setSearch } = useSearchStore();
+
   // whenever searchValue change we should go to /search/[searchValue]
   const router = useRouter();
   React.useEffect(() => {
     const makeSearch = async () => {
       if (searchValue) {
         setLoading(true);
+        // save un zustand state
+        setSearch(searchValue);
         // go to search page
-        await router.push(`/search/${encodeURI(searchValue)}`);
+        await router.push(`/search`);
         setSearchValue("");
         setLoading(false);
       }
     };
     void makeSearch();
-  }, [router, searchValue]);
+  }, [router, searchValue, setSearch]);
 
   return (
     <div onMouseLeave={() => setHoverOptions(false)}>

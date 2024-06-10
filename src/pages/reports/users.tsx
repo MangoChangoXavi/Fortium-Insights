@@ -6,7 +6,6 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
-import { UIDebouncer } from "~/components/system/ui/Debouncer";
 import { StarIcon, SearchIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import {
@@ -124,11 +123,6 @@ export default function Users() {
   return (
     <LayoutSigned>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
-        <UIDebouncer
-          value={search}
-          setValue={setSearch}
-          icon={<SearchIcon className="h-4 w-4" />}
-        />
         <div className="md:flex md:items-center md:justify-between">
           {filters && (
             <StatsGroup
