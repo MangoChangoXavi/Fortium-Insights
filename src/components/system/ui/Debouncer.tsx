@@ -1,6 +1,6 @@
 import React from "react";
 
-export const UIDebouncer = ({
+export const Debouncer = ({
   value,
   setValue,
   debounceTime = 800,
@@ -34,27 +34,18 @@ export const UIDebouncer = ({
   }, [value]);
 
   return (
-    <div className="mt-4 flex w-[540px] flex-col gap-2">
-      <div className="flex flex-row items-end gap-2">
+    <div className="mt-4 flex w-[400px] flex-col gap-2">
+      <div className="flex flex-row items-center gap-2">
         {icon}
         <input
-          className="input-transparent h-full w-full border-none text-sm  font-medium not-italic leading-[normal] text-[#808080] outline-none"
+          className="input-transparent h-full w-full border-none text-sm  font-medium not-italic leading-[normal] text-white outline-none"
           type="text"
           placeholder={placeholder}
           value={inputValue}
           onChange={handleInputChange}
         />
       </div>
-      <hr className="w-full border-zinc-400 bg-zinc-400" />
+      <hr className="w-full border-white bg-white" />
     </div>
-    // <Input
-    //   label="Buscar"
-    //   name="value"
-    //   color="primary"
-    //   placeholder={placeholder}
-    //   type="text"
-    //   value={inputValue}
-    //   onChange={handleInputChange}
-    // />
   );
 };

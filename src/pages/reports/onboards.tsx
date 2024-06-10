@@ -6,7 +6,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
-import { UIDebouncer } from "~/components/system/ui/UIDebouncer";
+import { UIDebouncer } from "~/components/system/ui/Debouncer";
 import { SearchIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import { CategoryIcon } from "~/components/system/ui/Icons";

@@ -1,8 +1,12 @@
 import { MousePointerSquare, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import { set } from "zod";
 import LogoSvg from "~/assets/svg/logo.svg";
+import { Loader } from "~/components/system/layouts/Loader";
+import { Debouncer } from "~/components/system/ui/Debouncer";
 export const Topbar = ({
   profileImgUrl,
   handleClickSignOut,
@@ -14,6 +18,24 @@ export const Topbar = ({
    * Represents the state of hover options in the topbar.
    */
   const [hoverOptions, setHoverOptions] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  // whenever searchValue change we should go to /search/[searchValue]
+  const router = useRouter();
+  React.useEffect(() => {
+    const makeSearch = async () => {
+      if (searchValue) {
+        setLoading(true);
+        // go to search page
+        await router.push(`/search/${encodeURI(searchValue)}`);
+        setSearchValue("");
+        setLoading(false);
+      }
+    };
+    void makeSearch();
+  }, [router, searchValue]);
+
   return (
     <div onMouseLeave={() => setHoverOptions(false)}>
       {/* topbar */}
@@ -39,14 +61,18 @@ export const Topbar = ({
           >
             Options
           </MousePointerSquare>
-          <div className="relative h-[26px] w-[400px]">
-            <input
-              className="absolute left-[24px] top-0  w-[148px] border-none bg-transparent text-sm font-medium text-white outline-none"
+          {loading ? (
+            <Loader />
+          ) : (
+            <Debouncer
+              value={searchValue}
+              setValue={setSearchValue}
               placeholder="Search"
+              icon={
+                <SearchIcon className="h-[12px] w-[12px] stroke-gray-200" />
+              }
             />
-            <div className="absolute left-0 top-[26px] h-px w-[400px] bg-white" />
-            <SearchIcon className="absolute left-[2px] top-[4px] h-[12px] w-[12px] stroke-gray-200" />
-          </div>
+          )}
         </div>
         {/* right items */}
         <div className="absolute bottom-0 right-[32px] top-0 my-auto flex items-center gap-2">
