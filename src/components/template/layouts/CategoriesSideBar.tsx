@@ -64,14 +64,16 @@ export const CategoriesSideBar = () => {
             label="Show all"
           />
           {/* rest of options */}
-          {categoriesToDisplay.map((category, index) => (
-            <RadioButton
-              key={index}
-              checked={categoryId === index + 1}
-              handleChange={() => setCategoryId(index + 1)}
-              label={category.name}
-            />
-          ))}
+          {categoriesToDisplay
+            .sort((a, b) => String(a.name).localeCompare(b.name))
+            .map((category, index) => (
+              <RadioButton
+                key={index}
+                checked={categoryId === index + 1}
+                handleChange={() => setCategoryId(index + 1)}
+                label={category.name}
+              />
+            ))}
           {/* see more button */}
           <Button
             onClick={() => setIsExpanded((prev) => !prev)}

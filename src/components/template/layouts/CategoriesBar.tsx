@@ -25,24 +25,26 @@ export const CategoriesBar = () => {
             <Loader />
           </div>
         ) : (
-          categories.map((category, index) => (
-            <button
-              onClick={() => handleCategoryClick(index)}
-              key={index}
-              className="group inline-flex cursor-pointer  flex-col items-center justify-start gap-4"
-            >
-              <Image
-                alt="category"
-                className="h-[100px] w-[100px] rounded-full transition duration-150 ease-in-out group-hover:scale-110"
-                src={category.imageUrl}
-                width={100}
-                height={100}
-              />
-              <div className="font-['Noto Sans JP'] text-base font-medium text-blue-950 transition duration-150 ease-in-out group-hover:scale-110">
-                {category.name}
-              </div>
-            </button>
-          ))
+          categories
+            .sort((a, b) => String(a.name).localeCompare(b.name))
+            .map((category, index) => (
+              <button
+                onClick={() => handleCategoryClick(index + 1)}
+                key={index}
+                className="group inline-flex cursor-pointer  flex-col items-center justify-start gap-4"
+              >
+                <Image
+                  alt="category"
+                  className="h-[100px] w-[100px] rounded-full transition duration-150 ease-in-out group-hover:scale-110"
+                  src={category.imageUrl}
+                  width={100}
+                  height={100}
+                />
+                <div className="font-['Noto Sans JP'] text-base font-medium text-blue-950 transition duration-150 ease-in-out group-hover:scale-110">
+                  {category.name}
+                </div>
+              </button>
+            ))
         )}
       </div>
       <ScrollBar orientation="horizontal" />
