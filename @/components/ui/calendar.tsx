@@ -70,7 +70,7 @@ function Calendar({
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-bold text-base aria-selected:opacity-100 hover:text-primary-500 hover:bg-primary-200 font-sans-css text-[#2C2C2C]",
+          "h-9 w-9 p-0 font-bold text-base aria-selected:opacity-100 hover:text-blue-950 hover:bg-primary-200 font-sans-css text-[#2C2C2C]",
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",

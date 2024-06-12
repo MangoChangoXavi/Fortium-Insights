@@ -87,7 +87,7 @@ export const Sidebar = ({
           <div>
             <div className="flex items-center justify-between py-3 md:block md:py-5">
               <Link href="#" className="">
-                <p className="text-[23px] font-normal not-italic leading-[normal] text-primary-500">
+                <p className="text-[23px] font-normal not-italic leading-[normal] text-blue-950">
                   {companyName}
                 </p>
               </Link>
@@ -97,7 +97,7 @@ export const Sidebar = ({
                   className="rounded-md p-2  outline-none focus:font-bold"
                   onClick={() => setOpen(!open)}
                 >
-                  <MenuIcon className="h-5 w-5 stroke-primary-500 hover:stroke-secondary-500" />
+                  <MenuIcon className="h-5 w-5 stroke-blue-950 hover:stroke-secondary-500" />
                 </button>
               </div>
             </div>
@@ -110,7 +110,7 @@ export const Sidebar = ({
                     <Link
                       key={index}
                       href={item.link}
-                      className="animate-fade-down text-darkGray animate-delay-100 animate-duration-1000 animate-ease-in-out flex w-full  transform flex-row items-center space-x-3  rounded-full duration-300 ease-in-out hover:ml-4 hover:text-primary-500 "
+                      className="animate-fade-down text-darkGray animate-delay-100 animate-duration-1000 animate-ease-in-out flex w-full  transform flex-row items-center space-x-3  rounded-full duration-300 ease-in-out hover:ml-4 hover:text-blue-950 "
                     >
                       {item.icon}
                       <div>{item.name}</div>
@@ -132,12 +132,12 @@ export const Sidebar = ({
             open ? "justify-between" : "justify-center"
           } gap-2  transition duration-500 ease-in-out`}
         >
-          {/* {!open ? <LogoIcon className="h-6 w-6 stroke-primary-500" /> : null} */}
-          <p className="w-fit p-2 text-[23px] font-normal not-italic leading-[normal] text-primary-500">
+          {/* {!open ? <LogoIcon className="h-6 w-6 stroke-blue-950" /> : null} */}
+          <p className="w-fit p-2 text-[23px] font-normal not-italic leading-[normal] text-blue-950">
             {companyName}
           </p>
           {open ? (
-            <LogoIcon className="mr-2 h-8 w-8  stroke-primary-500 " />
+            <LogoIcon className="mr-2 h-8 w-8  stroke-blue-950 " />
           ) : null}
         </button>
         <div
@@ -159,7 +159,7 @@ export const Sidebar = ({
                   <Link
                     key={index}
                     href={item.link}
-                    className="flex w-full transform flex-row items-center gap-[8px] text-[#2C2C2C] duration-300 ease-in-out  hover:text-primary-500"
+                    className="flex w-full transform flex-row items-center gap-[8px] text-[#2C2C2C] duration-300 ease-in-out  hover:text-blue-950"
                   >
                     {item.icon}
                     <div className="w-[100px]">{item.name}</div>
@@ -195,7 +195,7 @@ export const Sidebar = ({
               {userName}
             </p>
             <button>
-              <MenuIcon className="stroke-darkGray ml-2 h-6 w-6 hover:stroke-primary-500" />
+              <MenuIcon className="stroke-darkGray ml-2 h-6 w-6 hover:stroke-blue-950" />
             </button>
           </div>
         </div>
@@ -210,7 +210,7 @@ export const Sidebar = ({
               href={"/dashboard"}
               className="text-darkGray mt-4 flex w-full transform justify-end px-3 duration-300 ease-in-out "
             >
-              <DashboardIcon className="fill-darkGray stroke-darkGray  h-5 w-5  hover:fill-primary-500 hover:stroke-primary-500" />
+              <DashboardIcon className="fill-darkGray stroke-darkGray  h-5 w-5  hover:fill-blue-950 hover:stroke-blue-950" />
             </Link>
             {items.map((item, index) => {
               if (hasPermissions(item.permissions)) {
@@ -218,7 +218,7 @@ export const Sidebar = ({
                   <Link
                     key={index}
                     href={item.link}
-                    className="text-darkGray flex w-full transform justify-end px-3 duration-300  ease-in-out  hover:text-primary-500"
+                    className="text-darkGray flex w-full transform justify-end px-3 duration-300  ease-in-out  hover:text-blue-950"
                   >
                     {item.icon}
                   </Link>

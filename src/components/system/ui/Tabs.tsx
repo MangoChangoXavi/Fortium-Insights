@@ -19,7 +19,7 @@ export const Tabs = ({ tabs }: PropsI) => {
           key={`${index}${item.label}`}
           className={`flex flex-row gap-[8px] p-2 ${
             item.label === selectedTab?.label
-              ? "rounded-lg border border-solid border-primary-500 bg-primary-100"
+              ? "rounded-lg border border-solid border-blue-950 bg-primary-100"
               : ""
           }`}
         >

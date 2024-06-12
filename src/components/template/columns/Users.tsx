@@ -85,8 +85,8 @@ export const columns: ColumnDef<user>[] = [
               className={`h-[4px] w-[4px] rounded-full ${
                 {
                   disabled: "bg-red-500",
-                  admin: "bg-emerald-500",
-                  user: "bg-blue-950",
+                  admin: "bg-yellow-500",
+                  user: "bg-emerald-500",
                 }[user.userRole ? user.userRole : "user"]
               }`}
             ></div>

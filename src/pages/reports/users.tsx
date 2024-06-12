@@ -6,7 +6,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
-import { StarIcon, SearchIcon } from "lucide-react";
+import { StarIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import {
   CategoryIcon,
@@ -15,6 +15,7 @@ import {
 } from "~/components/system/ui/Icons";
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
 import { columns } from "~/components/template/columns/Users";
+import { Loader } from "~/components/system/layouts/Loader";
 
 const ITEMS_PER_PAGE = 5;
 export default function Users() {
@@ -85,7 +86,7 @@ export default function Users() {
     },
     {
       label: "Disabled",
-      value: "user",
+      value: "disabled",
       icon: <CancelIcon className="h-6 w-6 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
       total: countData?.find((item) => item.role === "disabled")?.count ?? 0,
       background: "bg-[#dc5c5c]",
@@ -143,7 +144,7 @@ export default function Users() {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            No hay datos...
+            No data...
           </div>
         )}
       </section>

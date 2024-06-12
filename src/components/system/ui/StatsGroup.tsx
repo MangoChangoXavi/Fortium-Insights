@@ -24,7 +24,7 @@ export const StatsGroup = ({
     <div
       className={`flex w-full ${
         isVertical ? "flex-col" : "flex-row"
-      } justify-evenly rounded-xl bg-white p-6`}
+      } border-3 justify-evenly rounded-xl border border-blue-100 p-6`}
     >
       {filters.map((item, index) => (
         <button
@@ -32,7 +32,7 @@ export const StatsGroup = ({
           key={`${index}${item.value}`}
           className={`flex flex-row gap-[8px] p-2 ${
             item.value === filter
-              ? "rounded-lg border border-solid border-primary-500 bg-primary-100"
+              ? "rounded-lg border border-solid border-blue-300 bg-blue-100"
               : ""
           }`}
         >
