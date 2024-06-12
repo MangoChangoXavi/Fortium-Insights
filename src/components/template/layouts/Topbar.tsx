@@ -1,4 +1,4 @@
-import { Copy, MousePointerSquare, SearchIcon } from "lucide-react";
+import { CameraIcon, Copy, MousePointerSquare, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { categories } from "~/lib/categories";
+import CardGradientDetailsSvg from "~/assets/svg/card-gradient-details.svg";
 
 export const Topbar = ({
   profileImgUrl,
@@ -190,6 +191,34 @@ export const Topbar = ({
                             <Label>Company Details and Contact</Label>
                             <Textarea placeholder="Description" />
                           </div>
+                        </div>
+                      </div>
+                      <div className="grid w-full grid-cols-1 gap-8">
+                        <div className="relative h-36 w-full">
+                          <Image
+                            src="https://via.placeholder.com/264x160"
+                            alt="Company Image"
+                            width={264}
+                            height={160}
+                            className="absolute bottom-0 left-0 right-0 mx-auto rounded"
+                          />
+                          <Image
+                            src={CardGradientDetailsSvg}
+                            alt="Gradient"
+                            className="absolute bottom-0 left-0 right-0 mx-auto rounded-b"
+                            width={264}
+                          />
+                          <button className="group absolute bottom-4 left-0 right-0 mx-auto">
+                            <div className=" flex items-center justify-center gap-2">
+                              <CameraIcon
+                                size={16}
+                                className="text-white  transition duration-150 ease-in-out group-hover:text-blue-200"
+                              />
+                              <span className="font-['Noto Sans JP'] text-sm font-medium text-white transition duration-150 ease-in-out group-hover:text-blue-200 ">
+                                Upload cover
+                              </span>
+                            </div>
+                          </button>
                         </div>
                       </div>
                       <DialogFooter className="sm:justify-end">

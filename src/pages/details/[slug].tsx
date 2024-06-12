@@ -119,13 +119,11 @@ export default function Address(props: PageProps) {
             </button>
           </div>
           {/* body */}
-          <ScrollArea className="h-[20vw] pr-8">
-            <div className="flex flex-col gap-5">
-              {reviews.map((review) => (
-                <Review key={review.name} {...review} />
-              ))}
-            </div>
-          </ScrollArea>
+          <div className="flex flex-col gap-5">
+            {reviews.map((review) => (
+              <Review key={review.name} {...review} />
+            ))}
+          </div>
         </div>
       </section>
     </LayoutSigned>

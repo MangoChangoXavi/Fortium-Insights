@@ -93,9 +93,9 @@ export const columns: ColumnDef<user>[] = [
             <span className="text-xs font-medium  not-italic text-[#2c2c2c]">
               {
                 {
-                  disabled: "Desactivado",
-                  admin: "Administrador",
-                  user: "Usuario",
+                  disabled: "Disabled",
+                  admin: "Admin",
+                  user: "User",
                 }[user.userRole ? user.userRole : "user"]
               }
             </span>
@@ -129,7 +129,7 @@ export const columns: ColumnDef<user>[] = [
                     role = "user";
                   }}
                 >
-                  Usuario
+                  User
                 </DropdownMenuItem>
               </AlertDialogTrigger>
               <AlertDialogTrigger asChild>
@@ -147,22 +147,22 @@ export const columns: ColumnDef<user>[] = [
                     role = "disabled";
                   }}
                 >
-                  Deshabilitar
+                  Disable
                 </DropdownMenuItem>
               </AlertDialogTrigger>
             </DropdownMenuContent>
           </DropdownMenu>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Estas seguro?</AlertDialogTitle>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                Estas a punto de modificar el rol del usuario{" "}
+                You are going to modify <b>{user.userName}</b>{" "}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>No</AlertDialogCancel>
               <AlertDialogAction onClick={handleClickAction}>
-                Si, Adelante
+                Yes, go ahead
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

@@ -75,7 +75,7 @@ export default function Users() {
 
   const filters = [
     {
-      label: "Todas",
+      label: "All",
       value: "",
       icon: (
         <CategoryIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />
@@ -84,21 +84,21 @@ export default function Users() {
       background: "bg-[#9b83d8]",
     },
     {
-      label: "Desactivados",
+      label: "Disabled",
       value: "user",
       icon: <CancelIcon className="h-6 w-6 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
       total: countData?.find((item) => item.role === "disabled")?.count ?? 0,
       background: "bg-[#dc5c5c]",
     },
     {
-      label: "Usuario",
+      label: "Users",
       value: "user",
       icon: <SellIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
       total: countData?.find((item) => item.role === "user")?.count ?? 0,
       background: "bg-[#61dc7d]",
     },
     {
-      label: "Administradores",
+      label: "Admins",
       value: "admin",
       icon: <StarIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
       total: countData?.find((item) => item.role === "admin")?.count ?? 0,
