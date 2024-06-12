@@ -27,17 +27,12 @@ const RadioButton = ({
         onChange={handleChange}
         className="h-2.5 w-2.5 rounded-full border border-zinc-800"
       />
-      <label
-        htmlFor={label}
-        className="font-['Noto Sans JP'] text-sm font-medium text-zinc-800"
-      >
+      <label htmlFor={label} className="text-sm font-medium text-zinc-800">
         {label}
       </label>
     </div>
     <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
-      <div className="font-['Noto Sans JP'] text-[10px] font-normal text-zinc-800">
-        45
-      </div>
+      <div className="text-[10px] font-normal text-zinc-800">45</div>
     </div>
   </div>
 );
@@ -52,9 +47,7 @@ export const CategoriesSideBar = () => {
     <div className="flex flex-col gap-8">
       {/* category section */}
       <div className="flex flex-col gap-6">
-        <div className="font-['Noto Sans JP'] text-base font-bold text-blue-950">
-          Category
-        </div>
+        <div className="text-base font-bold text-blue-950">Category</div>
         {/* categories radio buttons */}
         <div className="flex flex-col gap-2">
           {/* show all option */}
@@ -78,7 +71,7 @@ export const CategoriesSideBar = () => {
           <Button
             onClick={() => setIsExpanded((prev) => !prev)}
             variant={"ghost"}
-            className="font-['Noto Sans JP'] w-full text-sm font-normal text-indigo-400"
+            className="w-full text-sm font-normal text-indigo-400"
           >
             {isExpanded ? "See less" : "See more"}
           </Button>

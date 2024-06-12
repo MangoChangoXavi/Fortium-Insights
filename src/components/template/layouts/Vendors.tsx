@@ -4,10 +4,14 @@ import { Star } from "lucide-react";
 import CardGradientSvg from "~/assets/svg/card-gradient.svg";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { type Vendor, vendors } from "~/lib/vendors";
+import Link from "next/link";
 
 const VendorCard = ({ vendor }: { vendor: Vendor }) => {
   return (
-    <div className="group relative h-[221px] w-[368px] cursor-pointer">
+    <Link
+      href={`details/${vendor.name}`}
+      className="group relative h-[221px] w-[368px] cursor-pointer"
+    >
       <Image
         alt="service image"
         src={vendor.image}
@@ -26,10 +30,10 @@ const VendorCard = ({ vendor }: { vendor: Vendor }) => {
         />
         {/* card text */}
         <div className=" absolute bottom-0 flex cursor-pointer flex-col gap-1 p-3">
-          <div className="font-['Noto Sans JP'] text-base font-medium text-white transition duration-150 ease-in-out group-hover:scale-110">
+          <div className="text-base font-medium text-white transition duration-150 ease-in-out group-hover:scale-110">
             {vendor.name}
           </div>
-          <div className="font-['Noto Sans JP'] w-[119px] text-sm font-normal text-white transition duration-150 ease-in-out group-hover:scale-110">
+          <div className="w-[119px] text-sm font-normal text-white transition duration-150 ease-in-out group-hover:scale-110">
             {vendor.description}
           </div>
         </div>
@@ -40,7 +44,7 @@ const VendorCard = ({ vendor }: { vendor: Vendor }) => {
           ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -53,9 +57,7 @@ const VendorScroll = ({
 }) => {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="font-['Noto Sans JP'] mx-12 text-xl font-bold text-blue-950">
-        {title}
-      </h2>
+      <h2 className="mx-12 text-xl font-bold text-blue-950">{title}</h2>
       <ScrollArea className="w-screen whitespace-nowrap rounded-md px-12">
         <div className="flex w-max space-x-4 pb-6">
           {vendors.map((vendor) => (

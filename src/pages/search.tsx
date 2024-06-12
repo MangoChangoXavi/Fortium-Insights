@@ -8,8 +8,7 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 
 export default function Address() {
-  const { search, setSearch, categoryId, setCategoryId, ranking, setRanking } =
-    useSearchStore();
+  const { search, categoryId, ranking } = useSearchStore();
 
   return (
     <LayoutSigned>
@@ -21,15 +20,13 @@ export default function Address() {
         </div>
         {/* results */}
         <div className="flex w-full flex-col gap-8 pl-8">
-          <h1 className="font-['Noto Sans JP'] flex items-center gap-3 text-base font-bold text-blue-950">
-            <h3>Results for: {search}</h3>
+          <h1 className="flex items-center gap-3 text-base font-bold text-blue-950">
+            <h3>Results</h3>
             <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
-              <div className="font-['Noto Sans JP'] text-[10px] font-normal text-zinc-800">
-                4
-              </div>
+              <div className="text-[10px] font-normal text-zinc-800">4</div>
             </div>
           </h1>
-          <div className=" grid w-full grid-cols-4 items-end justify-start gap-4">
+          <div className=" grid w-full grid-cols-1 items-end justify-start gap-4  md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {vendors.map((vendor) => (
               <div key={vendor.name} className="relative h-[265px] w-[216px]">
                 <div className="absolute left-0 top-0 h-[265px] w-[216px] rounded-2xl border border-slate-300" />
@@ -41,10 +38,10 @@ export default function Address() {
                   height={124}
                 />
                 <div className="absolute left-0 top-[145px] h-[35px] w-[216px]">
-                  <div className="font-['Noto Sans JP'] absolute left-0 top-0 h-[18px] w-[216px] text-center text-sm font-medium text-zinc-800">
+                  <div className="absolute left-0 top-0 h-[18px] w-[216px] text-center text-sm font-medium text-zinc-800">
                     {vendor.name}
                   </div>
-                  <div className="font-['Noto Sans JP'] absolute left-0 top-[20px] h-[15px] w-[216px] text-center text-xs font-normal text-neutral-400">
+                  <div className="absolute left-0 top-[20px] h-[15px] w-[216px] text-center text-xs font-normal text-neutral-400">
                     {vendor.description}
                   </div>
                 </div>

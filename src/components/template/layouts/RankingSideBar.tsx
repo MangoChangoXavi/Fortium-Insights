@@ -31,7 +31,7 @@ const RadioButton = ({
         />
         <label
           htmlFor={label}
-          className="font-['Noto Sans JP'] flex gap-2 text-xs font-normal text-zinc-400"
+          className="flex gap-2 text-xs font-normal text-zinc-400"
         >
           <div className="flex">
             {new Array(numberOfStars).fill(0).map((_, index) => (
@@ -55,9 +55,7 @@ const RadioButton = ({
         </label>
       </div>
       <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
-        <div className="font-['Noto Sans JP'] text-[10px] font-normal text-zinc-800">
-          45
-        </div>
+        <div className="text-[10px] font-normal text-zinc-800">45</div>
       </div>
     </div>
   );
@@ -67,9 +65,7 @@ export const RankingSideBar = () => {
   const { ranking, setRanking } = useSearchStore();
   return (
     <div className="flex flex-col  gap-6">
-      <h2 className="font-['Noto Sans JP'] text-base font-bold text-blue-950">
-        Ranking
-      </h2>
+      <h2 className="text-base font-bold text-blue-950">Ranking</h2>
       {/* rankings */}
       <div className="flex flex-col gap-3">
         <RadioButton
