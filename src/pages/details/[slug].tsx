@@ -70,7 +70,7 @@ export default function Address(props: PageProps) {
               </h2>
             </div>
             <ScrollArea>
-              <p className="w-[683px] text-base font-semibold text-[#2C2C2C]">
+              <p className="max-w-[800px] text-base font-semibold text-[#2C2C2C]">
                 We strongly believe that our people and our culture are our
                 competitive differentiators. Passionate technologists and
                 passion to build an extraordinary team with an extraordinary

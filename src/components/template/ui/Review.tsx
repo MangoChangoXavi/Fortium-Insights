@@ -70,7 +70,11 @@ export const Review = ({
         {/* rank */}
         <div className="inline-flex items-center justify-end gap-1">
           {new Array(rank).fill(0).map((_, i) => (
-            <Star key={i} size={16} className="fill-blue-950 stroke-blue-950" />
+            <Star
+              key={i}
+              size={16}
+              className="fill-yellow-500/80 stroke-yellow-500/80"
+            />
           ))}
         </div>
       </div>

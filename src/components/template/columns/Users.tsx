@@ -38,7 +38,7 @@ export type user = {
 export const columns: ColumnDef<user>[] = [
   {
     accessorKey: "userName",
-    header: "Usuario",
+    header: "Name",
     cell: ({ row }) => {
       const user = row.original;
       return (
@@ -67,7 +67,7 @@ export const columns: ColumnDef<user>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: "Fecha de Creacion",
+    header: "Created Date",
     cell: ({ row }) => {
       const user = row.original;
       return user.createdAt.toLocaleString();
@@ -75,7 +75,7 @@ export const columns: ColumnDef<user>[] = [
   },
   {
     accessorKey: "userRole",
-    header: "Rol",
+    header: "Role",
     cell: ({ row }) => {
       const user = row.original;
       return (
@@ -106,7 +106,7 @@ export const columns: ColumnDef<user>[] = [
   },
   {
     id: "actions",
-    header: "Acciones",
+    header: "Actions",
     cell: ({ row }) => {
       const user = row.original;
       let role = "salesperson";

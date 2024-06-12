@@ -113,6 +113,12 @@ export const Topbar = ({
                 >
                   Users administration
                 </Link>
+                <Link
+                  href={"/search"}
+                  className="text-base font-normal text-white hover:underline"
+                >
+                  Search
+                </Link>
               </div>
             </div>
             <div className="inline-flex flex-col items-start justify-start gap-4">
