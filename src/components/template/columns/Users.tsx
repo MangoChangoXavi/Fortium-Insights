@@ -86,7 +86,7 @@ export const columns: ColumnDef<user>[] = [
                 {
                   disabled: "bg-red-500",
                   admin: "bg-emerald-500",
-                  user: "bg-primary-500",
+                  user: "bg-blue-950",
                 }[user.userRole ? user.userRole : "user"]
               }`}
             ></div>

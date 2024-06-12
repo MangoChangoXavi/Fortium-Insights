@@ -1,4 +1,4 @@
-import { MousePointerSquare, SearchIcon } from "lucide-react";
+import { Copy, MousePointerSquare, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,6 +7,30 @@ import LogoSvg from "~/assets/svg/logo.svg";
 import { Loader } from "~/components/system/layouts/Loader";
 import { Debouncer } from "~/components/system/ui/Debouncer";
 import { useSearchStore } from "~/stores/useSearchStore";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { categories } from "~/lib/categories";
+
 export const Topbar = ({
   profileImgUrl,
   handleClickSignOut,
@@ -124,9 +148,71 @@ export const Topbar = ({
             <div className="inline-flex flex-col items-start justify-start gap-4">
               <div className="text-[17px] font-bold text-white">Actions</div>
               <div className="flex flex-col items-start justify-start gap-2">
-                <button className="text-base font-normal text-white hover:underline">
-                  Add new vendor{" "}
-                </button>
+                <Dialog>
+                  <DialogTrigger>
+                    <button className="text-base font-normal text-white hover:underline">
+                      Add new vendor{" "}
+                    </button>
+                  </DialogTrigger>
+                  <DialogPortal>
+                    <DialogContent className="sm:max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>Add new vendor</DialogTitle>
+                      </DialogHeader>
+                      <div className="mb-8 mt-2 flex w-full flex-col gap-6">
+                        <hr className="bg-[#e1e1e1]" />
+                        <div className="grid w-full grid-cols-2 gap-8">
+                          <div className="flex flex-col gap-3">
+                            <Label>Company Name</Label>
+                            <Input placeholder="Vendor" />
+                          </div>
+                          <div className="flex  flex-col gap-3">
+                            <Label>Category</Label>
+                            <Select>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a category" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {categories.map((category) => (
+                                  <SelectItem
+                                    key={category.name}
+                                    value={category.name}
+                                  >
+                                    {category.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                        <div className="grid w-full grid-cols-1 gap-8">
+                          <div className="flex flex-col gap-3">
+                            <Label>Company Details and Contact</Label>
+                            <Textarea placeholder="Description" />
+                          </div>
+                        </div>
+                      </div>
+                      <DialogFooter className="sm:justify-end">
+                        <DialogClose asChild>
+                          <Button
+                            type="button"
+                            variant="default"
+                            className="!rounded-full  !px-8"
+                          >
+                            Close
+                          </Button>
+                        </DialogClose>
+                        <Button
+                          type="button"
+                          variant="primary"
+                          className="!rounded-full !px-8"
+                        >
+                          Save
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </DialogPortal>
+                </Dialog>
                 <button
                   onClick={handleClickSignOut}
                   className="text-base font-normal text-white hover:underline"
