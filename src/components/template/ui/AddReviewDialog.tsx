@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Star, PlusSquareIcon } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const DialogReview = ({
   selectedRanking,
@@ -24,7 +25,7 @@ const DialogReview = ({
   setSelectedRanking: (value: number) => void;
 }) => {
   return (
-    <>
+    <ScrollArea className="max-h-96">
       <div className="mb-8 mt-2 flex w-full flex-col gap-6">
         <hr className="bg-[#e1e1e1]" />
         <div className="grid w-full grid-cols-2 gap-8">
@@ -57,7 +58,7 @@ const DialogReview = ({
           </div>
         </div>
       </div>
-    </>
+    </ScrollArea>
   );
 };
 
@@ -82,7 +83,7 @@ export const AddReviewDialog = () => {
             selectedRanking={selectedRanking}
             setSelectedRanking={setSelectedRanking}
           />
-          <DialogFooter className="sm:justify-end">
+          <DialogFooter className="gap-2 sm:justify-end">
             <DialogClose asChild>
               <Button
                 type="button"
