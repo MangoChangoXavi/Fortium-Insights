@@ -70,12 +70,12 @@ function Calendar({
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-bold text-base aria-selected:opacity-100 hover:text-blue-950 hover:bg-primary-200 font-sans-css text-[#2C2C2C]",
+          "h-9 w-9 p-0 font-bold text-base aria-selected:opacity-100 hover:text-[#093061] hover:bg-primary-200 font-sans-css text-[#2C2C2C]",
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
         day_selected:
-          "bg-blue-950 text-white hover:bg-primary-600 hover:text-white focus:bg-primary focus:text-primary-foreground",
+          "bg-[#093061] text-white hover:bg-primary-600 hover:text-white focus:bg-primary focus:text-primary-foreground",
         day_today: "bg-secondary-200 text-accent-foreground",
         day_outside: "text-muted-foreground opacity-50",
         day_disabled: "text-muted-foreground opacity-50",

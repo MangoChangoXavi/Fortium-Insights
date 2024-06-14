@@ -122,7 +122,7 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute right-0">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-5 w-5 stroke-blue-950" />
+        <Check className="h-5 w-5 stroke-[#093061]" />
       </SelectPrimitive.ItemIndicator>
     </span>
 

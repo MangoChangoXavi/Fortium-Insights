@@ -78,8 +78,10 @@ const DialogReview = ({
                 <button key={i} onClick={() => setSelectedRanking(i + 1)}>
                   <Star
                     size={24}
-                    className={`stroke-blue-950 hover:stroke-blue-700 ${
-                      i < selectedRanking ? "fill-blue-950" : "fill-transparent"
+                    className={`stroke-[#093061] hover:stroke-blue-700 ${
+                      i < selectedRanking
+                        ? "fill-[#093061]"
+                        : "fill-transparent"
                     }`}
                   />
                 </button>
@@ -111,13 +113,13 @@ export default function Dashboard(props: PageProps) {
             {/* title and category */}
             <div className="flex flex-col gap-2">
               <div className="flex gap-2">
-                <h1 className="text-lg font-bold text-blue-950">
+                <h1 className="text-lg font-bold text-[#093061]">
                   Mango Chango
                 </h1>
                 <button>
                   <EditIcon
                     size={16}
-                    className="stroke-blue-950 hover:stroke-blue-700"
+                    className="stroke-[#093061] hover:stroke-blue-700"
                   />
                 </button>
               </div>
@@ -166,13 +168,13 @@ export default function Dashboard(props: PageProps) {
         <div className="flex flex-col gap-6">
           {/* title */}
           <div className="flex gap-2">
-            <h2 className="text-xl font-bold text-blue-950">Reviews</h2>
+            <h2 className="text-xl font-bold text-[#093061]">Reviews</h2>
             <Dialog>
               <DialogTrigger>
                 <button>
                   <PlusSquareIcon
                     size={18}
-                    className="stroke-blue-950 hover:stroke-blue-700"
+                    className="stroke-[#093061] hover:stroke-blue-700"
                   />
                 </button>
               </DialogTrigger>

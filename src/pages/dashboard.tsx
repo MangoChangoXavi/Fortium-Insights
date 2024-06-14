@@ -20,7 +20,7 @@ const VendorCard = ({
 }) => {
   return (
     <div className="relative flex h-fit w-full flex-col items-center gap-6 rounded-2xl border border-slate-300 pb-6">
-      <div className="relative h-40 w-full">
+      <div className="relative h-44 w-full">
         <Image
           className="rounded-tl-lg rounded-tr-lg"
           src={image}
@@ -37,19 +37,19 @@ const VendorCard = ({
           {description}
         </div>
       </div>
-      <div className="flex w-full items-center justify-center">
+      <div className="flex w-full items-center justify-center px-6">
         <Link
           href={`/details/${name}`}
-          className=" rounded-2xl bg-blue-950 p-3 px-4 text-xs font-medium text-white shadow transition duration-150 ease-in-out hover:-translate-y-2"
+          className="w-full rounded-2xl bg-[#093061] p-3 px-4 text-center text-xs font-medium text-white shadow transition duration-150 ease-in-out hover:-translate-y-2"
         >
           See Details
         </Link>
       </div>
       <div className="absolute right-[16px] top-[16px] flex items-center justify-center gap-[5px] rounded-2xl bg-white p-[5px]">
-        <span className="inline-flex text-xs font-normal text-blue-950">
+        <span className="inline-flex text-xs font-normal text-[#093061]">
           {rating} stars
         </span>
-        <Star size={12} className="fill-white stroke-blue-950" />
+        <Star size={12} className="fill-white stroke-[#093061]" />
       </div>
     </div>
   );
@@ -68,7 +68,7 @@ export default function Dashboard() {
         </div>
         {/* results */}
         <div className="flex w-full flex-col gap-8 pl-8">
-          <h1 className="flex items-center gap-3 text-base font-bold text-blue-950">
+          <h1 className="flex items-center gap-3 text-base font-bold text-[#093061]">
             <h3>Results</h3>
             <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
               <div className="text-[10px] font-normal text-zinc-800">4</div>

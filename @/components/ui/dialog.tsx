@@ -45,7 +45,7 @@ const DialogContent = React.forwardRef<
     >
       {children}
       <DialogPrimitive.Close className="absolute right-4 top-4  opacity-80 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-        <XCircleIcon className="h-8 w-8 fill-blue-950 stroke-white" />
+        <XCircleIcon className="h-8 w-8 fill-[#093061] stroke-white" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
@@ -88,7 +88,7 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      " text-2xl font-bold leading-none tracking-tight text-blue-950",
+      " text-2xl font-bold leading-none tracking-tight text-[#093061]",
       className,
     )}
     {...props}

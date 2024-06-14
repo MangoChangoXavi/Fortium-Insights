@@ -6,7 +6,7 @@ export const PageNotFound = () => {
       <section className="dark:bg-tertiary-900 h-[100vh] w-full bg-white">
         <div className="flex h-full items-center justify-center px-4 py-8 lg:px-6 lg:py-16">
           <div className="text-center">
-            <h1 className="mb-4 text-7xl font-extrabold tracking-tight text-primary-600 lg:text-9xl dark:text-blue-950">
+            <h1 className="mb-4 text-7xl font-extrabold tracking-tight text-primary-600 lg:text-9xl dark:text-[#093061]">
               404
             </h1>
             <p className="text-tertiary-900 mb-4 text-3xl font-bold tracking-tight md:text-4xl dark:text-white">

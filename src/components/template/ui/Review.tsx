@@ -45,7 +45,7 @@ export const Review = ({
             <button onClick={onEdit}>
               <EditIcon
                 size={18}
-                className="stroke-blue-950 hover:stroke-blue-700"
+                className="stroke-[#093061] hover:stroke-blue-700"
               />
             </button>
           )}
@@ -64,7 +64,7 @@ export const Review = ({
       {/* date and rank */}
       <div className="flex flex-col gap-1">
         {/* date */}
-        <span className="text-right text-sm font-normal text-blue-950">
+        <span className="text-right text-sm font-normal text-[#093061]">
           {date}
         </span>
         {/* rank */}

@@ -17,7 +17,7 @@ const RadioButton = ({
     <div className="flex w-full items-center justify-between">
       <div
         className={`flex cursor-pointer items-center gap-2 ${
-          checked ? "text-blue-950" : "text-slate-950"
+          checked ? "text-[#093061]" : "text-slate-950"
         }`}
         onClick={handleChange}
       >
@@ -65,7 +65,7 @@ export const RankingSideBar = () => {
   const { ranking, setRanking } = useSearchStore();
   return (
     <div className="flex flex-col  gap-6">
-      <h2 className="text-base font-bold text-blue-950">Ranking</h2>
+      <h2 className="text-base font-bold text-[#093061]">Ranking</h2>
       {/* rankings */}
       <div className="flex flex-col gap-3">
         <RadioButton

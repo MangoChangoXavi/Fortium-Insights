@@ -2,7 +2,7 @@ import React from "react";
 
 export const Footer = ({ isLarge = false }: { isLarge?: boolean }) => {
   return (
-    <div className="h-fit w-full bg-blue-950 p-8">
+    <div className="h-fit w-full bg-[#093061] p-8">
       <span className="text-base font-bold text-neutral-300">
         Elevate Your Decision-Making w ith Trusted Recommendations From Your Own
         Partners

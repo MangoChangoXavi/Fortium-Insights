@@ -15,7 +15,7 @@ const RadioButton = ({
   <div className="flex w-full items-center justify-between">
     <div
       className={`flex cursor-pointer items-center gap-2 ${
-        checked ? "text-blue-950" : "text-slate-950"
+        checked ? "text-[#093061]" : "text-slate-950"
       }`}
       onClick={handleChange}
     >
@@ -47,7 +47,7 @@ export const CategoriesSideBar = () => {
     <div className="flex flex-col gap-8">
       {/* category section */}
       <div className="flex flex-col gap-6">
-        <div className="text-base font-bold text-blue-950">Category</div>
+        <div className="text-base font-bold text-[#093061]">Category</div>
         {/* categories radio buttons */}
         <div className="flex flex-col gap-2">
           {/* show all option */}

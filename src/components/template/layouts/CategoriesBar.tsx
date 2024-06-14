@@ -40,7 +40,7 @@ export const CategoriesBar = () => {
                   width={100}
                   height={100}
                 />
-                <div className="text-base font-medium text-blue-950 transition duration-150 ease-in-out group-hover:scale-110">
+                <div className="text-base font-medium text-[#093061] transition duration-150 ease-in-out group-hover:scale-110">
                   {category.name}
                 </div>
               </button>

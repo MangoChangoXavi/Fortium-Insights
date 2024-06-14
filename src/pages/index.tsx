@@ -19,7 +19,7 @@ const HeroCTA = ({ handleClick }: { handleClick: () => void }) => {
       <div className="flex flex-col items-center justify-center gap-4">
         <Image className="h-[59px] w-[203px]" src={LogoSvg} alt="logo" />
         <div className="flex flex-col items-center justify-center gap-3">
-          <h1 className="w-[527px] text-center text-[25px] font-bold text-blue-950">
+          <h1 className="w-[527px] text-center text-[25px] font-bold text-[#093061]">
             Get real time recommendations from others experts in Fortium
           </h1>
           <button

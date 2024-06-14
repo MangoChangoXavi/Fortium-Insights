@@ -111,7 +111,7 @@ const AlertDialogAction = React.forwardRef<
     className={cn(
       buttonVariants(),
       className,
-      "font-sans-css bg-blue-950 text-white",
+      "font-sans-css bg-[#093061] text-white",
     )}
     {...props}
   />

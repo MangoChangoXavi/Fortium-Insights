@@ -31,7 +31,7 @@ export default function MapSelect({
         placeholder: "Dirección, Barrio, Ciudad, etc.",
         className:
           className ??
-          "border-blue-950 outline-3 outline-primary-200 w-full rounded-lg border text-base font-semibold not-italic leading-[normal] text-black outline  ring-offset-background  file:border-0  file:bg-transparent file:text-sm  file:font-medium placeholder:font-medium placeholder:italic placeholder:leading-normal placeholder:text-[#808080] placeholder:text-muted-foreground  focus-visible:ring-2  focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          "border-[#093061] outline-3 outline-primary-200 w-full rounded-lg border text-base font-semibold not-italic leading-[normal] text-black outline  ring-offset-background  file:border-0  file:bg-transparent file:text-sm  file:font-medium placeholder:font-medium placeholder:italic placeholder:leading-normal placeholder:text-[#808080] placeholder:text-muted-foreground  focus-visible:ring-2  focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
       }}
     />
   );

@@ -57,7 +57,7 @@ const VendorScroll = ({
 }) => {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="mx-12 text-xl font-bold text-blue-950">{title}</h2>
+      <h2 className="mx-12 text-xl font-bold text-[#093061]">{title}</h2>
       <ScrollArea className="w-screen whitespace-nowrap rounded-md px-12">
         <div className="flex w-max space-x-4 pb-6">
           {vendors.map((vendor) => (
