@@ -60,14 +60,14 @@ export default function Dashboard() {
 
   return (
     <LayoutSigned>
-      <section className="flex gap-8 divide-x-2 p-8">
+      <section className="flex flex-col gap-8 p-4 lg:flex-row lg:divide-x-2 lg:p-8">
         {/* sidebar */}
-        <div className="flex w-1/4 flex-col gap-8 border-slate-700">
+        <div className="flex flex-col gap-8 border-slate-700 lg:w-1/4">
           <RankingSideBar />
           <CategoriesSideBar />
         </div>
         {/* results */}
-        <div className="flex w-full flex-col gap-8 pl-8">
+        <div className="flex w-full flex-col gap-8 lg:pl-8">
           <h1 className="flex items-center gap-3 text-base font-bold text-[#093061]">
             <h3>Results</h3>
             <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
