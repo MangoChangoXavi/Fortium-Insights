@@ -6,7 +6,7 @@ import { createTRPCContext } from "~/server/api/trpc";
 
 //All trpc functions can be run max for 200 seconds
 export const config = {
-  maxDuration: 200,
+  maxDuration: 60,
 };
 
 // export API handler
