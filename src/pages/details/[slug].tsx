@@ -55,6 +55,48 @@ const reviews = [
   },
 ];
 
+const DialogReview = ({
+  selectedRanking,
+  setSelectedRanking,
+}: {
+  selectedRanking: number;
+  setSelectedRanking: (value: number) => void;
+}) => {
+  return (
+    <>
+      <div className="mb-8 mt-2 flex w-full flex-col gap-6">
+        <hr className="bg-[#e1e1e1]" />
+        <div className="grid w-full grid-cols-2 gap-8">
+          <div className="flex flex-col gap-3">
+            <Label>Title</Label>
+            <Input />
+          </div>
+          <div className="flex flex-col gap-3">
+            <Label>Rank</Label>
+            <div className="flex gap-1">
+              {new Array(5).fill(0).map((_, i) => (
+                <button key={i} onClick={() => setSelectedRanking(i + 1)}>
+                  <Star
+                    size={24}
+                    className={`stroke-blue-950 hover:stroke-blue-700 ${
+                      i < selectedRanking ? "fill-blue-950" : "fill-transparent"
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="grid w-full grid-cols-1 gap-8">
+          <div className="flex flex-col gap-3">
+            <Label>Description</Label>
+            <Textarea />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
   const [selectedRanking, setSelectedRanking] = useState(0);
@@ -139,41 +181,10 @@ export default function Dashboard(props: PageProps) {
                   <DialogHeader>
                     <DialogTitle>Add a review</DialogTitle>
                   </DialogHeader>
-                  <div className="mb-8 mt-2 flex w-full flex-col gap-6">
-                    <hr className="bg-[#e1e1e1]" />
-                    <div className="grid w-full grid-cols-2 gap-8">
-                      <div className="flex flex-col gap-3">
-                        <Label>Title</Label>
-                        <Input />
-                      </div>
-                      <div className="flex flex-col gap-3">
-                        <Label>Rank</Label>
-                        <div className="flex gap-1">
-                          {new Array(5).fill(0).map((_, i) => (
-                            <button
-                              key={i}
-                              onClick={() => setSelectedRanking(i + 1)}
-                            >
-                              <Star
-                                size={24}
-                                className={`stroke-blue-950 hover:stroke-blue-700 ${
-                                  i < selectedRanking
-                                    ? "fill-blue-950"
-                                    : "fill-transparent"
-                                }`}
-                              />
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="grid w-full grid-cols-1 gap-8">
-                      <div className="flex flex-col gap-3">
-                        <Label>Description</Label>
-                        <Textarea />
-                      </div>
-                    </div>
-                  </div>
+                  <DialogReview
+                    selectedRanking={selectedRanking}
+                    setSelectedRanking={setSelectedRanking}
+                  />
                   <DialogFooter className="sm:justify-end">
                     <DialogClose asChild>
                       <Button
