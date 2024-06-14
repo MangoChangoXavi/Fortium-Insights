@@ -74,6 +74,7 @@ const DialogBody = () => {
         </div>
       </div>
       <div className="grid w-full grid-cols-1 gap-8">
+        <Label>Cover Image</Label>
         <div className="relative h-36 w-full">
           <Image
             src="https://via.placeholder.com/264x160"
