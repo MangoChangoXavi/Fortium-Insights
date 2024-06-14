@@ -46,7 +46,7 @@ type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
   return (
     <LayoutSigned>
-      <section className="flex flex-col gap-10 p-4 md:p-8">
+      <section className="mb-8 flex flex-col gap-10 p-4 md:p-8">
         {/* company details */}
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           {/* company description */}
@@ -93,14 +93,14 @@ export default function Dashboard(props: PageProps) {
         {/* separator */}
         <div className="h-[0px] w-full border border-neutral-200"></div>
         {/* reviews */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-8">
           {/* title */}
           <div className="flex gap-2">
             <h2 className="text-xl font-bold text-[#093061]">Reviews</h2>
             <AddReviewDialog />
           </div>
           {/* body */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-8">
             {reviews.map((review) => (
               <Review key={review.name} {...review} />
             ))}

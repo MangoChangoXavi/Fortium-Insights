@@ -22,9 +22,9 @@ export const Review = ({
   return (
     <div className="flex justify-between">
       {/* user and review */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3">
         {/* user */}
-        <div className="flex gap-4">
+        <div className="flex gap-3">
           {/* image */}
           <Image
             alt="User Image"
