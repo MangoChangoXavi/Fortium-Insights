@@ -24,8 +24,10 @@ import { categories } from "~/lib/categories";
 import CardGradientDetailsSvg from "~/assets/svg/card-gradient-details.svg";
 import { CameraIcon } from "lucide-react";
 import Image from "next/image";
+import { Switch } from "@/components/ui/switch";
 
 export const AddVendorDialog = () => {
+  const [isNewCategory, setIsNewCategory] = React.useState(false);
   return (
     <Dialog>
       <DialogTrigger>
@@ -40,25 +42,37 @@ export const AddVendorDialog = () => {
           </DialogHeader>
           <div className="mb-8 mt-2 flex w-full flex-col gap-6">
             <hr className="bg-[#e1e1e1]" />
-            <div className="grid w-full grid-cols-2 gap-8">
-              <div className="flex flex-col gap-3">
-                <Label>Company Name</Label>
-                <Input placeholder="Vendor" />
+            <div className="grid w-full grid-cols-3 gap-8">
+              <div className="col-span-1 flex flex-col gap-3">
+                <Label>Is new category?</Label>
+                <Switch onClick={() => setIsNewCategory((prev) => !prev)} />
               </div>
-              <div className="flex  flex-col gap-3">
+              <div className="col-span-2 flex flex-col gap-3">
                 <Label>Category</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category.name} value={category.name}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                {isNewCategory ? (
+                  <Input placeholder="Write category name" />
+                ) : (
+                  <>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem key={category.name} value={category.name}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="grid w-full grid-cols-1 gap-8">
+              <div className="flex flex-col gap-3">
+                <Label>Company Name?</Label>
+                <Input placeholder="Vendor name" />
               </div>
             </div>
             <div className="grid w-full grid-cols-1 gap-8">

@@ -19,28 +19,32 @@ const VendorCard = ({
   rating: number;
 }) => {
   return (
-    <div className="relative flex w-full flex-col items-center gap-8 rounded-2xl border border-slate-300 pb-4">
-      <Image
-        className=" h-[150px] w-full rounded-tl-lg rounded-tr-lg"
-        src={image}
-        alt="Vendor Image"
-        width={216}
-        height={124}
-      />
-      <div className=" h-[35px] w-full">
-        <div className=" w-full text-center text-sm font-medium text-zinc-800">
+    <div className="relative flex h-fit w-full flex-col items-center gap-6 rounded-2xl border border-slate-300 pb-6">
+      <div className="relative h-40 w-full">
+        <Image
+          className="rounded-tl-lg rounded-tr-lg"
+          src={image}
+          alt="Vendor Image"
+          objectFit="cover"
+          fill
+        />
+      </div>
+      <div className="w-full">
+        <div className="text-center text-sm font-medium text-zinc-800">
           {name}
         </div>
-        <div className=" w-full text-center text-xs font-normal text-neutral-400">
+        <div className="text-center text-xs font-normal text-neutral-400">
           {description}
         </div>
       </div>
-      <Link
-        href={`/details/${name}`}
-        className="flex items-center justify-center rounded-2xl bg-blue-950 p-3 px-4 text-xs font-medium text-white shadow transition duration-150 ease-in-out hover:-translate-y-2"
-      >
-        See Details
-      </Link>
+      <div className="flex w-full items-center justify-center">
+        <Link
+          href={`/details/${name}`}
+          className=" rounded-2xl bg-blue-950 p-3 px-4 text-xs font-medium text-white shadow transition duration-150 ease-in-out hover:-translate-y-2"
+        >
+          See Details
+        </Link>
+      </div>
       <div className="absolute right-[16px] top-[16px] flex items-center justify-center gap-[5px] rounded-2xl bg-white p-[5px]">
         <span className="inline-flex text-xs font-normal text-blue-950">
           {rating} stars
