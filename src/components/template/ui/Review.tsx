@@ -1,6 +1,7 @@
 import { EditIcon, Star } from "lucide-react";
 import React from "react";
 import Image from "next/image";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const Review = ({
   name,
@@ -51,14 +52,14 @@ export const Review = ({
           )}
         </div>
         {/* review */}
-        <div className="h-20 w-full">
+        <div className="w-full">
           <span className="text-sm font-bold text-zinc-800">
             {reviewTitle}
             <br />
           </span>
-          <span className="text-sm font-medium text-zinc-800">
+          <p className="text-sm font-medium text-zinc-800">
             {reviewBody} <br />
-          </span>
+          </p>
         </div>
       </div>
       {/* date and rank */}

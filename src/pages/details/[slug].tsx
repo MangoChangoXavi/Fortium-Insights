@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CameraIcon, EditIcon, PlusSquareIcon, Star } from "lucide-react";
+import { CameraIcon, EditIcon } from "lucide-react";
 import {
   type InferGetStaticPropsType,
   type GetServerSidePropsContext,
@@ -9,21 +9,8 @@ import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import { Review } from "~/components/template/ui/Review";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import CardGradientDetailsSvg from "~/assets/svg/card-gradient-details.svg";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { AddReviewDialog } from "~/components/template/ui/AddReviewDialog";
+
 const reviews = [
   {
     name: "John Doe",
@@ -55,63 +42,17 @@ const reviews = [
   },
 ];
 
-const DialogReview = ({
-  selectedRanking,
-  setSelectedRanking,
-}: {
-  selectedRanking: number;
-  setSelectedRanking: (value: number) => void;
-}) => {
-  return (
-    <>
-      <div className="mb-8 mt-2 flex w-full flex-col gap-6">
-        <hr className="bg-[#e1e1e1]" />
-        <div className="grid w-full grid-cols-2 gap-8">
-          <div className="flex flex-col gap-3">
-            <Label>Title</Label>
-            <Input />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label>Rank</Label>
-            <div className="flex gap-1">
-              {new Array(5).fill(0).map((_, i) => (
-                <button key={i} onClick={() => setSelectedRanking(i + 1)}>
-                  <Star
-                    size={24}
-                    className={`stroke-[#093061] hover:stroke-blue-700 ${
-                      i < selectedRanking
-                        ? "fill-[#093061]"
-                        : "fill-transparent"
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="grid w-full grid-cols-1 gap-8">
-          <div className="flex flex-col gap-3">
-            <Label>Description</Label>
-            <Textarea />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
-  const [selectedRanking, setSelectedRanking] = useState(0);
-
   return (
     <LayoutSigned>
-      <section className="flex flex-col gap-8 p-8">
+      <section className="flex flex-col gap-10 p-4 md:p-8">
         {/* company details */}
-        <div className="flex justify-between">
+        <div className="flex flex-col justify-between gap-4 md:flex-row">
           {/* company description */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-6">
             {/* title and category */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <div className="flex gap-2">
                 <h1 className="text-lg font-bold text-[#093061]">
                   Mango Chango
@@ -123,12 +64,12 @@ export default function Dashboard(props: PageProps) {
                   />
                 </button>
               </div>
-              <h2 className="text-sm  font-medium text-[#999999]">
+              <h2 className="text-sm  font-semibold text-[#999999]">
                 Software Development
               </h2>
             </div>
             <ScrollArea>
-              <p className="max-w-[800px] text-base font-semibold text-[#2C2C2C]">
+              <p className="max-w-[800px] text-base font-medium text-[#2C2C2C]">
                 We strongly believe that our people and our culture are our
                 competitive differentiators. Passionate technologists and
                 passion to build an extraordinary team with an extraordinary
@@ -137,29 +78,16 @@ export default function Dashboard(props: PageProps) {
             </ScrollArea>
           </div>
           {/* company photo */}
-          <div className="relative">
-            <Image
-              src="https://via.placeholder.com/368x221"
-              alt="Company Image"
-              width={368}
-              height={221}
-            />
-            <Image
-              src={CardGradientDetailsSvg}
-              alt="Gradient"
-              className="absolute bottom-0 left-0 right-0 mx-auto"
-            />
-            <button className="group absolute bottom-4 left-0 right-0 mx-auto">
-              <div className=" flex items-center justify-center gap-2">
-                <CameraIcon
-                  size={16}
-                  className="text-white  transition duration-150 ease-in-out group-hover:text-blue-200"
-                />
-                <span className="font-['Noto Sans JP'] text-sm font-medium text-white transition duration-150 ease-in-out group-hover:text-blue-200">
-                  Upload cover
-                </span>
-              </div>
-            </button>
+          <div className="relative h-[221px] w-full max-w-[368px]">
+            <div className="relative h-[221px] w-full max-w-[368px]">
+              <Image
+                src="https://via.placeholder.com/368x221"
+                alt="Company Image"
+                className="rounded-lg"
+                fill
+                objectFit="cover"
+              />
+            </div>
           </div>
         </div>
         {/* separator */}
@@ -169,48 +97,10 @@ export default function Dashboard(props: PageProps) {
           {/* title */}
           <div className="flex gap-2">
             <h2 className="text-xl font-bold text-[#093061]">Reviews</h2>
-            <Dialog>
-              <DialogTrigger>
-                <button>
-                  <PlusSquareIcon
-                    size={18}
-                    className="stroke-[#093061] hover:stroke-blue-700"
-                  />
-                </button>
-              </DialogTrigger>
-              <DialogPortal>
-                <DialogContent className="sm:max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle>Add a review</DialogTitle>
-                  </DialogHeader>
-                  <DialogReview
-                    selectedRanking={selectedRanking}
-                    setSelectedRanking={setSelectedRanking}
-                  />
-                  <DialogFooter className="sm:justify-end">
-                    <DialogClose asChild>
-                      <Button
-                        type="button"
-                        variant="default"
-                        className="!rounded-full  !px-8"
-                      >
-                        Close
-                      </Button>
-                    </DialogClose>
-                    <Button
-                      type="button"
-                      variant="primary"
-                      className="!rounded-full !px-8"
-                    >
-                      Save
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </DialogPortal>
-            </Dialog>
+            <AddReviewDialog />
           </div>
           {/* body */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
             {reviews.map((review) => (
               <Review key={review.name} {...review} />
             ))}

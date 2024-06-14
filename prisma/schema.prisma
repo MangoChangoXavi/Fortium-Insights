@@ -11,101 +11,22 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model onboard {
+model Category {
   id        String   @id @default(cuid())
-  links     String
-  intro     String
-  services  String
-  problems  String
-  success   String
-  budget    String
-  status    String   @default("initial")
+  name      String
   createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  vendors   Vendor[]
 }
 
-model client {
-  id          String    @id @default(cuid())
-  name        String
-  company     String
-  role        String
-  phone       String?
-  location    String
-  linkedIn    String?
-  notes       String?
-  status      String    @default("initial") // Initial, Contacted, Proposal, Contract, Completed
-  nextMeeting DateTime? @default(now()) @map("next_meeting")
-  createdAt   DateTime  @default(now()) @map("created_at")
-}
-
-model acmResultDetail {
-  id                  String   @id @default(cuid())
-  lat                 Decimal  @default(0)
-  lng                 Decimal  @default(0)
-  price               Decimal  @default(0)
-  numberOfRooms       Int      @default(0)
-  numberOfBathrooms   Int      @default(0)
-  numberOfParkingLots Int      @default(0)
-  totalArea           Int      @default(0)
-  buildingType        String   @default("")
-  imagesUrl           String[] @default([])
-  url                 String   @default("")
-  currency            String   @default("USD")
-  address             String   @default("")
-  createdAt           DateTime @default(now()) @map("created_at")
-  acm                 acm      @relation(fields: [acmId], references: [id])
-  acmId               String
-
-  @@index([acmId])
-}
-
-model acm {
-  id                  String             @id @default(cuid())
-  address             String
-  lat                 Decimal            @default(0)
-  lng                 Decimal            @default(0)
-  radius              Decimal            @default(0)
-  operationType       String // Buy, Rent
-  buildingType        String // Apartment, House, Office, Warehouse
-  numberOfRooms       Int               @default(0)
-  numberOfBathrooms   Int               @default(0)
-  numberOfParkingLots Int               @default(0)
-  totalArea           Int               @default(0)
-  createdAt           DateTime           @default(now()) @map("created_at")
-  // userId              String
-  // user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  acmResultDetail     acmResultDetail[]
-}
-
-model proposalService {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  proposalId  String
-  proposal    proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
-}
-
-model proposal {
-  id                      String   @id @default(cuid())
-  identifier              String   @unique
-  title                   String
-  client                  String
-  status                  String   @default("initial") // Initial, Sent, Accepted, Rejected
-  createdAt               DateTime @default(now()) @map("created_at")
-  paymentLink             String   @default("none") @map("payment_link")
-  concurrentPaymentAmount String?  @default("") @map("concurrent_payment_amount")
-
-  proposalServices proposalService[]
-}
-
-model request {
-  id          String   @id @default(cuid())
-  name        String
-  email       String
-  phone       String
-  message     String
-  url         String
-  status      String   @default("initial") // Initial, Sent, Accepted, Rejected
-  createdAt   DateTime @default(now()) @map("created_at")
+model Vendor {
+  id              String   @id @default(cuid())
+  name            String
+  description     String
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at")
+  category        Category @relation(fields: [categoryId], references: [id])
+  categoryId      String
 }
 
 // Necessary for Next auth
