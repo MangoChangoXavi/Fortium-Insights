@@ -135,13 +135,7 @@ export const Topbar = ({
                   href={"/reports/users"}
                   className="text-base font-normal text-white hover:underline"
                 >
-                  Users administration
-                </Link>
-                <Link
-                  href={"/search"}
-                  className="text-base font-normal text-white hover:underline"
-                >
-                  Search
+                  Users
                 </Link>
               </div>
             </div>

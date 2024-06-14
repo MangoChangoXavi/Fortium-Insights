@@ -56,8 +56,7 @@ const reviews = [
 ];
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
-export default function Address(props: PageProps) {
-  const itemId = props.itemId;
+export default function Dashboard(props: PageProps) {
   const [selectedRanking, setSelectedRanking] = useState(0);
 
   return (
