@@ -1,7 +1,6 @@
 import { EditIcon, Star } from "lucide-react";
 import React from "react";
 import Image from "next/image";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const Review = ({
   name,

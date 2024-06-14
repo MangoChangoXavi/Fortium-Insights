@@ -1,4 +1,4 @@
-import { MousePointerSquare, SearchIcon } from "lucide-react";
+import { MenuIcon, MousePointerSquare, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -61,7 +61,7 @@ export const Topbar = ({
           </Link>
         </div>
         {/* center items */}
-        <div className="absolute left-0 right-0 mx-auto inline-flex h-full items-center justify-center gap-8">
+        <div className="absolute left-0 right-0 mx-auto hidden h-full items-center justify-center gap-8 lg:inline-flex">
           <MousePointerSquare
             onMouseEnter={() => setHoverOptions(true)}
             className="cursor-pointer text-white transition duration-150 ease-in-out hover:scale-110"
@@ -82,7 +82,7 @@ export const Topbar = ({
           )}
         </div>
         {/* right items */}
-        <div className="absolute bottom-0 right-[32px] top-0 my-auto flex items-center gap-2">
+        <div className="absolute bottom-0 right-[32px] top-0 my-auto hidden items-center gap-2 lg:flex">
           {/* profile picture */}
           <div className="relative ">
             <Image
@@ -95,11 +95,20 @@ export const Topbar = ({
             <div className="absolute right-0 top-0 h-1 w-1 rounded-full bg-green-500" />
           </div>
         </div>
+        {/* hamburger */}
+        <div className="absolute bottom-0 right-[32px] top-0 my-auto flex items-center gap-2 lg:hidden">
+          <button
+            onClick={() => setHoverOptions((prev) => !prev)}
+            className="flex items-center justify-center"
+          >
+            <MenuIcon className="h-[24px] w-[24px] text-white transition duration-150 ease-in-out hover:scale-110" />
+          </button>
+        </div>
       </div>
       {/* overlay */}
       {hoverOptions && (
         <div className="topbar-overlay absolute top-[60px] z-20 h-fit w-full bg-slate-950 p-16">
-          <div className="inline-flex h-[95px] w-[348px] items-start justify-start gap-[72px]">
+          <div className="inline-flex h-[95px] w-full items-start justify-start gap-[72px]">
             <div className="inline-flex flex-col items-start justify-start gap-4">
               <div className="text-[17px] font-bold text-white">Pages</div>
               <div className="flex flex-col items-start justify-start gap-2">

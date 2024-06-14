@@ -31,7 +31,7 @@ export const AddVendorDialog = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <button className="text-base font-normal text-white hover:underline">
+        <button className="w-full text-base font-normal text-white hover:underline">
           Add new vendor{" "}
         </button>
       </DialogTrigger>

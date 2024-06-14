@@ -23,7 +23,7 @@ export const StatsGroup = ({
   return (
     <div
       className={`flex w-full ${
-        isVertical ? "flex-col" : "flex-row"
+        isVertical ? "flex-col" : "flex-col md:flex-row"
       } border-3 justify-evenly rounded-xl border border-blue-100 p-6`}
     >
       {filters.map((item, index) => (
