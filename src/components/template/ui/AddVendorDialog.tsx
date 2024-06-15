@@ -10,11 +10,12 @@ import {
 import { api } from "~/utils/api";
 import { Vendor, type VendorFormI } from "../forms/Vendor";
 import { toast } from "@/components/ui/use-toast";
+import { uploadFile } from "~/utils/functions";
 
 export const AddVendorDialog = () => {
   // use the `useMutation` hook to create a mutation
   const ctx = api.useUtils();
-  const { mutate: createVendor } = api.vendor.create.useMutation({
+  const { mutate: createVendor, isLoading } = api.vendor.create.useMutation({
     onSuccess: () => {
       ctx.vendor.get.invalidate().catch((err) => {
         console.error(err);
@@ -29,24 +30,50 @@ export const AddVendorDialog = () => {
     },
   });
 
-  const { mutate: createVendorWithCategory } = api.vendor.create.useMutation({
-    onSuccess: () => {
-      ctx.vendor.get.invalidate().catch((err) => {
-        console.error(err);
-      });
-      toast({ title: "Vendor and category created" });
-    },
-    onError: (err) => {
-      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
-      toast({
-        title: errorMessage ?? "Something went wrong. Please try again later.",
-      });
-    },
-  });
-  const handleSubmit = (data: VendorFormI) => {
+  const { mutate: createVendorWithCategory, isLoading: isLoadingWithCategory } =
+    api.vendor.createWithCategory.useMutation({
+      onSuccess: () => {
+        ctx.vendor.get.invalidate().catch((err) => {
+          console.error(err);
+        });
+        toast({ title: "Vendor and category created" });
+      },
+      onError: (err) => {
+        const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+        toast({
+          title:
+            errorMessage ?? "Something went wrong. Please try again later.",
+        });
+      },
+    });
+  const handleSubmit = async (data: VendorFormI) => {
     // handle submit
-    console.log(data);
+    const { category, description, name, isNewCategory, vendorFiles } = data;
+
+    // upload files to vercel blob
+    const vendorUrls = await Promise.all(
+      Array.from(vendorFiles).map((file) => uploadFile(file)),
+    );
+    const vendorImgUrl = vendorUrls[0] ?? "";
+
+    // create with category
+    if (isNewCategory) {
+      createVendorWithCategory({
+        category,
+        description,
+        name,
+        vendorImgUrl,
+      });
+    } else {
+      createVendor({
+        categoryId: category,
+        description,
+        name,
+        vendorImgUrl,
+      });
+    }
   };
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -59,7 +86,10 @@ export const AddVendorDialog = () => {
           <DialogHeader>
             <DialogTitle>Add new vendor</DialogTitle>
           </DialogHeader>
-          <Vendor handleSubmit={handleSubmit} />
+          <Vendor
+            handleSubmit={handleSubmit}
+            isLoading={isLoading || isLoadingWithCategory}
+          />
         </DialogContent>
       </DialogPortal>
     </Dialog>

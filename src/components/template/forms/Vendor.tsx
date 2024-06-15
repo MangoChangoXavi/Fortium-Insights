@@ -34,6 +34,7 @@ import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { getFilesSchema } from "@/schema/files-schema";
 import { FilesListItem } from "@/components/layouts/files-list-item";
+import { Loader } from "~/components/system/layouts/Loader";
 
 const filesSchema = getFilesSchema({ filesLength: 1 });
 const FormSchema = z.object({
@@ -48,7 +49,7 @@ const FormSchema = z.object({
   category: z.string({ required_error: "Category is required" }).max(100, {
     message: "The category should not be greater than 100 characters",
   }),
-  isNewCategory: z.boolean(),
+  isNewCategory: z.boolean().optional(),
   vendorFiles: filesSchema,
 });
 
@@ -56,15 +57,16 @@ export interface VendorFormI {
   category: string;
   name: string;
   description: string;
-  isNewCategory: boolean;
+  isNewCategory?: boolean;
   vendorFiles: FileList;
 }
 interface PropsI {
-  handleSubmit: (data: z.infer<typeof FormSchema>) => void;
+  handleSubmit: (data: z.infer<typeof FormSchema>) => Promise<void>;
+  isLoading?: boolean;
   defaultData?: VendorFormI;
 }
 
-export function Vendor({ handleSubmit, defaultData }: PropsI) {
+export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
   const [newCategoryState, setNewCategoryState] = React.useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -227,24 +229,30 @@ export function Vendor({ handleSubmit, defaultData }: PropsI) {
             </div>
           </div>
         </ScrollArea>
-        <DialogFooter className="gap-2 pt-6 sm:justify-end">
-          <DialogClose asChild>
+        {isLoading ? (
+          <div className="flex w-full items-center justify-center">
+            <Loader />
+          </div>
+        ) : (
+          <DialogFooter className="gap-2 pt-6 sm:justify-end">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="default"
+                className="!rounded-full  !px-8"
+              >
+                Close
+              </Button>
+            </DialogClose>
             <Button
-              type="button"
-              variant="default"
-              className="!rounded-full  !px-8"
+              type="submit"
+              variant="primary"
+              className="!rounded-full !px-8"
             >
-              Close
+              Save
             </Button>
-          </DialogClose>
-          <Button
-            type="submit"
-            variant="primary"
-            className="!rounded-full !px-8"
-          >
-            Save
-          </Button>
-        </DialogFooter>
+          </DialogFooter>
+        )}
       </form>
     </Form>
   );

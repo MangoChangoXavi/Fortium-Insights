@@ -66,6 +66,7 @@ export const vendorRouter = createTRPCRouter({
         name: z.string(),
         description: z.string(),
         category: z.string(),
+        vendorImgUrl: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -76,6 +77,7 @@ export const vendorRouter = createTRPCRouter({
             create: {
               name: input.name,
               description: input.description,
+              vendorImgUrl: input.vendorImgUrl,
             },
           },
         },
@@ -88,6 +90,7 @@ export const vendorRouter = createTRPCRouter({
         name: z.string(),
         description: z.string(),
         categoryId: z.string(),
+        vendorImgUrl: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -96,6 +99,7 @@ export const vendorRouter = createTRPCRouter({
           name: input.name,
           description: input.description,
           categoryId: input.categoryId,
+          vendorImgUrl: input.vendorImgUrl,
         },
       });
     }),
