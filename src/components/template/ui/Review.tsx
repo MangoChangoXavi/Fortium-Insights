@@ -5,18 +5,20 @@ import Image from "next/image";
 export const Review = ({
   name,
   count,
-  reviewTitle,
-  reviewBody,
+  title,
+  comment,
   date,
-  rank,
+  rating,
+  userImage,
   onEdit,
 }: {
   name: string;
   count: number;
   date: string;
-  rank: number;
-  reviewTitle: string;
-  reviewBody: string;
+  rating: number;
+  title: string;
+  comment: string;
+  userImage: string;
   onEdit?: () => void;
 }) => {
   return (
@@ -31,7 +33,7 @@ export const Review = ({
             width={42}
             height={42}
             className="rounded-full"
-            src="https://via.placeholder.com/42x42"
+            src={userImage}
           />
           {/* name and count */}
           <div className="flex flex-col gap-0">
@@ -53,23 +55,23 @@ export const Review = ({
         {/* review */}
         <div className="w-full">
           <span className="text-sm font-bold text-zinc-800">
-            {reviewTitle}
+            {title}
             <br />
           </span>
           <p className="text-sm font-medium text-zinc-800">
-            {reviewBody} <br />
+            {comment} <br />
           </p>
         </div>
       </div>
-      {/* date and rank */}
+      {/* date and rating */}
       <div className="flex flex-col gap-1">
         {/* date */}
         <span className="text-right text-sm font-normal text-[#093061]">
           {date}
         </span>
-        {/* rank */}
+        {/* rating */}
         <div className="inline-flex items-center justify-end gap-1">
-          {new Array(rank).fill(0).map((_, i) => (
+          {new Array(rating).fill(0).map((_, i) => (
             <Star
               key={i}
               size={16}

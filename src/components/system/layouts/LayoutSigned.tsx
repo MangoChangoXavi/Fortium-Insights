@@ -56,7 +56,7 @@ export const LayoutSigned = ({
           session.user.image ?? "https://via.placeholder.com/33x33"
         }
       />
-      <div className="min-h-screen overflow-hidden">{children}</div>
+      <div className=" min-h-screen  overflow-hidden">{children}</div>
       <Footer />
     </>
   );

@@ -153,6 +153,19 @@ export const vendorRouter = createTRPCRouter({
         },
         include: {
           category: true,
+          reviews: {
+            include: {
+              user: {
+                include: {
+                  _count: {
+                    select: {
+                      reviews: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       });
     }),
