@@ -17,7 +17,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { FormIndicator } from "@/components/layouts/form-indicator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import {
   Select,
@@ -28,13 +27,13 @@ import {
 } from "@/components/ui/select";
 import CardGradientDetailsSvg from "~/assets/svg/card-gradient-details.svg";
 import React from "react";
-import { categories } from "~/lib/categories";
 import { CameraIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { getFilesSchema } from "@/schema/files-schema";
 import { FilesListItem } from "@/components/layouts/files-list-item";
 import { Loader } from "~/components/system/layouts/Loader";
+import { api } from "~/utils/api";
 
 const filesSchema = getFilesSchema({ filesLength: 1 });
 const FormSchema = z.object({
@@ -72,6 +71,9 @@ export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
     resolver: zodResolver(FormSchema),
     defaultValues: defaultData,
   });
+
+  // Get vendors
+  const { data: categories } = api.category.getAll.useQuery();
 
   return (
     <Form {...form}>
@@ -118,26 +120,30 @@ export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
                         </FormControl>
                       ) : (
                         <>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a category" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {categories.map((category) => (
-                                <SelectItem
-                                  key={category.name}
-                                  value={category.name}
-                                >
-                                  {category.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          {categories && categories.length > 0 ? (
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {categories.map((category) => (
+                                  <SelectItem
+                                    key={category.id}
+                                    value={category.id}
+                                  >
+                                    {category.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <></>
+                          )}
                         </>
                       )}
                       <FormMessage />

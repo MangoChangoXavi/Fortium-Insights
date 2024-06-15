@@ -72,7 +72,7 @@ export const vendorRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.category.create({
         data: {
-          name: input.name,
+          name: input.category,
           vendors: {
             create: {
               name: input.name,

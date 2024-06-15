@@ -53,6 +53,10 @@ export const categoryRouter = createTRPCRouter({
       };
     }),
 
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.category.findMany();
+  }),
+
   create: protectedProcedure
     .input(
       z.object({

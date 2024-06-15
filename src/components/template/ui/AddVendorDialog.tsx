@@ -13,6 +13,7 @@ import { toast } from "@/components/ui/use-toast";
 import { uploadFile } from "~/utils/functions";
 
 export const AddVendorDialog = () => {
+  const [open, setOpen] = React.useState(false);
   // use the `useMutation` hook to create a mutation
   const ctx = api.useUtils();
   const { mutate: createVendor, isLoading } = api.vendor.create.useMutation({
@@ -21,6 +22,7 @@ export const AddVendorDialog = () => {
         console.error(err);
       });
       toast({ title: "Vendor created" });
+      setOpen(false);
     },
     onError: (err) => {
       const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
@@ -37,6 +39,7 @@ export const AddVendorDialog = () => {
           console.error(err);
         });
         toast({ title: "Vendor and category created" });
+        setOpen(false);
       },
       onError: (err) => {
         const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
@@ -75,7 +78,7 @@ export const AddVendorDialog = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <span className="w-full text-base font-normal text-white hover:underline">
           Add new vendor{" "}
