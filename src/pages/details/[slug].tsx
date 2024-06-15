@@ -8,8 +8,9 @@ import Image from "next/image";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import { Review } from "~/components/template/ui/Review";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
-import CardGradientDetailsSvg from "~/assets/svg/card-gradient-details.svg";
 import { AddReviewDialog } from "~/components/template/ui/AddReviewDialog";
+import { api } from "~/utils/api";
+import { LoadingPage } from "~/components/system/layouts/Loader";
 
 const reviews = [
   {
@@ -44,6 +45,26 @@ const reviews = [
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
+  const { data: vendor, isLoading } = api.vendor.get.useQuery({
+    id: props.id,
+  });
+
+  if (isLoading) {
+    return (
+      <LayoutSigned>
+        <LoadingPage />
+      </LayoutSigned>
+    );
+  }
+
+  if (!vendor) {
+    return (
+      <LayoutSigned>
+        <p>Vendor not found</p>
+      </LayoutSigned>
+    );
+  }
+
   return (
     <LayoutSigned>
       <section className="mb-8 flex flex-col gap-10 p-4 md:p-8">
@@ -55,7 +76,7 @@ export default function Dashboard(props: PageProps) {
             <div className="flex flex-col gap-1">
               <div className="flex gap-2">
                 <h1 className="text-lg font-bold text-[#093061]">
-                  Mango Chango
+                  {vendor.name}
                 </h1>
                 <button>
                   <EditIcon
@@ -65,15 +86,12 @@ export default function Dashboard(props: PageProps) {
                 </button>
               </div>
               <h2 className="text-sm  font-semibold text-[#999999]">
-                Software Development
+                {vendor.category?.name}
               </h2>
             </div>
             <ScrollArea>
               <p className="max-w-[800px] text-base font-medium text-[#2C2C2C]">
-                We strongly believe that our people and our culture are our
-                competitive differentiators. Passionate technologists and
-                passion to build an extraordinary team with an extraordinary
-                reputation.
+                {vendor.description}
               </p>
             </ScrollArea>
           </div>
@@ -81,7 +99,7 @@ export default function Dashboard(props: PageProps) {
           <div className="relative h-[221px] w-full max-w-[368px]">
             <div className="relative h-[221px] w-full max-w-[368px]">
               <Image
-                src="https://via.placeholder.com/368x221"
+                src={vendor.vendorImgUrl}
                 alt="Company Image"
                 className="rounded-lg"
                 fill
@@ -119,13 +137,18 @@ export const getStaticProps = (ctx: GetServerSidePropsContext) => {
 
   if (!slug) throw new Error("No slug provided");
 
-  const itemId = slug;
+  const id = slug.trim();
+
+  // this only helps to prefetch in react query and save in cache
+  helpers.vendor.get.prefetch({ id }).catch((err) => {
+    console.error(err);
+  });
 
   return {
     props: {
       // very important - use `trpcState` as the key
       trpcState: helpers.dehydrate(),
-      itemId,
+      id,
     },
   };
 };

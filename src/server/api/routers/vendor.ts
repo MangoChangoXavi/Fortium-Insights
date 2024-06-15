@@ -151,6 +151,9 @@ export const vendorRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
+        include: {
+          category: true,
+        },
       });
     }),
 });

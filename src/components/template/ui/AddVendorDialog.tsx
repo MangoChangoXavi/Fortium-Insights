@@ -18,7 +18,7 @@ export const AddVendorDialog = () => {
   const ctx = api.useUtils();
   const { mutate: createVendor, isLoading } = api.vendor.create.useMutation({
     onSuccess: () => {
-      ctx.vendor.get.invalidate().catch((err) => {
+      ctx.vendor.getAll.invalidate().catch((err) => {
         console.error(err);
       });
       toast({ title: "Vendor created" });
@@ -35,7 +35,7 @@ export const AddVendorDialog = () => {
   const { mutate: createVendorWithCategory, isLoading: isLoadingWithCategory } =
     api.vendor.createWithCategory.useMutation({
       onSuccess: () => {
-        ctx.vendor.get.invalidate().catch((err) => {
+        ctx.vendor.getAll.invalidate().catch((err) => {
           console.error(err);
         });
         toast({ title: "Vendor and category created" });
