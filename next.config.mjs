@@ -13,6 +13,7 @@ const config = {
       "via.placeholder.com",
       "images.unsplash.com",
       "plus.unsplash.com",
+      "qfaqx7gfqgvnv2eg.public.blob.vercel-storage.com",
     ],
   },
 

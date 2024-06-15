@@ -3,17 +3,19 @@ import { RankingSideBar } from "~/components/template/layouts/RankingSideBar";
 import { CategoriesSideBar } from "~/components/template/layouts/CategoriesSideBar";
 import { useSearchStore } from "~/stores/useSearchStore";
 import Image from "next/image";
-import { vendors } from "~/lib/vendors";
 import { Star } from "lucide-react";
 import Link from "next/link";
+import { api } from "~/utils/api";
 
 const VendorCard = ({
-  name,
+  id,
+  title,
   description,
   image,
   rating,
 }: {
-  name: string;
+  id: string;
+  title: string;
   description: string;
   image: string;
   rating: number;
@@ -31,7 +33,7 @@ const VendorCard = ({
       </div>
       <div className="w-full">
         <div className="text-center text-sm font-medium text-zinc-800">
-          {name}
+          {title}
         </div>
         <div className="text-center text-xs font-normal text-neutral-400">
           {description}
@@ -39,7 +41,7 @@ const VendorCard = ({
       </div>
       <div className="flex w-full items-center justify-center px-6">
         <Link
-          href={`/details/${name}`}
+          href={`/details/${id}`}
           className="w-full rounded-2xl bg-[#093061] p-3 px-4 text-center text-xs font-medium text-white shadow transition duration-150 ease-in-out hover:-translate-y-2"
         >
           See Details
@@ -58,6 +60,9 @@ const VendorCard = ({
 export default function Dashboard() {
   const { search, categoryId, ranking } = useSearchStore();
 
+  // Get vendors
+  const { data: vendors } = api.vendor.getAll.useQuery();
+
   return (
     <LayoutSigned>
       <section className="flex flex-col gap-8 p-4 lg:flex-row lg:divide-x-2 lg:p-8">
@@ -75,9 +80,20 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="grid w-full grid-cols-1 items-end justify-start gap-4  md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            {vendors.map((vendor) => (
-              <VendorCard key={vendor.name} {...vendor} />
-            ))}
+            {vendors && vendors.length > 0 ? (
+              vendors.map((vendor) => (
+                <VendorCard
+                  key={vendor.id}
+                  id={vendor.id}
+                  image={vendor.vendorImgUrl}
+                  title={vendor.name}
+                  description={vendor.category?.name}
+                  rating={4}
+                />
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </section>

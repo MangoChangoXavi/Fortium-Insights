@@ -60,6 +60,14 @@ export const vendorRouter = createTRPCRouter({
       };
     }),
 
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.vendor.findMany({
+      include: {
+        category: true,
+      },
+    });
+  }),
+
   createWithCategory: protectedProcedure
     .input(
       z.object({
