@@ -72,7 +72,7 @@ export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
     defaultValues: defaultData,
   });
 
-  // Get vendors
+  // Get categories
   const { data: categories } = api.category.getAll.useQuery();
 
   return (
