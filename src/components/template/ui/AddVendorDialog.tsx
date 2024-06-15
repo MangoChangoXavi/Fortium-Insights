@@ -26,9 +26,45 @@ import { CameraIcon } from "lucide-react";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { api } from "~/utils/api";
+import { toast } from "@/components/ui/use-toast";
+import { Vendor } from "../forms/Vendor";
 
 const DialogBody = () => {
   const [isNewCategory, setIsNewCategory] = React.useState(false);
+  // use the `useMutation` hook to create a mutation
+  const ctx = api.useUtils();
+
+  const { mutate: createVendor } = api.vendor.create.useMutation({
+    onSuccess: () => {
+      ctx.vendor.get.invalidate().catch((err) => {
+        console.error(err);
+      });
+      toast({ title: "Vendor created" });
+    },
+    onError: (err) => {
+      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+      toast({
+        title: errorMessage ?? "Something went wrong. Please try again later.",
+      });
+    },
+  });
+
+  const { mutate: createVendorWithCategory } = api.vendor.create.useMutation({
+    onSuccess: () => {
+      ctx.vendor.get.invalidate().catch((err) => {
+        console.error(err);
+      });
+      toast({ title: "Vendor and category created" });
+    },
+    onError: (err) => {
+      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+      toast({
+        title: errorMessage ?? "Something went wrong. Please try again later.",
+      });
+    },
+  });
+
   return (
     <ScrollArea className="h-96">
       <div className="mb-8 mt-2 flex w-full flex-col gap-6">
@@ -62,7 +98,7 @@ const DialogBody = () => {
         </div>
         <div className="grid w-full grid-cols-1 gap-8">
           <div className="flex flex-col gap-3">
-            <Label>Company Name?</Label>
+            <Label>Company Name</Label>
             <Input placeholder="Vendor name" />
           </div>
         </div>
@@ -107,6 +143,10 @@ const DialogBody = () => {
 };
 
 export const AddVendorDialog = () => {
+  const handleSubmit = (data: any) => {
+    // handle submit
+    console.log(data);
+  };
   return (
     <Dialog>
       <DialogTrigger>
@@ -119,25 +159,7 @@ export const AddVendorDialog = () => {
           <DialogHeader>
             <DialogTitle>Add new vendor</DialogTitle>
           </DialogHeader>
-          <DialogBody />
-          <DialogFooter className="gap-2 sm:justify-end">
-            <DialogClose asChild>
-              <Button
-                type="button"
-                variant="default"
-                className="!rounded-full  !px-8"
-              >
-                Close
-              </Button>
-            </DialogClose>
-            <Button
-              type="button"
-              variant="primary"
-              className="!rounded-full !px-8"
-            >
-              Save
-            </Button>
-          </DialogFooter>
+          <Vendor handleSubmit={handleSubmit} />
         </DialogContent>
       </DialogPortal>
     </Dialog>

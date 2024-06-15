@@ -2,7 +2,15 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
-export const CategoryRouter = createTRPCRouter({
+// model Category {
+//   id        String   @id @default(cuid())
+//   name      String
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+//   vendors   Vendor[]
+// }
+
+export const categoryRouter = createTRPCRouter({
   getDataTable: protectedProcedure
     .input(
       z.object({
@@ -16,12 +24,6 @@ export const CategoryRouter = createTRPCRouter({
       const limit = input.limit ?? 50;
       const skip = input.skip ?? 0;
       let where = {};
-      if (input.role) {
-        where = {
-          role: input.role,
-        };
-      }
-
       if (input.search) {
         where = {
           ...where,
@@ -34,10 +36,10 @@ export const CategoryRouter = createTRPCRouter({
           ],
         };
       }
-      const totalItemsCount = await ctx.db.user.count({
+      const totalItemsCount = await ctx.db.category.count({
         where,
       });
-      const users = await ctx.db.user.findMany({
+      const categories = await ctx.db.category.findMany({
         take: limit,
         skip,
         orderBy: {
@@ -46,8 +48,60 @@ export const CategoryRouter = createTRPCRouter({
         where,
       });
       return {
-        users,
+        categories,
         totalItemsCount,
       };
+    }),
+
+  create: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.category.create({
+        data: {
+          name: input.name,
+        },
+      });
+    }),
+
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.category.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          name: input.name,
+        },
+      });
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.category.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
+
+  get: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.category.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
     }),
 });

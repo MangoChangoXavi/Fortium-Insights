@@ -11,21 +11,21 @@ const ALLOWED_IMAGE_TYPES = [
 
 export const getFilesSchema = ({ filesLength }: { filesLength: number }) => {
   return z
-    .custom<FileList>((val) => val instanceof FileList, "Requerido")
-    .refine((files) => files.length > 0, `Requerido`)
+    .custom<FileList>((val) => val instanceof FileList, "Required")
+    .refine((files) => files.length > 0, "Required")
     .refine(
       (files) => files.length <= filesLength,
-      `Solo se permite un maximo de ${filesLength} imagenes.`,
+      `Only a maximum of ${filesLength} images are allowed.`,
     )
     .refine(
       (files) => Array.from(files).every((file) => file.size <= MAX_IMAGE_SIZE),
-      `Las fotos deben pesar menos de 5mb`,
+      "Photos must weigh less than 5mb",
     )
     .refine(
       (files) =>
         Array.from(files).every((file) =>
           ALLOWED_IMAGE_TYPES.includes(file.type),
         ),
-      "Solo estos tipos son permitidos: .jpg, .jpeg, .png and .webp",
+      "Only these types are allowed: .jpg, .jpeg, .png and .webp",
     );
 };

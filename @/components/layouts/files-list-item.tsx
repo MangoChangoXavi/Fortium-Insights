@@ -1,13 +1,12 @@
 import React from "react";
 import {
-  Form,
   FormControl,
-  FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { FormIndicator } from "@/components/layouts/form-indicator";
 
 export const FilesListItem = ({
   field,
@@ -15,16 +14,21 @@ export const FilesListItem = ({
   title,
   disabled,
   onChange,
+  required,
 }: {
   field: any;
   images: FileList;
   title: string;
   disabled: boolean;
   onChange: (newFiles: FileList) => void;
+  required?: boolean;
 }) => {
   return (
     <FormItem>
-      <FormLabel>{title}</FormLabel>
+      <div className="flex flex-row justify-between">
+        <FormLabel>{title}</FormLabel>
+        <FormIndicator required={required} />
+      </div>
       {/* File Upload */}
       <FormControl>
         <Input

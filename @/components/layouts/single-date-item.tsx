@@ -5,21 +5,27 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { Button } from "../ui/button";
+import { FormIndicator } from "./form-indicator";
 
 export const SingleDateItem = ({
   field,
   label,
   fromYear,
   toYear,
+  required,
 }: {
   field: { value: Date; onChange: () => void };
   label: string;
   fromYear: number;
   toYear: number;
+  required?: boolean;
 }) => {
   return (
     <FormItem className="flex flex-col">
-      <FormLabel>{label}</FormLabel>
+      <div className="flex flex-row justify-between">
+        <FormLabel>{label}</FormLabel>
+        <FormIndicator required={required} />
+      </div>
       <Popover>
         <PopoverTrigger asChild>
           <FormControl>
