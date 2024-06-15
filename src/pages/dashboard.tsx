@@ -68,12 +68,12 @@ export default function Dashboard() {
         </div>
         {/* results */}
         <div className="flex w-full flex-col gap-8 lg:pl-8">
-          <h1 className="flex items-center gap-3 text-base font-bold text-[#093061]">
+          <div className="flex items-center gap-3 text-base font-bold text-[#093061]">
             <h3>Results</h3>
             <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
               <div className="text-[10px] font-normal text-zinc-800">4</div>
             </div>
-          </h1>
+          </div>
           <div className="grid w-full grid-cols-1 items-end justify-start gap-4  md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {vendors.map((vendor) => (
               <VendorCard key={vendor.name} {...vendor} />

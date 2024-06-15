@@ -48,16 +48,24 @@ const FormSchema = z.object({
   category: z.string({ required_error: "Category is required" }).max(100, {
     message: "The category should not be greater than 100 characters",
   }),
+  isNewCategory: z.boolean(),
   vendorFiles: filesSchema,
 });
 
+export interface VendorFormI {
+  category: string;
+  name: string;
+  description: string;
+  isNewCategory: boolean;
+  vendorFiles: FileList;
+}
 interface PropsI {
   handleSubmit: (data: z.infer<typeof FormSchema>) => void;
-  defaultData?: any;
+  defaultData?: VendorFormI;
 }
 
 export function Vendor({ handleSubmit, defaultData }: PropsI) {
-  const [isNewCategory, setIsNewCategory] = React.useState(false);
+  const [newCategoryState, setNewCategoryState] = React.useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: defaultData,
@@ -72,8 +80,25 @@ export function Vendor({ handleSubmit, defaultData }: PropsI) {
             <hr className="bg-[#e1e1e1]" />
             <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-3">
               <div className="col-span-1 flex flex-col gap-3">
-                <Label>Is new category?</Label>
-                <Switch onClick={() => setIsNewCategory((prev) => !prev)} />
+                <FormField
+                  control={form.control}
+                  name="isNewCategory"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex flex-row justify-between">
+                        <FormLabel>Is new category?</FormLabel>
+                      </div>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          onClick={() => setNewCategoryState(!newCategoryState)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
               <div className="col-span-2 flex flex-col gap-3">
                 <FormField
@@ -85,29 +110,34 @@ export function Vendor({ handleSubmit, defaultData }: PropsI) {
                         <FormLabel>Category</FormLabel>
                         <FormIndicator required />
                       </div>
-                      <FormControl>
-                        {isNewCategory ? (
+                      {newCategoryState ? (
+                        <FormControl>
                           <Input placeholder="Write category name" {...field} />
-                        ) : (
-                          <>
-                            <Select {...field}>
+                        </FormControl>
+                      ) : (
+                        <>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select a category" />
                               </SelectTrigger>
-                              <SelectContent>
-                                {categories.map((category) => (
-                                  <SelectItem
-                                    key={category.name}
-                                    value={category.name}
-                                  >
-                                    {category.name}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </>
-                        )}
-                      </FormControl>
+                            </FormControl>
+                            <SelectContent>
+                              {categories.map((category) => (
+                                <SelectItem
+                                  key={category.name}
+                                  value={category.name}
+                                >
+                                  {category.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </>
+                      )}
                       <FormMessage />
                     </FormItem>
                   )}
