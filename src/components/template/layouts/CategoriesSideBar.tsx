@@ -2,6 +2,7 @@ import React from "react";
 import { useSearchStore } from "~/stores/useSearchStore";
 import { Button } from "@/components/ui/button";
 import { api } from "~/utils/api";
+import { SkeletonRating } from "../ui/SkeletonRating";
 
 const RadioButton = ({
   handleChange,
@@ -44,8 +45,10 @@ export const CategoriesSideBar = () => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   // Get categories
-  const { data: categories } = api.category.getAll.useQuery();
+  const { data: categories, isLoading } = api.category.getAll.useQuery();
   const categoriesToDisplay = isExpanded ? categories : categories?.slice(0, 5);
+
+  if (isLoading) return <SkeletonRating />;
 
   return (
     <div className="flex flex-col gap-8">

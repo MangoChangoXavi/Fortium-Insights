@@ -1,8 +1,8 @@
 import { StarIcon } from "lucide-react";
 import React from "react";
-import { Loader } from "~/components/system/layouts/Loader";
 import { useSearchStore } from "~/stores/useSearchStore";
 import { api } from "~/utils/api";
+import { SkeletonRating } from "../ui/SkeletonRating";
 
 const RadioButton = ({
   handleChange,
@@ -37,7 +37,7 @@ const RadioButton = ({
           htmlFor={label}
           className="flex gap-2 text-xs font-normal text-zinc-400"
         >
-          <div className="flex">
+          <div className="flex items-center">
             {new Array(numberOfStars).fill(0).map((_, index) => (
               <StarIcon
                 key={index}
@@ -70,7 +70,7 @@ export const RatingSideBar = () => {
 
   // Get ratings
   const { data } = api.vendor.getRatingCounts.useQuery();
-  if (!data) return <Loader />;
+  if (!data) return <SkeletonRating />;
 
   // get stars counts
   const oneStarOrMore =

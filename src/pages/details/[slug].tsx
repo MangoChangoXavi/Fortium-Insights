@@ -11,12 +11,14 @@ import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { AddReviewDialog } from "~/components/template/ui/AddReviewDialog";
 import { api } from "~/utils/api";
 import { LoadingPage } from "~/components/system/layouts/Loader";
+import { useSession } from "next-auth/react";
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
   const { data: vendor, isLoading } = api.vendor.get.useQuery({
     id: props.id,
   });
+  const { data: session } = useSession();
 
   if (isLoading) {
     return (
@@ -34,6 +36,9 @@ export default function Dashboard(props: PageProps) {
     );
   }
 
+  // is this user the owner of the vendor?
+  const isOwner = session?.user?.id === vendor.userId;
+
   return (
     <LayoutSigned>
       <section className="md:p- mb-8 flex flex-col gap-10 p-8">
@@ -47,12 +52,14 @@ export default function Dashboard(props: PageProps) {
                 <h1 className="text-lg font-bold text-[#093061]">
                   {vendor.name}
                 </h1>
-                <button>
-                  <EditIcon
-                    size={16}
-                    className="stroke-[#093061] hover:stroke-blue-700"
-                  />
-                </button>
+                {isOwner && (
+                  <button>
+                    <EditIcon
+                      size={16}
+                      className="stroke-[#093061] hover:stroke-blue-700"
+                    />
+                  </button>
+                )}
               </div>
               <h2 className="text-sm  font-semibold text-[#999999]">
                 {vendor.category?.name}

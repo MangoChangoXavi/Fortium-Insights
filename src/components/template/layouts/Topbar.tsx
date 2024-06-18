@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import LogoSvg from "~/assets/svg/logo.svg";
-import { Loader } from "~/components/system/layouts/Loader";
 import { Debouncer } from "~/components/system/ui/Debouncer";
 import { useSearchStore } from "~/stores/useSearchStore";
 import { AddVendorDialog } from "../ui/AddVendorDialog";
@@ -14,7 +13,6 @@ export const Topbar = ({
 }: {
   profileImgUrl: string;
   handleClickSignOut: () => void;
-  handleSearch: (searchValue: string) => void;
 }) => {
   /**
    * Represents the state of hover options in the topbar.

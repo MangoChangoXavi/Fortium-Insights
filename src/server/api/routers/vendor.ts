@@ -152,6 +152,7 @@ export const vendorRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
       return await ctx.db.category.create({
         data: {
           name: input.category,
@@ -160,6 +161,7 @@ export const vendorRouter = createTRPCRouter({
               name: input.name,
               description: input.description,
               vendorImgUrl: input.vendorImgUrl,
+              userId,
             },
           },
         },
@@ -176,12 +178,14 @@ export const vendorRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
       return await ctx.db.vendor.create({
         data: {
           name: input.name,
           description: input.description,
           categoryId: input.categoryId,
           vendorImgUrl: input.vendorImgUrl,
+          userId,
         },
       });
     }),
