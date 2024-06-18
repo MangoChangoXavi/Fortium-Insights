@@ -1,6 +1,8 @@
 import { StarIcon } from "lucide-react";
 import React from "react";
+import { Loader } from "~/components/system/layouts/Loader";
 import { useSearchStore } from "~/stores/useSearchStore";
+import { api } from "~/utils/api";
 
 const RadioButton = ({
   handleChange,
@@ -65,17 +67,38 @@ const RadioButton = ({
 
 export const RatingSideBar = () => {
   const { rating, setRating } = useSearchStore();
+
+  // Get ratings
+  const { data } = api.vendor.getRatingCounts.useQuery();
+  if (!data) return <Loader />;
+
+  // get stars counts
+  const oneStarOrMore =
+    data.oneStar +
+    data.twoStars +
+    data.threeStars +
+    data.fourStars +
+    data.fiveStars;
+  const twoStarsOrMore =
+    data.twoStars + data.threeStars + data.fourStars + data.fiveStars;
+  const threeStarsOrMore = data.threeStars + data.fourStars + data.fiveStars;
+  const fourStarsOrMore = data.fourStars + data.fiveStars;
+  const fiveStarsOrMore = data.fiveStars;
+
+  // save to an array to map through
+  const ratingsJson = [
+    oneStarOrMore,
+    twoStarsOrMore,
+    threeStarsOrMore,
+    fourStarsOrMore,
+    fiveStarsOrMore,
+  ];
+
   return (
     <div className="flex flex-col  gap-6">
       <h2 className="text-base font-bold text-[#093061]">Rating</h2>
       {/* ratings */}
       <div className="flex flex-col gap-3">
-        <RadioButton
-          handleChange={() => setRating(0)}
-          checked={rating === 0}
-          label="All"
-          numberOfStars={0}
-        />
         {/* rest of options */}
         {new Array(5).fill(0).map((_, index) => (
           <RadioButton
@@ -84,6 +107,7 @@ export const RatingSideBar = () => {
             checked={rating === index + 1}
             label={index + 1 + " stars"}
             numberOfStars={index + 1}
+            count={ratingsJson[index] ?? 0}
           />
         ))}
       </div>

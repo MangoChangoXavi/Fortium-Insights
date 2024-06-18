@@ -8,7 +8,7 @@ export const Debouncer = ({
   icon,
 }: {
   value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValue: (search: string) => void;
   debounceTime?: number;
   icon?: React.ReactNode;
   placeholder?: string;

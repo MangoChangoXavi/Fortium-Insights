@@ -65,6 +65,7 @@ export const vendorRouter = createTRPCRouter({
       z.object({
         categoryId: z.string().optional(),
         rating: z.number().optional(),
+        search: z.string().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -82,6 +83,25 @@ export const vendorRouter = createTRPCRouter({
           },
         };
       }
+      if (input.search) {
+        where = {
+          ...where,
+          OR: [
+            {
+              name: {
+                contains: input.search,
+                mode: "insensitive", // Default value: default
+              },
+            },
+            {
+              description: {
+                contains: input.search,
+                mode: "insensitive", // Default value: default
+              },
+            },
+          ],
+        };
+      }
       return await ctx.db.vendor.findMany({
         include: {
           category: true,
@@ -89,6 +109,38 @@ export const vendorRouter = createTRPCRouter({
         where,
       });
     }),
+
+  getRatingCounts: protectedProcedure.query(async ({ ctx }) => {
+    const vendors = await ctx.db.vendor.findMany({
+      select: {
+        rating: true,
+      },
+    });
+    const rankingCounts = vendors.reduce(
+      (acc, curr) => {
+        if (curr.rating === 1) {
+          acc.oneStar++;
+        } else if (curr.rating === 2) {
+          acc.twoStars++;
+        } else if (curr.rating === 3) {
+          acc.threeStars++;
+        } else if (curr.rating === 4) {
+          acc.fourStars++;
+        } else if (curr.rating === 5) {
+          acc.fiveStars++;
+        }
+        return acc;
+      },
+      {
+        oneStar: 0,
+        twoStars: 0,
+        threeStars: 0,
+        fourStars: 0,
+        fiveStars: 0,
+      },
+    );
+    return rankingCounts;
+  }),
 
   createWithCategory: protectedProcedure
     .input(

@@ -65,6 +65,7 @@ export default function Dashboard() {
   const { data: vendors, isLoading } = api.vendor.getAll.useQuery({
     categoryId,
     rating,
+    search,
   });
 
   return (

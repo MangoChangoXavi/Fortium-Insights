@@ -1,7 +1,6 @@
 import { MenuIcon, MousePointerSquare, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import LogoSvg from "~/assets/svg/logo.svg";
 import { Loader } from "~/components/system/layouts/Loader";
@@ -15,33 +14,15 @@ export const Topbar = ({
 }: {
   profileImgUrl: string;
   handleClickSignOut: () => void;
+  handleSearch: (searchValue: string) => void;
 }) => {
   /**
    * Represents the state of hover options in the topbar.
    */
   const [hoverOptions, setHoverOptions] = React.useState(false);
-  const [searchValue, setSearchValue] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
 
   // zustand state
-  const { setSearch } = useSearchStore();
-
-  // whenever searchValue change we should go to /search/[searchValue]
-  const router = useRouter();
-  React.useEffect(() => {
-    const makeSearch = async () => {
-      if (searchValue) {
-        setLoading(true);
-        // save un zustand state
-        setSearch(searchValue);
-        // go to search page
-        await router.push(`/search`);
-        setSearchValue("");
-        setLoading(false);
-      }
-    };
-    void makeSearch();
-  }, [router, searchValue, setSearch]);
+  const { search, setSearch } = useSearchStore();
 
   return (
     <div onMouseLeave={() => setHoverOptions(false)}>
@@ -68,18 +49,12 @@ export const Topbar = ({
           >
             Options
           </MousePointerSquare>
-          {loading ? (
-            <Loader />
-          ) : (
-            <Debouncer
-              value={searchValue}
-              setValue={setSearchValue}
-              placeholder="Search"
-              icon={
-                <SearchIcon className="h-[12px] w-[12px] stroke-gray-200" />
-              }
-            />
-          )}
+          <Debouncer
+            value={search}
+            setValue={setSearch}
+            placeholder="Search"
+            icon={<SearchIcon className="h-[12px] w-[12px] stroke-gray-200" />}
+          />
         </div>
         {/* right items */}
         <div className="absolute bottom-0 right-[32px] top-0 my-auto hidden items-center gap-2 lg:flex">
