@@ -1,19 +1,19 @@
 import { create } from "zustand";
 
 type Store = {
-  categoryId: number;
-  setCategoryId: (categoryId: number) => void;
-  ranking: number;
-  setRanking: (ranking: number) => void;
+  categoryId: string;
+  setCategoryId: (categoryId: string) => void;
+  rating: number;
+  setRating: (rating: number) => void;
   search: string;
   setSearch: (search: string) => void;
 };
 
 export const useSearchStore = create<Store>()((set) => ({
-  categoryId: 0,
+  categoryId: "",
   setCategoryId: (categoryId) => set(() => ({ categoryId })),
-  ranking: 0,
-  setRanking: (ranking) => set(() => ({ ranking })),
+  rating: 0,
+  setRating: (rating) => set(() => ({ rating })),
   search: "",
   setSearch: (search) => set(() => ({ search })),
 }));

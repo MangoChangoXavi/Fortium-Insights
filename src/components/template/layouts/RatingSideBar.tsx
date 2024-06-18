@@ -7,11 +7,13 @@ const RadioButton = ({
   checked,
   label,
   numberOfStars,
+  count,
 }: {
   handleChange: () => void;
   checked: boolean;
   label: string;
   numberOfStars: number;
+  count: number;
 }) => {
   return (
     <div className="flex w-full items-center justify-between">
@@ -23,7 +25,7 @@ const RadioButton = ({
       >
         <input
           type="radio"
-          name="ranking"
+          name="rating"
           id={label}
           checked={checked}
           onChange={handleChange}
@@ -55,22 +57,22 @@ const RadioButton = ({
         </label>
       </div>
       <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
-        <div className="text-[10px] font-normal text-zinc-800">45</div>
+        <div className="text-[10px] font-normal text-zinc-800">{count}</div>
       </div>
     </div>
   );
 };
 
-export const RankingSideBar = () => {
-  const { ranking, setRanking } = useSearchStore();
+export const RatingSideBar = () => {
+  const { rating, setRating } = useSearchStore();
   return (
     <div className="flex flex-col  gap-6">
-      <h2 className="text-base font-bold text-[#093061]">Ranking</h2>
-      {/* rankings */}
+      <h2 className="text-base font-bold text-[#093061]">Rating</h2>
+      {/* ratings */}
       <div className="flex flex-col gap-3">
         <RadioButton
-          handleChange={() => setRanking(0)}
-          checked={ranking === 0}
+          handleChange={() => setRating(0)}
+          checked={rating === 0}
           label="All"
           numberOfStars={0}
         />
@@ -78,8 +80,8 @@ export const RankingSideBar = () => {
         {new Array(5).fill(0).map((_, index) => (
           <RadioButton
             key={index}
-            handleChange={() => setRanking(index + 1)}
-            checked={ranking === index + 1}
+            handleChange={() => setRating(index + 1)}
+            checked={rating === index + 1}
             label={index + 1 + " stars"}
             numberOfStars={index + 1}
           />

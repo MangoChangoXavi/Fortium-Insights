@@ -1,11 +1,12 @@
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
-import { RankingSideBar } from "~/components/template/layouts/RankingSideBar";
 import { CategoriesSideBar } from "~/components/template/layouts/CategoriesSideBar";
 import { useSearchStore } from "~/stores/useSearchStore";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import Link from "next/link";
 import { api } from "~/utils/api";
+import { RatingSideBar } from "~/components/template/layouts/RatingSideBar";
+import { SkeletonCard } from "~/components/template/ui/SkeletonCard";
 
 const VendorCard = ({
   id,
@@ -58,17 +59,20 @@ const VendorCard = ({
 };
 
 export default function Dashboard() {
-  const { search, categoryId, ranking } = useSearchStore();
+  const { search, categoryId, rating } = useSearchStore();
 
   // Get vendors
-  const { data: vendors } = api.vendor.getAll.useQuery();
+  const { data: vendors, isLoading } = api.vendor.getAll.useQuery({
+    categoryId,
+    rating,
+  });
 
   return (
     <LayoutSigned>
       <section className="flex flex-col gap-8 p-4 lg:flex-row lg:divide-x-2 lg:p-8">
         {/* sidebar */}
         <div className="flex flex-col gap-8 border-slate-700 lg:w-1/4">
-          <RankingSideBar />
+          <RatingSideBar />
           <CategoriesSideBar />
         </div>
         {/* results */}
@@ -76,10 +80,16 @@ export default function Dashboard() {
           <div className="flex items-center gap-3 text-base font-bold text-[#093061]">
             <h3>Results</h3>
             <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
-              <div className="text-[10px] font-normal text-zinc-800">4</div>
+              <div className="text-[10px] font-normal text-zinc-800">
+                {vendors?.length}
+              </div>
             </div>
           </div>
           <div className="grid w-full grid-cols-1 items-end justify-start gap-4  md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            {isLoading &&
+              new Array(4)
+                .fill(0)
+                .map((_, index) => <SkeletonCard key={index} />)}
             {vendors && vendors.length > 0 ? (
               vendors.map((vendor) => (
                 <VendorCard
@@ -88,7 +98,7 @@ export default function Dashboard() {
                   image={vendor.vendorImgUrl}
                   title={vendor.name}
                   description={vendor.category?.name}
-                  rating={4}
+                  rating={vendor.rating}
                 />
               ))
             ) : (

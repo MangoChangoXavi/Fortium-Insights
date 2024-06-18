@@ -56,9 +56,9 @@ export const CategoriesSideBar = () => {
         <div className="flex flex-col gap-2">
           {/* show all option */}
           <RadioButton
-            checked={categoryId === 0}
+            checked={categoryId === ""}
             label="Show all"
-            handleChange={() => setCategoryId(0)}
+            handleChange={() => setCategoryId("")}
             count={
               categories?.reduce((acc, curr) => acc + curr._count.vendors, 0) ??
               0
@@ -71,8 +71,8 @@ export const CategoriesSideBar = () => {
               .map((category, index) => (
                 <RadioButton
                   key={index}
-                  checked={categoryId === index + 1}
-                  handleChange={() => setCategoryId(index + 1)}
+                  checked={categoryId === category.id}
+                  handleChange={() => setCategoryId(category.id)}
                   label={category.name}
                   count={category._count.vendors}
                 />

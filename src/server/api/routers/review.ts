@@ -72,6 +72,24 @@ export const reviewRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
+      // updates vendor rating
+      const reviews = await ctx.db.review.findMany({
+        where: {
+          vendorId: input.vendorId,
+        },
+      });
+      const rating = reviews.reduce((acc, review) => acc + review.rating, 0);
+      const averageRating = (rating + input.rating) / (reviews.length + 1);
+      await ctx.db.vendor.update({
+        where: {
+          id: input.vendorId,
+        },
+        data: {
+          rating: averageRating,
+        },
+      });
+
+      // create review
       return await ctx.db.review.create({
         data: {
           title: input.title,
