@@ -66,6 +66,7 @@ export default function Dashboard() {
     categoryId,
     rating,
     search,
+    status: "active",
   });
 
   return (

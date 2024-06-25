@@ -80,6 +80,7 @@ export const vendorRouter = createTRPCRouter({
         categoryId: z.string().optional(),
         rating: z.number().optional(),
         search: z.string().optional(),
+        status: z.string().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -95,6 +96,12 @@ export const vendorRouter = createTRPCRouter({
           rating: {
             gte: input.rating,
           },
+        };
+      }
+      if (input.status) {
+        where = {
+          ...where,
+          status: input.status,
         };
       }
       if (input.search) {
