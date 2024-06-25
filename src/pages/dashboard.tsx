@@ -7,6 +7,7 @@ import Link from "next/link";
 import { api } from "~/utils/api";
 import { RatingSideBar } from "~/components/template/layouts/RatingSideBar";
 import { SkeletonCard } from "~/components/template/ui/SkeletonCard";
+import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 
 const VendorCard = ({
   id,
@@ -112,3 +113,23 @@ export default function Dashboard() {
     </LayoutSigned>
   );
 }
+
+// Fetch data before the page loads
+export const getStaticProps = () => {
+  const helpers = generateSSGHelper();
+
+  helpers.vendor.getAll
+    .prefetch({
+      status: "active",
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+  return {
+    props: {
+      // very important - use `trpcState` as the key
+      trpcState: helpers.dehydrate(),
+    },
+  };
+};
