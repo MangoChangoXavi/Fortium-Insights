@@ -99,6 +99,13 @@ export const RatingSideBar = () => {
       <h2 className="text-base font-bold text-[#093061]">Rating</h2>
       {/* ratings */}
       <div className="flex flex-col gap-3">
+        <RadioButton
+          handleChange={() => setRating(0)}
+          checked={rating === 0}
+          label="Show All"
+          numberOfStars={0}
+          count={oneStarOrMore}
+        />
         {/* rest of options */}
         {new Array(5).fill(0).map((_, index) => (
           <RadioButton
