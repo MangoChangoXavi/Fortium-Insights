@@ -1,6 +1,7 @@
-import { EditIcon, Star } from "lucide-react";
+import { EditIcon, Star, TrashIcon } from "lucide-react";
 import React from "react";
 import Image from "next/image";
+import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 export const Review = ({
   name,
@@ -10,6 +11,7 @@ export const Review = ({
   date,
   rating,
   userImage,
+  onDelete,
   onEdit,
 }: {
   name: string;
@@ -19,6 +21,7 @@ export const Review = ({
   title: string;
   comment: string;
   userImage: string;
+  onDelete?: () => void;
   onEdit?: () => void;
 }) => {
   return (
@@ -63,22 +66,33 @@ export const Review = ({
           </p>
         </div>
       </div>
-      {/* date and rating */}
-      <div className="flex flex-col gap-1">
-        {/* date */}
-        <span className="text-right text-sm font-normal text-[#093061]">
-          {date}
-        </span>
-        {/* rating */}
-        <div className="inline-flex items-center justify-end gap-1">
-          {new Array(rating).fill(0).map((_, i) => (
-            <Star
-              key={i}
-              size={16}
-              className="fill-yellow-500/80 stroke-yellow-500/80"
-            />
-          ))}
+      <div className="flex items-center justify-center gap-3">
+        {/* date and rating */}
+        <div className="flex flex-col gap-1">
+          {/* date */}
+          <span className="text-right text-sm font-normal text-[#093061]">
+            {date}
+          </span>
+          {/* rating */}
+          <div className="inline-flex items-center justify-end gap-1">
+            {new Array(rating).fill(0).map((_, i) => (
+              <Star
+                key={i}
+                size={16}
+                className="fill-yellow-500/80 stroke-yellow-500/80"
+              />
+            ))}
+          </div>
         </div>
+        {/* trash icon */}
+        {onDelete && (
+          <button onClick={onDelete}>
+            <TrashIcon
+              size={18}
+              className="stroke-[#093061] hover:stroke-blue-700"
+            />
+          </button>
+        )}
       </div>
     </div>
   );

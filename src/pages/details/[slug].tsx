@@ -12,13 +12,34 @@ import { AddReviewDialog } from "~/components/template/ui/AddReviewDialog";
 import { api } from "~/utils/api";
 import { LoadingPage } from "~/components/system/layouts/Loader";
 import { useSession } from "next-auth/react";
+import { toast } from "@/components/ui/use-toast";
+import { ConfirmDialog } from "~/components/template/ui/ConfirmDialog";
+import { useState } from "react";
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedId, setSelectedId] = useState<string>("");
   const { data: vendor, isLoading } = api.vendor.get.useQuery({
     id: props.id,
   });
   const { data: session } = useSession();
+  // use the `useMutation` hook to create a mutation
+  const ctx = api.useUtils();
+  const { mutate: deleteReview } = api.review.delete.useMutation({
+    onSuccess: () => {
+      ctx.vendor.get.invalidate().catch((err) => {
+        console.error(err);
+      });
+      toast({ title: "Review delete" });
+    },
+    onError: (err) => {
+      const errorMessage = err?.data?.zodError?.fieldErrors?.content?.[0];
+      toast({
+        title: errorMessage ?? "Something went wrong. Please try again later.",
+      });
+    },
+  });
 
   if (isLoading) {
     return (
@@ -41,6 +62,16 @@ export default function Dashboard(props: PageProps) {
 
   return (
     <LayoutSigned>
+      <ConfirmDialog
+        open={openDelete}
+        setOpen={setOpenDelete}
+        onConfirm={() => {
+          deleteReview({ id: selectedId });
+          setOpenDelete(false);
+        }}
+        title="Delete Review"
+        description="Are you sure you want to delete this review?"
+      />
       <section className="md:p- mb-8 flex flex-col gap-10 p-8">
         {/* company details */}
         <div className="flex flex-col justify-between gap-4 md:flex-row">
@@ -107,6 +138,14 @@ export default function Dashboard(props: PageProps) {
                 name={review.user?.name ?? "Anonymous"}
                 count={review.user._count.reviews}
                 date={review.createdAt.toLocaleDateString()}
+                onDelete={
+                  isOwner
+                    ? () => {
+                        setSelectedId(review.id);
+                        setOpenDelete(true);
+                      }
+                    : undefined
+                }
               />
             ))}
           </div>
