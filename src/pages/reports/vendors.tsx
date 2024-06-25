@@ -8,17 +8,13 @@ import React from "react";
 
 import { StarIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
-import {
-  CategoryIcon,
-  CancelIcon,
-  SellIcon,
-} from "~/components/system/ui/Icons";
+import { CategoryIcon, CancelIcon } from "~/components/system/ui/Icons";
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
-import { columns } from "~/components/template/columns/Users";
+import { columns } from "~/components/template/columns/Vendors";
 import { Loader } from "~/components/system/layouts/Loader";
 
 const ITEMS_PER_PAGE = 5;
-export default function Users() {
+export default function Vendors() {
   const { toast } = useToast();
   const [filter, setFilter] = React.useState("");
   const [search, setSearch] = React.useState("");
@@ -37,25 +33,25 @@ export default function Users() {
     [pageIndex, pageSize],
   );
 
-  const { data } = api.user.getDataTable.useQuery({
+  const { data } = api.vendor.getDataTable.useQuery({
     limit: pageSize,
     skip: pageIndex * pageSize,
-    role: filter,
+    status: filter,
     search,
   });
 
   const pageCount = Math.ceil(
     (data?.totalItemsCount ?? ITEMS_PER_PAGE) / ITEMS_PER_PAGE,
   );
-  const { data: countData } = api.user.countRoles.useQuery();
+  const { data: countData } = api.vendor.countStatus.useQuery();
 
   const ctx = api.useUtils();
-  const { mutate } = api.user.updateRole.useMutation({
+  const { mutate } = api.vendor.updateStatus.useMutation({
     onSuccess: () => {
-      ctx.user.getInfinite.invalidate().catch((err) => {
+      ctx.vendor.getInfinite.invalidate().catch((err) => {
         console.error(err);
       });
-      ctx.user.countRoles.invalidate().catch((err) => {
+      ctx.vendor.countStatus.invalidate().catch((err) => {
         console.error(err);
       });
     },
@@ -67,10 +63,10 @@ export default function Users() {
     },
   });
 
-  const updateRole = (userId: string, role: string) => {
+  const updateStatus = (vendorId: string, status: string) => {
     mutate({
-      id: userId,
-      role: role,
+      id: vendorId,
+      status: status,
     });
   };
 
@@ -81,43 +77,33 @@ export default function Users() {
       icon: (
         <CategoryIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />
       ),
-      total: countData?.find((item) => item.role === "all")?.count ?? 0,
+      total: countData?.find((item) => item.status === "all")?.count ?? 0,
       background: "bg-[#9b83d8]",
     },
     {
       label: "Disabled",
       value: "disabled",
       icon: <CancelIcon className="h-6 w-6 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
-      total: countData?.find((item) => item.role === "disabled")?.count ?? 0,
+      total: countData?.find((item) => item.status === "disabled")?.count ?? 0,
       background: "bg-[#dc5c5c]",
     },
     {
-      label: "Users",
-      value: "user",
-      icon: <SellIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
-      total: countData?.find((item) => item.role === "user")?.count ?? 0,
-      background: "bg-[#61dc7d]",
-    },
-    {
-      label: "Admins",
-      value: "admin",
+      label: "Active",
+      value: "active",
       icon: <StarIcon className="h-5 w-5 fill-[#2c2c2c] stroke-[#2c2c2c]" />,
-      total: countData?.find((item) => item.role === "admin")?.count ?? 0,
+      total: countData?.find((item) => item.status === "active")?.count ?? 0,
       background: "bg-[#DCF691]",
     },
   ];
 
-  const usersData = data?.users.map((user) => {
+  const vendorsData = data?.vendors.map((vendor) => {
     return {
-      userId: user.id,
-      userName: user.name,
-      userEmail: user.email,
-      userImage: user.image,
-      userRole: user.role ?? "user",
-      createdAt: user.createdAt,
-      handleClickAction: (userId: string, role: string) => {
-        updateRole(userId, role);
+      ...vendor,
+      handleClickAction: (vendorId: string, status: string) => {
+        updateStatus(vendorId, status);
       },
+      numberOfReviews: vendor._count.reviews,
+      category: vendor.category.name,
     };
   });
 
@@ -133,14 +119,14 @@ export default function Users() {
             />
           )}
         </div>
-        {usersData ? (
+        {vendorsData ? (
           <DataTable
             onPaginationChange={setPagination}
             pagination={pagination}
             pageCount={pageCount}
             columns={columns}
-            title="Users"
-            data={usersData}
+            title="Vendors"
+            data={vendorsData}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">

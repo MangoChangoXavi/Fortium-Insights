@@ -97,6 +97,12 @@ export const Topbar = ({
                 >
                   Users
                 </Link>
+                <Link
+                  href={"/reports/vendors"}
+                  className="text-base font-normal text-white hover:underline"
+                >
+                  Vendors
+                </Link>
               </div>
             </div>
             <div className="inline-flex flex-col items-start justify-start gap-4">
