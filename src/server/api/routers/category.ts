@@ -78,11 +78,6 @@ export const categoryRouter = createTRPCRouter({
       where: {
         // the status is active and at least one vendor is active
         status: "active",
-        vendors: {
-          some: {
-            status: "active",
-          },
-        },
       },
     });
   }),

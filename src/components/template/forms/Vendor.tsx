@@ -25,9 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import CardGradientDetailsSvg from "~/assets/svg/card-gradient-details.svg";
 import React from "react";
-import { CameraIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { getFilesSchema } from "@/schema/files-schema";
@@ -57,7 +55,9 @@ export interface VendorFormI {
   name: string;
   description: string;
   isNewCategory?: boolean;
-  vendorFiles: FileList;
+  vendorFiles?: FileList;
+  vendorImgUrl?: string;
+  id?: string;
 }
 interface PropsI {
   handleSubmit: (data: z.infer<typeof FormSchema>) => Promise<void>;
@@ -207,32 +207,17 @@ export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
                 );
               }}
             />
-            <div className="relative hidden h-36 w-full">
-              <Image
-                src="https://via.placeholder.com/264x160"
-                alt="Company Image"
-                width={264}
-                height={160}
-                className="absolute bottom-0 left-0 right-0 mx-auto rounded"
-              />
-              <Image
-                src={CardGradientDetailsSvg}
-                alt="Gradient"
-                className="absolute bottom-0 left-0 right-0 mx-auto rounded-b"
-                width={264}
-              />
-              <button className="group absolute bottom-4 left-0 right-0 mx-auto">
-                <div className=" flex items-center justify-center gap-2">
-                  <CameraIcon
-                    size={16}
-                    className="text-white  transition duration-150 ease-in-out group-hover:text-blue-200"
-                  />
-                  <span className="font-['Noto Sans JP'] text-sm font-medium text-white transition duration-150 ease-in-out group-hover:text-blue-200 ">
-                    Upload cover
-                  </span>
-                </div>
-              </button>
-            </div>
+            {defaultData?.vendorImgUrl && (
+              <div className="relative h-36 w-full  border border-neutral-200">
+                <Image
+                  src={defaultData.vendorImgUrl}
+                  alt="Company Image"
+                  width={264}
+                  height={160}
+                  className="absolute bottom-0 left-0 right-0 mx-auto rounded"
+                />
+              </div>
+            )}
           </div>
         </ScrollArea>
         {isLoading ? (

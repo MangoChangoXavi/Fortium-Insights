@@ -220,6 +220,30 @@ export const vendorRouter = createTRPCRouter({
       });
     }),
 
+  updateWithCategory: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        description: z.string(),
+        category: z.string(),
+        vendorImgUrl: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.vendor.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          name: input.name,
+          description: input.description,
+          categoryId: input.category,
+          vendorImgUrl: input.vendorImgUrl,
+        },
+      });
+    }),
+
   update: protectedProcedure
     .input(
       z.object({
@@ -227,6 +251,7 @@ export const vendorRouter = createTRPCRouter({
         name: z.string(),
         description: z.string(),
         categoryId: z.string(),
+        vendorImgUrl: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -238,6 +263,7 @@ export const vendorRouter = createTRPCRouter({
           name: input.name,
           description: input.description,
           categoryId: input.categoryId,
+          vendorImgUrl: input.vendorImgUrl,
         },
       });
     }),

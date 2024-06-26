@@ -11,8 +11,7 @@ const ALLOWED_IMAGE_TYPES = [
 
 export const getFilesSchema = ({ filesLength }: { filesLength: number }) => {
   return z
-    .custom<FileList>((val) => val instanceof FileList, "Required")
-    .refine((files) => files.length > 0, "Required")
+    .custom<FileList>()
     .refine(
       (files) => files.length <= filesLength,
       `Only a maximum of ${filesLength} images are allowed.`,
@@ -27,5 +26,6 @@ export const getFilesSchema = ({ filesLength }: { filesLength: number }) => {
           ALLOWED_IMAGE_TYPES.includes(file.type),
         ),
       "Only these types are allowed: .jpg, .jpeg, .png and .webp",
-    );
+    )
+    .optional();
 };

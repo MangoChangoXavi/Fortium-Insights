@@ -1,5 +1,4 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { EditIcon } from "lucide-react";
 import {
   type InferGetStaticPropsType,
   type GetServerSidePropsContext,
@@ -15,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
 import { ConfirmDialog } from "~/components/template/ui/ConfirmDialog";
 import { useState } from "react";
+import { EditVendorDialog } from "~/components/template/ui/EditVendorDialog";
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
@@ -84,12 +84,15 @@ export default function Dashboard(props: PageProps) {
                   {vendor.name}
                 </h1>
                 {isOwner && (
-                  <button>
-                    <EditIcon
-                      size={16}
-                      className="stroke-[#093061] hover:stroke-blue-700"
-                    />
-                  </button>
+                  <EditVendorDialog
+                    vendor={{
+                      name: vendor.name,
+                      description: vendor.description,
+                      category: vendor.category?.id,
+                      vendorImgUrl: vendor.vendorImgUrl,
+                      id: vendor.id,
+                    }}
+                  />
                 )}
               </div>
               <h2 className="text-sm  font-semibold text-[#999999]">
