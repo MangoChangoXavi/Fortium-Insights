@@ -81,7 +81,7 @@ export const Topbar = ({
       {/* overlay */}
       {hoverOptions && (
         <div className="topbar-overlay absolute top-[60px] z-20 h-fit w-full bg-slate-950 p-16">
-          <div className="inline-flex h-[95px] w-full items-start justify-start gap-[72px]">
+          <div className="inline-flex h-fit w-full items-start justify-start gap-[72px]">
             <div className="inline-flex flex-col items-start justify-start gap-4">
               <div className="text-[17px] font-bold text-white">Pages</div>
               <div className="flex flex-col items-start justify-start gap-2">
@@ -102,6 +102,12 @@ export const Topbar = ({
                   className="text-base font-normal text-white hover:underline"
                 >
                   Vendors
+                </Link>
+                <Link
+                  href={"/reports/categories"}
+                  className="text-base font-normal text-white hover:underline"
+                >
+                  Categories
                 </Link>
               </div>
             </div>
