@@ -6,6 +6,7 @@ import LogoSvg from "~/assets/svg/logo.svg";
 import { Debouncer } from "~/components/system/ui/Debouncer";
 import { useSearchStore } from "~/stores/useSearchStore";
 import { AddVendorDialog } from "../ui/AddVendorDialog";
+import { useSession } from "next-auth/react";
 
 export const Topbar = ({
   profileImgUrl,
@@ -18,6 +19,10 @@ export const Topbar = ({
    * Represents the state of hover options in the topbar.
    */
   const [hoverOptions, setHoverOptions] = React.useState(false);
+
+  // session
+  const session = useSession();
+  const userRole = session.data?.user?.role;
 
   // zustand state
   const { search, setSearch } = useSearchStore();
@@ -82,35 +87,37 @@ export const Topbar = ({
       {hoverOptions && (
         <div className="topbar-overlay absolute top-[60px] z-20 h-fit w-full bg-slate-950 p-16">
           <div className="inline-flex h-fit w-full items-start justify-start gap-[72px]">
-            <div className="inline-flex flex-col items-start justify-start gap-4">
-              <div className="text-[17px] font-bold text-white">Pages</div>
-              <div className="flex flex-col items-start justify-start gap-2">
-                <Link
-                  href={"/dashboard"}
-                  className="text-base font-normal text-white hover:underline"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href={"/reports/users"}
-                  className="text-base font-normal text-white hover:underline"
-                >
-                  Users
-                </Link>
-                <Link
-                  href={"/reports/vendors"}
-                  className="text-base font-normal text-white hover:underline"
-                >
-                  Vendors
-                </Link>
-                <Link
-                  href={"/reports/categories"}
-                  className="text-base font-normal text-white hover:underline"
-                >
-                  Categories
-                </Link>
+            {userRole === "admin" && (
+              <div className="inline-flex flex-col items-start justify-start gap-4">
+                <div className="text-[17px] font-bold text-white">Pages</div>
+                <div className="flex flex-col items-start justify-start gap-2">
+                  <Link
+                    href={"/dashboard"}
+                    className="text-base font-normal text-white hover:underline"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    href={"/reports/users"}
+                    className="text-base font-normal text-white hover:underline"
+                  >
+                    Users
+                  </Link>
+                  <Link
+                    href={"/reports/vendors"}
+                    className="text-base font-normal text-white hover:underline"
+                  >
+                    Vendors
+                  </Link>
+                  <Link
+                    href={"/reports/categories"}
+                    className="text-base font-normal text-white hover:underline"
+                  >
+                    Categories
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
             <div className="inline-flex flex-col items-start justify-start gap-4">
               <div className="text-[17px] font-bold text-white">Actions</div>
               <div className="flex flex-col items-start justify-start gap-2">

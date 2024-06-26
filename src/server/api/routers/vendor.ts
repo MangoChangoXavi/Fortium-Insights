@@ -85,8 +85,17 @@ export const vendorRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       let where = {};
+      where = {
+        ...where,
+        status: "active",
+        // category status is active
+        category: {
+          status: "active",
+        },
+      };
       if (input.categoryId) {
         where = {
+          ...where,
           categoryId: input.categoryId,
         };
       }
