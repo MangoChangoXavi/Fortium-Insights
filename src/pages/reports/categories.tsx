@@ -47,7 +47,7 @@ export default function Categories() {
   const ctx = api.useUtils();
   const { mutate } = api.category.updateStatus.useMutation({
     onSuccess: () => {
-      ctx.category.getInfinite.invalidate().catch((err) => {
+      ctx.category.getDataTable.invalidate().catch((err) => {
         console.error(err);
       });
       ctx.category.countStatus.invalidate().catch((err) => {

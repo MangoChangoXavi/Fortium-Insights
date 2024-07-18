@@ -11,7 +11,6 @@ import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import { CategoryIcon, CancelIcon } from "~/components/system/ui/Icons";
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
 import { columns } from "~/components/template/columns/Vendors";
-import { Loader } from "~/components/system/layouts/Loader";
 
 const ITEMS_PER_PAGE = 5;
 export default function Vendors() {
@@ -48,7 +47,7 @@ export default function Vendors() {
   const ctx = api.useUtils();
   const { mutate } = api.vendor.updateStatus.useMutation({
     onSuccess: () => {
-      ctx.vendor.getInfinite.invalidate().catch((err) => {
+      ctx.vendor.getDataTable.invalidate().catch((err) => {
         console.error(err);
       });
       ctx.vendor.countStatus.invalidate().catch((err) => {
