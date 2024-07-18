@@ -15,6 +15,7 @@ import { toast } from "@/components/ui/use-toast";
 import { ConfirmDialog } from "~/components/template/ui/ConfirmDialog";
 import { useState } from "react";
 import { EditVendorDialog } from "~/components/template/ui/EditVendorDialog";
+import NoImagePlaceholder from "~/assets/img/noimage-placeholder.jpg";
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
@@ -109,7 +110,9 @@ export default function Dashboard(props: PageProps) {
           <div className="relative h-[221px] w-full max-w-[368px]">
             <div className="relative h-[221px] w-full max-w-[368px]">
               <Image
-                src={vendor.vendorImgUrl}
+                src={
+                  vendor.vendorImgUrl ? vendor.vendorImgUrl : NoImagePlaceholder
+                }
                 alt="Company Image"
                 className="rounded-lg"
                 fill
