@@ -52,7 +52,7 @@ export default function Users() {
   const ctx = api.useUtils();
   const { mutate } = api.user.updateRole.useMutation({
     onSuccess: () => {
-      ctx.user.getInfinite.invalidate().catch((err) => {
+      ctx.user.getDataTable.invalidate().catch((err) => {
         console.error(err);
       });
       ctx.user.countRoles.invalidate().catch((err) => {

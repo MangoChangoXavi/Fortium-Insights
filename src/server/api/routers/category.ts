@@ -66,21 +66,29 @@ export const categoryRouter = createTRPCRouter({
       };
     }),
 
-  getAll: protectedProcedure.query(async ({ ctx }) => {
-    return await ctx.db.category.findMany({
-      include: {
-        _count: {
-          select: {
-            vendors: true,
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        includeEmpty: z.boolean().optional(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const includeEmpty = input.includeEmpty ?? true;
+      return await ctx.db.category.findMany({
+        include: {
+          _count: {
+            select: {
+              vendors: true,
+            },
           },
         },
-      },
-      where: {
-        // the status is active and at least one vendor is active
-        status: "active",
-      },
-    });
-  }),
+        where: {
+          // the status is active and at least one vendor is active
+          status: "active",
+          vendors: includeEmpty ? undefined : { some: { status: "active" } },
+        },
+      });
+    }),
 
   create: protectedProcedure
     .input(

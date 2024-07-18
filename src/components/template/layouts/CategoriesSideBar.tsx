@@ -45,7 +45,9 @@ export const CategoriesSideBar = () => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   // Get categories
-  const { data: categories, isLoading } = api.category.getAll.useQuery();
+  const { data: categories, isLoading } = api.category.getAll.useQuery({
+    includeEmpty: false,
+  });
   const categoriesToDisplay = isExpanded ? categories : categories?.slice(0, 5);
 
   if (isLoading) return <SkeletonRating />;

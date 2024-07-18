@@ -73,7 +73,9 @@ export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
   });
 
   // Get categories
-  const { data: categories } = api.category.getAll.useQuery();
+  const { data: categories } = api.category.getAll.useQuery({
+    includeEmpty: true,
+  });
 
   return (
     <Form {...form}>
@@ -207,17 +209,19 @@ export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
                 );
               }}
             />
-            {defaultData?.vendorImgUrl && (
-              <div className="relative h-36 w-full  border border-neutral-200">
-                <Image
-                  src={defaultData.vendorImgUrl}
-                  alt="Company Image"
-                  width={264}
-                  height={160}
-                  className="absolute bottom-0 left-0 right-0 mx-auto rounded"
-                />
-              </div>
-            )}
+            <div className="flex h-fit w-full items-center justify-center">
+              {defaultData?.vendorImgUrl && (
+                <div className="relative h-52 w-1/2 border border-neutral-200">
+                  <Image
+                    src={defaultData.vendorImgUrl}
+                    alt="Company Image"
+                    objectFit="cover"
+                    fill
+                    className="absolute bottom-0 left-0 right-0 mx-auto rounded"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </ScrollArea>
         {isLoading ? (
