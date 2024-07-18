@@ -54,9 +54,11 @@ export const AddVendorDialog = () => {
     const { category, description, name, isNewCategory, vendorFiles } = data;
 
     // upload files to vercel blob
-    const vendorUrls = await Promise.all(
-      Array.from(vendorFiles).map((file) => uploadFile(file)),
-    );
+    const vendorUrls = vendorFiles
+      ? await Promise.all(
+          Array.from(vendorFiles).map((file) => uploadFile(file)),
+        )
+      : [];
     const vendorImgUrl = vendorUrls[0] ?? "";
 
     // create with category

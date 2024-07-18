@@ -8,6 +8,7 @@ import { api } from "~/utils/api";
 import { RatingSideBar } from "~/components/template/layouts/RatingSideBar";
 import { SkeletonCard } from "~/components/template/ui/SkeletonCard";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import NoImagePlaceholder from "~/assets/img/noimage-placeholder.jpg";
 
 const VendorCard = ({
   id,
@@ -27,7 +28,7 @@ const VendorCard = ({
       <div className="relative h-44 w-full">
         <Image
           className="rounded-tl-lg rounded-tr-lg"
-          src={image}
+          src={image ? image : NoImagePlaceholder}
           alt="Vendor Image"
           objectFit="cover"
           fill
