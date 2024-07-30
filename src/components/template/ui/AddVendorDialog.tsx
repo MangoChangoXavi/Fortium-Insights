@@ -12,8 +12,11 @@ import { Vendor, type VendorFormI } from "../forms/Vendor";
 import { toast } from "@/components/ui/use-toast";
 import { uploadFile } from "~/utils/functions";
 
-export const AddVendorDialog = () => {
-  const [open, setOpen] = React.useState(false);
+export const AddVendorDialog = ({
+  setOpen,
+}: {
+  setOpen: (open: boolean) => void;
+}) => {
   // use the `useMutation` hook to create a mutation
   const ctx = api.useUtils();
   const { mutate: createVendor, isLoading } = api.vendor.create.useMutation({
@@ -80,23 +83,16 @@ export const AddVendorDialog = () => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <span className="w-full text-base font-normal text-white hover:underline">
-          Add new vendor{" "}
-        </span>
-      </DialogTrigger>
-      <DialogPortal>
-        <DialogContent className="sm:max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Add new vendor</DialogTitle>
-          </DialogHeader>
-          <Vendor
-            handleSubmit={handleSubmit}
-            isLoading={isLoading || isLoadingWithCategory}
-          />
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
+    <DialogPortal>
+      <DialogContent className="sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Add new vendor</DialogTitle>
+        </DialogHeader>
+        <Vendor
+          handleSubmit={handleSubmit}
+          isLoading={isLoading || isLoadingWithCategory}
+        />
+      </DialogContent>
+    </DialogPortal>
   );
 };
