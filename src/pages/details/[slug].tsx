@@ -73,7 +73,7 @@ export default function Dashboard(props: PageProps) {
         title="Delete Review"
         description="Are you sure you want to delete this review?"
       />
-      <section className="md:p- mb-8 flex flex-col gap-10 p-8">
+      <section className="mb-8 flex w-full flex-col gap-10 p-8">
         {/* company details */}
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           {/* company description */}

@@ -61,11 +61,17 @@ export interface VendorFormI {
 }
 interface PropsI {
   handleSubmit: (data: z.infer<typeof FormSchema>) => Promise<void>;
+  setOpen: (open: boolean) => void;
   isLoading?: boolean;
   defaultData?: VendorFormI;
 }
 
-export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
+export function Vendor({
+  handleSubmit,
+  defaultData,
+  isLoading,
+  setOpen,
+}: PropsI) {
   const [newCategoryState, setNewCategoryState] = React.useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -230,15 +236,14 @@ export function Vendor({ handleSubmit, defaultData, isLoading }: PropsI) {
           </div>
         ) : (
           <DialogFooter className="gap-2 pt-6 sm:justify-end">
-            <DialogClose asChild>
-              <Button
-                type="button"
-                variant="default"
-                className="!rounded-full  !px-8"
-              >
-                Close
-              </Button>
-            </DialogClose>
+            <Button
+              type="button"
+              variant="default"
+              className="!rounded-full  !px-8"
+              onClick={() => setOpen(false)}
+            >
+              Close
+            </Button>
             <Button
               type="submit"
               variant="primary"

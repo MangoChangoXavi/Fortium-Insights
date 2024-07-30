@@ -97,7 +97,6 @@ export default function Index() {
   return (
     <>
       <LandingHero handleClick={handleClick} />
-      <Footer isLarge />
     </>
   );
 }

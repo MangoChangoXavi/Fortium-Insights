@@ -1,11 +1,9 @@
 import React from "react";
 import {
-  Dialog,
   DialogContent,
   DialogHeader,
   DialogPortal,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { api } from "~/utils/api";
 import { Vendor, type VendorFormI } from "../forms/Vendor";
@@ -90,6 +88,7 @@ export const AddVendorDialog = ({
         </DialogHeader>
         <Vendor
           handleSubmit={handleSubmit}
+          setOpen={setOpen}
           isLoading={isLoading || isLoadingWithCategory}
         />
       </DialogContent>
