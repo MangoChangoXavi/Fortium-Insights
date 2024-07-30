@@ -49,12 +49,6 @@ export const Topbar = ({
           </div>
           {/* center items */}
           <div className="absolute left-0 right-0 mx-auto hidden h-full items-center justify-center gap-8 lg:inline-flex">
-            <MousePointerSquare
-              onMouseEnter={() => setHoverOptions(true)}
-              className="cursor-pointer text-white transition duration-150 ease-in-out hover:scale-110"
-            >
-              Options
-            </MousePointerSquare>
             <Debouncer
               value={search}
               setValue={setSearch}
@@ -67,7 +61,10 @@ export const Topbar = ({
           {/* right items */}
           <div className="absolute bottom-0 right-[32px] top-0 my-auto hidden items-center gap-2 lg:flex">
             {/* profile picture */}
-            <div className="relative ">
+            <div
+              onMouseEnter={() => setHoverOptions(true)}
+              className="relative "
+            >
               <Image
                 className="h-[33px] w-[33px] rounded-full"
                 src={profileImgUrl}
