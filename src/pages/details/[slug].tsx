@@ -87,7 +87,14 @@ export default function Dashboard(props: PageProps) {
         open={openReview}
         setOpen={setOpenReview}
       />
-      <EditVendorDialog vendor={vendor} open={openEdit} setOpen={setOpenEdit} />
+      <EditVendorDialog
+        vendor={{
+          ...vendor,
+          category: vendor.category.id,
+        }}
+        open={openEdit}
+        setOpen={setOpenEdit}
+      />
       <section className="flex  w-full  flex-col gap-8 p-8">
         {/* details */}
         <div className="card-shadow flex flex-col  justify-between rounded-2xl  bg-white p-6 md:h-[319px] md:flex-row">
