@@ -25,8 +25,8 @@ export const Review = ({
   onEdit?: () => void;
 }) => {
   return (
-    <div className="card-shadow h-[400px] w-full rounded-2xl bg-white p-6">
-      <div className="flex flex-col items-start justify-start gap-6">
+    <div className="card-shadow flex h-[400px] w-full flex-col items-end justify-between rounded-2xl bg-white p-6">
+      <div className="flex w-full flex-col items-start justify-start gap-6">
         {/* user details */}
         <div className="inline-flex items-start justify-center gap-4">
           <div className="relative h-12 w-12">
@@ -75,6 +75,15 @@ export const Review = ({
           </div>
         </div>
       </div>
+      {/* action buttons */}
+      {onDelete && (
+        <button
+          onClick={onDelete}
+          className="flex h-10 w-10 flex-row items-center justify-center rounded-lg bg-red-500 hover:bg-red-700"
+        >
+          <TrashIcon className="h-4 w-4 stroke-white" />
+        </button>
+      )}
     </div>
   );
 };

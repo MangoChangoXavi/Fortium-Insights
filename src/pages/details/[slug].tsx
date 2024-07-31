@@ -190,6 +190,7 @@ export default function Dashboard(props: PageProps) {
               title={review.title}
               comment={review.comment}
               count={review.user._count.reviews}
+              onDelete={isOwner ? () => setOpenDelete(true) : undefined}
             />
           ))}
         </div>
