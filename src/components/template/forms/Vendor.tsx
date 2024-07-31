@@ -32,6 +32,7 @@ import { getFilesSchema } from "@/schema/files-schema";
 import { FilesListItem } from "@/components/layouts/files-list-item";
 import { Loader } from "~/components/system/layouts/Loader";
 import { api } from "~/utils/api";
+import { PlusIcon } from "lucide-react";
 
 const filesSchema = getFilesSchema({ filesLength: 1 });
 const FormSchema = z.object({
@@ -90,77 +91,58 @@ export function Vendor({
         <ScrollArea className="h-96 md:h-fit">
           <div className="mb-8 mt-2 flex w-full flex-col gap-6">
             <hr className="bg-[#e1e1e1]" />
-            <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-3">
-              <div className="col-span-1 flex flex-col gap-3">
-                <FormField
-                  control={form.control}
-                  name="isNewCategory"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex flex-row justify-between">
-                        <FormLabel>Is new category?</FormLabel>
-                      </div>
+            <div className="grid w-full grid-cols-2 gap-8 ">
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex flex-row justify-between">
+                      <FormLabel>Category</FormLabel>
+                      <FormIndicator required />
+                    </div>
+                    {newCategoryState ? (
                       <FormControl>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          onClick={() => setNewCategoryState(!newCategoryState)}
-                        />
+                        <Input placeholder="Write category name" {...field} />
                       </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="col-span-2 flex flex-col gap-3">
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex flex-row justify-between">
-                        <FormLabel>Category</FormLabel>
-                        <FormIndicator required />
-                      </div>
-                      {newCategoryState ? (
+                    ) : (
+                      <Select
+                        onValueChange={(v) => {
+                          if (v === "_") {
+                            setNewCategoryState(true);
+                            // change is new category to true
+                            form.setValue("isNewCategory", true);
+                            field.onChange("");
+                          } else {
+                            field.onChange(v);
+                          }
+                        }}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
-                          <Input placeholder="Write category name" {...field} />
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a category" />
+                          </SelectTrigger>
                         </FormControl>
-                      ) : (
-                        <>
-                          {categories && categories.length > 0 ? (
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select a category" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {categories.map((category) => (
-                                  <SelectItem
-                                    key={category.id}
-                                    value={category.id}
-                                  >
-                                    {category.name}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          ) : (
-                            <></>
-                          )}
-                        </>
-                      )}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-            <div className="grid w-full grid-cols-1 gap-8">
+                        <SelectContent>
+                          <SelectItem value="_">
+                            <span className="flex gap-2">
+                              <PlusIcon size={16} />
+                              <span>Create new category</span>
+                            </span>
+                          </SelectItem>
+                          {categories?.map((category) => (
+                            <SelectItem key={category.id} value={category.id}>
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="name"
@@ -215,8 +197,8 @@ export function Vendor({
                 );
               }}
             />
-            <div className="flex h-fit w-full items-center justify-center">
-              {defaultData?.vendorImgUrl && (
+            {defaultData?.vendorImgUrl && (
+              <div className="flex h-fit w-full items-center justify-center">
                 <div className="relative h-52 w-1/2 border border-neutral-200">
                   <Image
                     src={defaultData.vendorImgUrl}
@@ -226,8 +208,8 @@ export function Vendor({
                     className="absolute bottom-0 left-0 right-0 mx-auto rounded"
                   />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </ScrollArea>
         {isLoading ? (
