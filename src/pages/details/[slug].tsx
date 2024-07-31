@@ -1,4 +1,3 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   type InferGetStaticPropsType,
   type GetServerSidePropsContext,
@@ -14,12 +13,22 @@ import { useSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
 import { ConfirmDialog } from "~/components/template/ui/ConfirmDialog";
 import { useState } from "react";
-import { EditVendorDialog } from "~/components/template/ui/EditVendorDialog";
 import NoImagePlaceholder from "~/assets/img/noimage-placeholder.jpg";
+import {
+  ChevronLeft,
+  MessageCircle,
+  PencilIcon,
+  PlusIcon,
+  StarIcon,
+} from "lucide-react";
+import Link from "next/link";
+import { EditVendorDialog } from "~/components/template/ui/EditVendorDialog";
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
   const [openDelete, setOpenDelete] = useState(false);
+  const [openReview, setOpenReview] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const [selectedId, setSelectedId] = useState<string>("");
   const { data: vendor, isLoading } = api.vendor.get.useQuery({
     id: props.id,
@@ -73,88 +82,116 @@ export default function Dashboard(props: PageProps) {
         title="Delete Review"
         description="Are you sure you want to delete this review?"
       />
-      <section className="mb-8 flex w-full flex-col gap-10 p-8">
-        {/* company details */}
-        <div className="flex flex-col justify-between gap-4 md:flex-row">
-          {/* company description */}
-          <div className="flex flex-col gap-6">
-            {/* title and category */}
-            <div className="flex flex-col gap-1">
-              <div className="flex gap-2">
-                <h1 className="text-lg font-bold text-[#093061]">
-                  {vendor.name}
-                </h1>
-                {isOwner && (
-                  <EditVendorDialog
-                    vendor={{
-                      name: vendor.name,
-                      description: vendor.description,
-                      category: vendor.category?.id,
-                      vendorImgUrl: vendor.vendorImgUrl,
-                      id: vendor.id,
-                    }}
-                  />
-                )}
-              </div>
-              <h2 className="text-sm  font-semibold text-[#999999]">
-                {vendor.category?.name}
-              </h2>
-            </div>
-            <ScrollArea>
-              <p className="max-w-[800px] text-base font-medium text-[#2C2C2C]">
-                {vendor.description}
-              </p>
-            </ScrollArea>
-          </div>
-          {/* company photo */}
-          <div className="relative h-[221px] w-full max-w-[368px]">
-            <div className="relative h-[221px] w-full max-w-[368px]">
+      <AddReviewDialog
+        vendorId={vendor.id}
+        open={openReview}
+        setOpen={setOpenReview}
+      />
+      <EditVendorDialog vendor={vendor} open={openEdit} setOpen={setOpenEdit} />
+      <section className="flex w-full flex-col gap-8 p-8">
+        {/* details */}
+        <div className="card-shadow flex h-[319px]  justify-between rounded-2xl bg-white p-6">
+          <div className="flex w-full gap-10">
+            <Link
+              href={"/"}
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-[20px] bg-[#466488] hover:bg-[#093061]"
+            >
+              <ChevronLeft className="h-6 w-6 stroke-white" />
+            </Link>
+            {/* image */}
+            <div className="relative h-full w-2/5">
               <Image
-                src={
-                  vendor.vendorImgUrl ? vendor.vendorImgUrl : NoImagePlaceholder
-                }
-                alt="Company Image"
-                className="rounded-lg"
-                fill
+                className="rounded"
+                src={vendor.vendorImgUrl}
+                alt={""}
+                layout="fill"
                 objectFit="cover"
               />
             </div>
+            {/* description */}
+            <div className="h-full items-center justify-center">
+              <div className="flex items-center gap-4">
+                <div className="font-['Noto Sans JP'] text-[80px] font-bold text-[#093061]">
+                  {vendor.rating.toFixed(1)}
+                </div>
+                <div className="flex flex-col items-center justify-center gap-3">
+                  <div className="flex h-8 w-48 gap-2">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <StarIcon
+                        key={i}
+                        className={`h-8 w-8 ${
+                          vendor.rating <= i - 1
+                            ? "fill-[#999999] stroke-[#999999]"
+                            : "fill-[#093061] stroke-[#093061]"
+                        } `}
+                      />
+                    ))}
+                  </div>
+                  <div className="font-['Noto Sans JP']  w-48 text-sm font-normal text-[#999999]">
+                    Based on {vendor.reviews.length} reviews
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="font-['Noto Sans JP']  text-[32px] font-bold text-[#2c2c2c]">
+                  {vendor.name}
+                </div>
+                <div className="font-['Plus Jakarta Sans'] text-base font-semibold text-[#999999]">
+                  {vendor.description}
+                  <br />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex h-full flex-col items-end justify-between">
+            {/* category */}
+            <div className="whitespace-nowrap text-base font-semibold text-[#466488]">
+              {vendor.category.name}
+            </div>
+            {/* action buttons */}
+            <div className="inline-flex h-10 items-center justify-start gap-4">
+              <button
+                onClick={() => setOpenEdit(true)}
+                className="flex h-10 w-10 cursor-pointer items-center justify-start gap-2.5 rounded-[20px] bg-[#466488] px-2 py-1.5 hover:bg-[#093061]"
+              >
+                <PencilIcon className="h-6 w-6 stroke-white" />
+              </button>
+              <button
+                onClick={() => setOpenReview(true)}
+                className="flex h-10 w-10 cursor-pointer items-center justify-start gap-2.5 rounded-[20px] bg-[#466488] px-2 py-1.5 hover:bg-[#093061]"
+              >
+                <MessageCircle className="h-6 w-6 stroke-white" />
+              </button>
+            </div>
           </div>
         </div>
-        {/* separator */}
-        <div className="h-[0px] w-full border border-neutral-200"></div>
         {/* reviews */}
-        <div className="flex flex-col gap-8">
-          {/* title */}
-          <div className="flex gap-2">
-            <h2 className="text-xl font-bold text-[#093061]">Reviews</h2>
-            <AddReviewDialog vendorId={vendor.id} />
-          </div>
-          {/* body */}
-          <div className="flex flex-col gap-8">
-            {vendor.reviews?.map((review) => (
-              <Review
-                key={review.id}
-                title={review.title}
-                comment={review.comment}
-                rating={review.rating}
-                userImage={
-                  review.user?.image ?? "https://via.placeholder.com/42x42"
-                }
-                name={review.user?.name ?? "Anonymous"}
-                count={review.user._count.reviews}
-                date={review.createdAt.toLocaleDateString()}
-                onDelete={
-                  isOwner
-                    ? () => {
-                        setSelectedId(review.id);
-                        setOpenDelete(true);
-                      }
-                    : undefined
-                }
-              />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {/* add card */}
+          <button
+            onClick={() => setOpenReview(true)}
+            className="inline-flex h-[400px] w-full flex-col items-center justify-center gap-2.5 rounded-2xl border border-[#2c2c2c] bg-white hover:shadow-xl"
+          >
+            <div className="flex flex-col items-center justify-center gap-7">
+              <PlusIcon className="relative h-12 w-12 stroke-[#2c2c2c]" />
+              <div className="font-['Plus Jakarta Sans'] text-2xl font-normal text-[#2c2c2c]">
+                Add review
+              </div>
+            </div>
+          </button>
+          {/* rest of the reviews */}
+          {vendor.reviews.map((review) => (
+            <Review
+              key={review.id}
+              name={review.user.name ?? "Anonymous"}
+              userImage={review.user.image ?? NoImagePlaceholder}
+              date={review.createdAt.toLocaleDateString()}
+              rating={review.rating}
+              title={review.title}
+              comment={review.comment}
+              count={review.user._count.reviews}
+            />
+          ))}
         </div>
       </section>
     </LayoutSigned>

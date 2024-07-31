@@ -5,16 +5,21 @@ import {
   DialogHeader,
   DialogPortal,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { api } from "~/utils/api";
 import { Vendor, type VendorFormI } from "../forms/Vendor";
 import { toast } from "@/components/ui/use-toast";
 import { uploadFile } from "~/utils/functions";
-import { EditIcon } from "lucide-react";
 
-export const EditVendorDialog = ({ vendor }: { vendor: VendorFormI }) => {
-  const [open, setOpen] = React.useState(false);
+export const EditVendorDialog = ({
+  vendor,
+  open,
+  setOpen,
+}: {
+  vendor: VendorFormI;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
   // use the `useMutation` hook to update a mutation
   const ctx = api.useUtils();
   const { mutate: updateVendor, isLoading } = api.vendor.update.useMutation({
@@ -85,18 +90,13 @@ export const EditVendorDialog = ({ vendor }: { vendor: VendorFormI }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <EditIcon
-          size={16}
-          className="stroke-[#093061] hover:stroke-blue-700"
-        />
-      </DialogTrigger>
       <DialogPortal>
         <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
             <DialogTitle>Edit new vendor</DialogTitle>
           </DialogHeader>
           <Vendor
+            setOpen={setOpen}
             defaultData={vendor}
             handleSubmit={handleSubmit}
             isLoading={isLoading || isLoadingWithCategory}

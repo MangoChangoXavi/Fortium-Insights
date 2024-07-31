@@ -30,7 +30,7 @@ export const Topbar = ({
   const { search, setSearch } = useSearchStore();
 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <div onMouseLeave={() => setHoverOptions(false)}>
         {/* topbar */}
         <div

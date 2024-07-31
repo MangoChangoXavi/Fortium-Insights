@@ -5,15 +5,20 @@ import {
   DialogHeader,
   DialogPortal,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { PlusSquareIcon } from "lucide-react";
 import { Review, type ReviewFormI } from "../forms/Review";
 import { api } from "~/utils/api";
 import { toast } from "@/components/ui/use-toast";
 
-export const AddReviewDialog = ({ vendorId }: { vendorId: string }) => {
-  const [open, setOpen] = React.useState(false);
+export const AddReviewDialog = ({
+  vendorId,
+  open,
+  setOpen,
+}: {
+  vendorId: string;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
   // use the `useMutation` hook to create a mutation
   const ctx = api.useUtils();
   const { mutate: createReview, isLoading } = api.review.create.useMutation({
@@ -44,14 +49,6 @@ export const AddReviewDialog = ({ vendorId }: { vendorId: string }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <button>
-          <PlusSquareIcon
-            size={18}
-            className="stroke-[#093061] hover:stroke-blue-700"
-          />
-        </button>
-      </DialogTrigger>
       <DialogPortal>
         <DialogContent className="sm:max-w-2xl">
           <DialogHeader>

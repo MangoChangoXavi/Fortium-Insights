@@ -220,3 +220,7 @@ h3 {
 .topbar-overlay {
   animation: slideDown 0.2s ease-out forwards;
 }
+
+.card-shadow {
+  box-shadow: 8px 8px 60px 0px rgba(70, 100, 136, 0.25);
+}
