@@ -88,10 +88,10 @@ export default function Dashboard(props: PageProps) {
         setOpen={setOpenReview}
       />
       <EditVendorDialog vendor={vendor} open={openEdit} setOpen={setOpenEdit} />
-      <section className="flex w-full flex-col gap-8 p-8">
+      <section className="flex  w-full  flex-col gap-8 p-8">
         {/* details */}
-        <div className="card-shadow flex h-[319px]  justify-between rounded-2xl bg-white p-6">
-          <div className="flex w-full gap-10">
+        <div className="card-shadow flex flex-col  justify-between rounded-2xl  bg-white p-6 md:h-[319px] md:flex-row">
+          <div className="flex  w-full flex-col gap-10 md:flex-row">
             <Link
               href={"/"}
               className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-[20px] bg-[#466488] hover:bg-[#093061]"
@@ -99,7 +99,7 @@ export default function Dashboard(props: PageProps) {
               <ChevronLeft className="h-6 w-6 stroke-white" />
             </Link>
             {/* image */}
-            <div className="relative h-full w-2/5">
+            <div className="relative h-[319px] w-full md:h-full md:w-2/5">
               <Image
                 className="rounded"
                 src={vendor.vendorImgUrl}
@@ -143,7 +143,7 @@ export default function Dashboard(props: PageProps) {
               </div>
             </div>
           </div>
-          <div className="flex h-full flex-col items-end justify-between">
+          <div className="flex h-full flex-row items-end justify-between md:flex-col">
             {/* category */}
             <div className="whitespace-nowrap text-base font-semibold text-[#466488]">
               {vendor.category.name}
