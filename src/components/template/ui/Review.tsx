@@ -26,7 +26,8 @@ export const Review = ({
 }) => {
   return (
     <div className="card-shadow h-[400px] w-full rounded-2xl bg-white p-6">
-      <div className="flex h-[265px] w-[273px] flex-col items-start justify-start gap-6">
+      <div className="flex flex-col items-start justify-start gap-6">
+        {/* user details */}
         <div className="inline-flex items-start justify-center gap-4">
           <div className="relative h-12 w-12">
             <Image
@@ -46,6 +47,7 @@ export const Review = ({
             </div>
           </div>
         </div>
+        {/* ratings */}
         <div className="flex h-[52px] flex-col items-start justify-start gap-2">
           <div className="flex h-6">
             {[1, 2, 3, 4, 5].map((i) => (
@@ -63,7 +65,8 @@ export const Review = ({
             {date}
           </div>
         </div>
-        <div className="flex h-[117px] flex-col items-start justify-start gap-3.5 self-stretch">
+        {/* comment */}
+        <div className="flex flex-col items-start justify-start gap-3.5 self-stretch">
           <div className="font-['Noto Sans JP'] self-stretch text-base font-bold text-[#2c2c2c]">
             {title}
           </div>
