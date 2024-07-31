@@ -39,7 +39,7 @@ const HeroCTA = ({ handleClick }: { handleClick: () => void }) => {
 
 const HeroImage = () => {
   return (
-    <div className="relative col-span-1 h-[80vh] overflow-hidden bg-[#466488]">
+    <div className="relative col-span-1 h-screen overflow-hidden bg-[#466488]">
       {/* person background */}
       <div className="absolute -bottom-10 left-0 right-0 mx-auto h-[322.92px] w-[322.92px] -rotate-45 rounded-[50px] bg-slate-400/40" />
       {/* growth image */}
