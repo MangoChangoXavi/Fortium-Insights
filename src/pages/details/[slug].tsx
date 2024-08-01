@@ -175,7 +175,7 @@ export default function Dashboard(props: PageProps) {
         {/* reviews */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {/* add card */}
-          <button
+          {/* <button
             onClick={() => setOpenReview(true)}
             className="inline-flex h-[400px] w-full flex-col items-center justify-center gap-2.5 rounded-2xl border border-[#2c2c2c] bg-white hover:shadow-xl"
           >
@@ -185,7 +185,7 @@ export default function Dashboard(props: PageProps) {
                 Add review
               </div>
             </div>
-          </button>
+          </button> */}
           {/* rest of the reviews */}
           {vendor.reviews.map((review) => (
             <Review
