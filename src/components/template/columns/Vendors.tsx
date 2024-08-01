@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -45,23 +46,28 @@ export const columns: ColumnDef<vendor>[] = [
     cell: ({ row }) => {
       const vendor = row.original;
       return (
-        <div className="flex flex-row items-center">
-          <Image
-            className="mr-2 shrink-0 rounded-full border-2 border-white object-cover dark:border-primary-700"
-            src={vendor.vendorImgUrl}
-            alt=""
-            width={40}
-            height={40}
-          />
+        <Link
+          href={`/details/${vendor.id}`}
+          className="flex flex-row items-center gap-3"
+        >
+          <div className="relative h-10 w-10">
+            <Image
+              className="rounded-full"
+              src={vendor.vendorImgUrl}
+              alt="Vendor Image"
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
           <div className="flex flex-col">
-            <span className="text-darkGray text-xs  font-medium not-italic">
+            <span className="text-xs font-medium  not-italic text-[#2c2c2c]">
               {vendor.name}
             </span>
-            <span className="text-gray text-xs  font-medium not-italic ">
+            <span className="text-xs font-medium  not-italic text-[#999999] ">
               {vendor.numberOfReviews} Reviews
             </span>
           </div>
-        </div>
+        </Link>
       );
     },
   },

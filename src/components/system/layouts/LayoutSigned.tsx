@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { PageNotFound } from "./PageNotFound";
 import { Topbar } from "~/components/template/layouts/Topbar";
 import { LoadingPage } from "./Loader";
-import { Footer } from "~/components/template/layouts/Footer";
 export const LayoutSigned = ({
   role = ["admin", "user", "disabled"],
   children,

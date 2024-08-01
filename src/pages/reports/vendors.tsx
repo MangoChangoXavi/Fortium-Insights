@@ -12,7 +12,7 @@ import { CategoryIcon, CancelIcon } from "~/components/system/ui/Icons";
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
 import { columns } from "~/components/template/columns/Vendors";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 export default function Vendors() {
   const { toast } = useToast();
   const [filter, setFilter] = React.useState("");

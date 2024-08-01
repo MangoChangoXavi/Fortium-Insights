@@ -1,4 +1,11 @@
-import { MenuIcon, MousePointerSquare, SearchIcon } from "lucide-react";
+import {
+  BlocksIcon,
+  GridIcon,
+  MenuIcon,
+  SearchIcon,
+  UserIcon,
+  Wallet2Icon,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -6,8 +13,44 @@ import LogoSvg from "~/assets/svg/logo.svg";
 import { Debouncer } from "~/components/system/ui/Debouncer";
 import { useSearchStore } from "~/stores/useSearchStore";
 import { AddVendorDialog } from "../ui/AddVendorDialog";
-import { useSession } from "next-auth/react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+const menuIcons = [
+  {
+    icon: (
+      <GridIcon className="cursor-pointer stroke-white hover:stroke-[#2c2c2c]" />
+    ),
+    label: "Dashboard",
+    href: "/dashboard",
+  },
+  {
+    icon: (
+      <UserIcon className="cursor-pointer stroke-white hover:stroke-[#2c2c2c]" />
+    ),
+    label: "Users",
+    href: "/reports/users",
+  },
+  {
+    icon: (
+      <Wallet2Icon className="cursor-pointer stroke-white hover:stroke-[#2c2c2c]" />
+    ),
+    label: "Vendors",
+    href: "/reports/vendors",
+  },
+  {
+    icon: (
+      <BlocksIcon className="cursor-pointer stroke-white hover:stroke-[#2c2c2c]" />
+    ),
+    label: "Categories",
+    href: "/reports/categories",
+  },
+];
 
 export const Topbar = ({
   profileImgUrl,
@@ -21,10 +64,6 @@ export const Topbar = ({
    */
   const [hoverOptions, setHoverOptions] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-
-  // session
-  const session = useSession();
-  const userRole = session.data?.user?.role;
 
   // zustand state
   const { search, setSearch } = useSearchStore();
@@ -48,7 +87,21 @@ export const Topbar = ({
             </Link>
           </div>
           {/* center items */}
-          <div className="absolute left-0 right-0 mx-auto hidden h-full items-center justify-center gap-8 lg:inline-flex">
+          <div className="absolute left-0 right-0 mx-auto hidden h-full items-center justify-center gap-10 lg:inline-flex">
+            <div className="flex gap-4">
+              <TooltipProvider>
+                {menuIcons.map(({ icon, label, href }) => (
+                  <Link href={href} key={href}>
+                    <Tooltip>
+                      <TooltipTrigger> {icon}</TooltipTrigger>
+                      <TooltipContent>
+                        <p>{label}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </Link>
+                ))}
+              </TooltipProvider>
+            </div>
             <Debouncer
               value={search}
               setValue={setSearch}
@@ -60,11 +113,7 @@ export const Topbar = ({
           </div>
           {/* right items */}
           <div className="absolute bottom-0 right-[32px] top-0 my-auto hidden items-center gap-2 lg:flex">
-            {/* profile picture */}
-            <div
-              onMouseEnter={() => setHoverOptions(true)}
-              className="relative "
-            >
+            <div className="relative ">
               <Image
                 className="h-[33px] w-[33px] rounded-full"
                 src={profileImgUrl}
@@ -89,7 +138,7 @@ export const Topbar = ({
         {hoverOptions && (
           <div className="topbar-overlay absolute top-[60px] z-20 h-fit w-full bg-slate-950 p-16">
             <div className="inline-flex h-fit w-full items-start justify-start gap-[72px]">
-              {userRole === "admin" && (
+              {
                 <div className="inline-flex flex-col items-start justify-start gap-4">
                   <div className="text-[17px] font-bold text-white">Pages</div>
                   <div className="flex flex-col items-start justify-start gap-2">
@@ -119,16 +168,16 @@ export const Topbar = ({
                     </Link>
                   </div>
                 </div>
-              )}
+              }
               <div className="inline-flex flex-col items-start justify-start gap-4">
                 <div className="text-[17px] font-bold text-white">Actions</div>
                 <div className="flex flex-col items-start justify-start gap-2">
-                  <button
-                    onClick={() => setOpen(true)}
-                    className="w-full text-base font-normal text-white hover:underline"
-                  >
-                    Add new vendor{" "}
-                  </button>
+                  {/* <button
+                      onClick={() => setOpen(true)}
+                      className="w-full text-base font-normal text-white hover:underline"
+                    >
+                      Add new vendor{" "}
+                    </button> */}
                   <button
                     onClick={handleClickSignOut}
                     className="text-base font-normal text-white hover:underline"

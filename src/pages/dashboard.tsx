@@ -47,7 +47,7 @@ const VendorCard = ({
           href={`/details/${id}`}
           className="w-full rounded-2xl bg-[#093061] p-3 px-4 text-center text-xs font-medium text-white shadow transition duration-150 ease-in-out hover:-translate-y-2"
         >
-          See Details
+          See Reviews
         </Link>
       </div>
       <div className="absolute right-[16px] top-[16px] flex items-center justify-center gap-[5px] rounded-2xl bg-white p-[5px]">
@@ -81,7 +81,7 @@ export default function Dashboard() {
         {/* results */}
         <div className="flex w-full flex-col gap-8 lg:pl-8">
           <div className="flex items-center gap-3 text-base font-bold text-[#093061]">
-            <h3>Results</h3>
+            <h3>Vendors</h3>
             <div className="inline-flex h-3.5 w-[38px] items-center justify-center gap-2.5 rounded-2xl border border-indigo-400 px-[13px]">
               <div className="text-[10px] font-normal text-zinc-800">
                 {vendors?.length}
