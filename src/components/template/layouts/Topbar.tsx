@@ -24,28 +24,28 @@ import {
 const menuIcons = [
   {
     icon: (
-      <GridIcon className="cursor-pointer stroke-white hover:stroke-[#2c2c2c]" />
+      <GridIcon className="cursor-pointer stroke-white hover:stroke-[#093061]" />
     ),
     label: "Dashboard",
     href: "/dashboard",
   },
   {
     icon: (
-      <UserIcon className="cursor-pointer stroke-white hover:stroke-[#2c2c2c]" />
+      <UserIcon className="cursor-pointer stroke-white hover:stroke-[#093061]" />
     ),
     label: "Users",
     href: "/reports/users",
   },
   {
     icon: (
-      <Wallet2Icon className="cursor-pointer stroke-white hover:stroke-[#2c2c2c]" />
+      <Wallet2Icon className="cursor-pointer stroke-white hover:stroke-[#093061]" />
     ),
     label: "Vendors",
     href: "/reports/vendors",
   },
   {
     icon: (
-      <BlocksIcon className="cursor-pointer stroke-white hover:stroke-[#2c2c2c]" />
+      <BlocksIcon className="cursor-pointer stroke-white hover:stroke-[#093061]" />
     ),
     label: "Categories",
     href: "/reports/categories",

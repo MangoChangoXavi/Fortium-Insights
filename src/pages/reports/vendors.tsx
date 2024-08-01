@@ -6,16 +6,20 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
-import { StarIcon } from "lucide-react";
+import { PlusIcon, StarIcon } from "lucide-react";
 import { LayoutSigned } from "~/components/system/layouts/LayoutSigned";
 import { CategoryIcon, CancelIcon } from "~/components/system/ui/Icons";
 import { StatsGroup } from "~/components/system/ui/StatsGroup";
 import { columns } from "~/components/template/columns/Vendors";
+import { Button } from "@/components/ui/button";
+import { AddVendorDialog } from "~/components/template/ui/AddVendorDialog";
+import { Dialog } from "@/components/ui/dialog";
 
 const ITEMS_PER_PAGE = 15;
 export default function Vendors() {
   const { toast } = useToast();
   const [filter, setFilter] = React.useState("");
+  const [openModal, setOpenModal] = React.useState(false);
   const [search, setSearch] = React.useState("");
 
   const [{ pageIndex, pageSize }, setPagination] =
@@ -108,7 +112,20 @@ export default function Vendors() {
 
   return (
     <LayoutSigned>
+      <Dialog open={openModal} onOpenChange={setOpenModal}>
+        <AddVendorDialog setOpen={setOpenModal} />
+      </Dialog>
       <section className="container mx-auto mt-10 flex w-full flex-col gap-8">
+        <div className="flex w-full items-center justify-center">
+          <Button
+            onClick={() => setOpenModal(true)}
+            variant={"primary"}
+            className="w-lg flex gap-2"
+          >
+            <PlusIcon />
+            Add new vendor
+          </Button>
+        </div>
         <div className="md:flex md:items-center md:justify-between">
           {filters && (
             <StatsGroup
