@@ -157,12 +157,14 @@ export default function Dashboard(props: PageProps) {
             </div>
             {/* action buttons */}
             <div className="inline-flex h-10 items-center justify-start gap-4">
-              <button
-                onClick={() => setOpenEdit(true)}
-                className="flex h-10 w-10 cursor-pointer items-center justify-start gap-2.5 rounded-[20px] bg-[#466488] px-2 py-1.5 hover:bg-[#093061]"
-              >
-                <PencilIcon className="h-6 w-6 stroke-white" />
-              </button>
+              {isOwner && (
+                <button
+                  onClick={() => setOpenEdit(true)}
+                  className="flex h-10 w-10 cursor-pointer items-center justify-start gap-2.5 rounded-[20px] bg-[#466488] px-2 py-1.5 hover:bg-[#093061]"
+                >
+                  <PencilIcon className="h-6 w-6 stroke-white" />
+                </button>
+              )}
               <button
                 onClick={() => setOpenReview(true)}
                 className="flex h-10 w-10 cursor-pointer items-center justify-start gap-2.5 rounded-[20px] bg-[#466488] px-2 py-1.5 hover:bg-[#093061]"
@@ -197,7 +199,11 @@ export default function Dashboard(props: PageProps) {
               title={review.title}
               comment={review.comment}
               count={review.user._count.reviews}
-              onDelete={isOwner ? () => setOpenDelete(true) : undefined}
+              onDelete={
+                session?.user.id === review.userId
+                  ? () => setOpenDelete(true)
+                  : undefined
+              }
             />
           ))}
         </div>
