@@ -1,7 +1,6 @@
-import { EditIcon, Star, StarIcon, TrashIcon } from "lucide-react";
+import { EditIcon, StarIcon, TrashIcon } from "lucide-react";
 import React from "react";
 import Image from "next/image";
-import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 export const Review = ({
   name,
@@ -76,14 +75,24 @@ export const Review = ({
         </div>
       </div>
       {/* action buttons */}
-      {onDelete && (
-        <button
-          onClick={onDelete}
-          className="flex h-10 w-10 flex-row items-center justify-center rounded-lg bg-red-500 hover:bg-red-700"
-        >
-          <TrashIcon className="h-4 w-4 stroke-white" />
-        </button>
-      )}
+      <div className="flex flex-row gap-2">
+        {onDelete && (
+          <button
+            onClick={onDelete}
+            className="flex h-10 w-10 flex-row items-center justify-center rounded-lg bg-red-500 hover:bg-red-700"
+          >
+            <TrashIcon className="h-4 w-4 stroke-white" />
+          </button>
+        )}
+        {onEdit && (
+          <button
+            onClick={onEdit}
+            className="flex h-10 w-10 flex-row items-center justify-center rounded-lg bg-[#466488] hover:bg-[#093061]"
+          >
+            <EditIcon className="h-4 w-4 stroke-white" />
+          </button>
+        )}
+      </div>
     </div>
   );
 };

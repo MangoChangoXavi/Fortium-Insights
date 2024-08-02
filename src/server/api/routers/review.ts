@@ -108,8 +108,6 @@ export const reviewRouter = createTRPCRouter({
         title: z.string(),
         rating: z.number(),
         comment: z.string(),
-        userId: z.string(),
-        vendorId: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -121,8 +119,6 @@ export const reviewRouter = createTRPCRouter({
           title: input.title,
           rating: input.rating,
           comment: input.comment,
-          userId: input.userId,
-          vendorId: input.vendorId,
         },
       });
     }),

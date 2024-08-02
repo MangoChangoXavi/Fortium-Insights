@@ -23,12 +23,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { EditVendorDialog } from "~/components/template/ui/EditVendorDialog";
+import { EditReviewDialog } from "~/components/template/ui/EditReviewDialog";
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 export default function Dashboard(props: PageProps) {
   const [openDelete, setOpenDelete] = useState(false);
   const [openReview, setOpenReview] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openEditReview, setOpenEditReview] = useState(false);
   const [selectedId, setSelectedId] = useState<string>("");
   const { data: vendor, isLoading } = api.vendor.get.useQuery({
     id: props.id,
@@ -86,6 +88,11 @@ export default function Dashboard(props: PageProps) {
         vendorId={vendor.id}
         open={openReview}
         setOpen={setOpenReview}
+      />
+      <EditReviewDialog
+        review={vendor.reviews.find((r) => r.id === selectedId)}
+        open={openEditReview}
+        setOpen={setOpenEditReview}
       />
       <EditVendorDialog
         vendor={{
@@ -193,7 +200,7 @@ export default function Dashboard(props: PageProps) {
             <Review
               key={review.id}
               name={review.user.name ?? "Anonymous"}
-              userImage={review.user.image ?? NoImagePlaceholder}
+              userImage={review.user.image ?? ""}
               date={review.createdAt.toLocaleDateString()}
               rating={review.rating}
               title={review.title}
@@ -202,6 +209,14 @@ export default function Dashboard(props: PageProps) {
               onDelete={
                 session?.user.id === review.userId
                   ? () => setOpenDelete(true)
+                  : undefined
+              }
+              onEdit={
+                session?.user.id === review.userId
+                  ? () => {
+                      setSelectedId(review.id);
+                      setOpenEditReview(true);
+                    }
                   : undefined
               }
             />

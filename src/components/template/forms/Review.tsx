@@ -43,6 +43,7 @@ export interface ReviewFormI {
   comment: string;
   title: string;
   rating: number;
+  id?: string;
 }
 interface PropsI {
   handleSubmit: (data: z.infer<typeof FormSchema>) => void;
@@ -60,6 +61,12 @@ export function Review({ handleSubmit, defaultData, isLoading }: PropsI) {
   useEffect(() => {
     form.setValue("rating", selectedRating);
   }, [form, selectedRating]);
+
+  useEffect(() => {
+    if (defaultData) {
+      setSelectedRating(defaultData.rating);
+    }
+  }, [defaultData]);
 
   return (
     <Form {...form}>
